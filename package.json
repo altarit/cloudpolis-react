@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "description": "cloudpolis-react",
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*.@(js|jsx)\"",
     "test:watch": "npm run test -- --watch"
@@ -32,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "classnames": "^2.2.5",
     "immutable": "^3.8.1",
     "react": "^15.4.1",
     "react-dom": "^15.4.1"

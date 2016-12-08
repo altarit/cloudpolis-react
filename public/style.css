@@ -1,0 +1,11 @@
+
+
+/* SideBar */
+.sidebar {
+  background-color: #aaaaaa;
+  position: fixed;
+  width: 320px;
+  top: 0px;
+  bottom: 50px;
+  right: 0px;
+}
