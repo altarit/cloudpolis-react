@@ -5,7 +5,7 @@ class SideBar extends React.Component {
   render() {
     let classes = cn({
       "sidebar": true,
-      "sidebar_opened": this.props.opened
+      "sidebar_open": this.props.isOpen
     });
 
     return <div className={classes}>
