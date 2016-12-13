@@ -16,9 +16,9 @@ class App extends React.Component {
 
   render() {
     return <div>
+      <BottomBar {...this.props}/>
       <Container {...this.props} />
       <SideBar {...this.props.sidebar}/>
-      <BottomBar {...this.props}/>
     </div>
   }
 }
