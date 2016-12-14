@@ -10,7 +10,12 @@ const config = {
   dir_client: 'src',
   dir_dist: 'dist',
   dir_public: 'public',
+  dir_server: 'server',
 
+  server_host: 'localhost',
+  server_port: process.env.PORT || 3000,
+
+  // Compiler Configuration
   compiler_babel: {
     cacheDirectory: true,
     plugins: ['transform-runtime'],
@@ -19,6 +24,7 @@ const config = {
   compiler_devtool: 'source-map',
   compiler_hash_type: 'hash',
   compiler_fail_on_warning: false,
+  compiler_quiet: false,
   compiler_public_path: '/',
   compiler_stats: {
     chunks: false,

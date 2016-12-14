@@ -24,7 +24,9 @@ const webpackConfig = {
 const APP_ENTRY = project.paths.client('index.jsx');
 
 webpackConfig.entry = {
-  app: [APP_ENTRY],
+  app : __DEV__
+    ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
+    : [APP_ENTRY],
   vendor: project.compiler_vendors
 };
 
@@ -51,6 +53,7 @@ webpackConfig.plugins = [
 
 if (__DEV__) {
   webpackConfig.plugins.push(
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   );
 } else if (__PROD__) {
