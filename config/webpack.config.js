@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const debug = require('debug')('app:config:webpack');
+const cssnano = require('cssnano');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const project = require('./project.config');
 
@@ -47,13 +48,42 @@ webpackConfig.plugins = [
   })
 ];
 
-webpackConfig.plugins.push(
-  new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor']
-  })
-);
+
+if (__DEV__) {
+  webpackConfig.plugins.push(
+    new webpack.NoErrorsPlugin()
+  );
+} else if (__PROD__) {
+  debug('Enabling plugins for production (OccurenceOrder, Dedupe & UglifyJS).')
+  webpackConfig.plugins.push(
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compress : {
+        unused    : true,
+        dead_code : true,
+        warnings  : false
+      }
+    })
+  );
+}
 
 
+
+// Don't split bundles during testing, since we only want import one bundle
+if (!__TEST__) {
+  webpackConfig.plugins.push(
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor']
+    })
+  );
+}
+
+
+// ------------------------------------
+// Loaders
+// ------------------------------------
+// JavaScript / JSON
 webpackConfig.module.loaders.push({
   test: /\.(js|jsx)$/,
   exclude: /node_modules/,
@@ -63,6 +93,69 @@ webpackConfig.module.loaders.push({
   test: /\.json$/,
   loader: 'json'
 });
+
+
+// ------------------------------------
+// Style Loaders
+// ------------------------------------
+// We use cssnano with the postcss loader, so we tell
+// css-loader not to duplicate minimization.
+const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
+
+webpackConfig.module.loaders.push({
+  test    : /\.scss$/,
+  exclude : null,
+  loaders : [
+    'style',
+    BASE_CSS_LOADER,
+    'postcss',
+    'sass?sourceMap'
+  ]
+});
+webpackConfig.module.loaders.push({
+  test    : /\.css$/,
+  exclude : null,
+  loaders : [
+    'style',
+    BASE_CSS_LOADER,
+    'postcss'
+  ]
+});
+
+webpackConfig.sassLoader = {
+  includePaths : project.paths.client('styles')
+};
+
+webpackConfig.postcss = [
+  cssnano({
+    autoprefixer : {
+      add      : true,
+      remove   : true,
+      browsers : ['last 2 versions']
+    },
+    discardComments : {
+      removeAll : true
+    },
+    discardUnused : false,
+    mergeIdents   : false,
+    reduceIdents  : false,
+    safe          : true,
+    sourcemap     : true
+  })
+];
+
+// File loaders
+webpackConfig.module.loaders.push(
+  { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
+  { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
+  { test: /\.otf(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=font/opentype' },
+  { test: /\.ttf(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream' },
+  { test: /\.eot(\?.*)?$/,   loader: 'file?prefix=fonts/&name=[path][name].[ext]' },
+  { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
+  { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
+)
+
+
 
 
 module.exports = webpackConfig;
