@@ -21,7 +21,7 @@ const webpackConfig = {
   }
 };
 
-const APP_ENTRY = project.paths.client('index.jsx');
+const APP_ENTRY = project.paths.client('main.js');
 
 webpackConfig.entry = {
   app : __DEV__

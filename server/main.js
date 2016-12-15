@@ -9,7 +9,7 @@ const connectHistoryApiFallback = require('connect-history-api-fallback');
 const app = express();
 
 app.use(connectHistoryApiFallback());
-app.use(compress());
+//app.use(compress());
 
 if (project.env === 'development') {
   const compiler = webpack(webpackConfig);
