@@ -1,10 +1,13 @@
 import { combineReducers } from 'redux';
 import locationReducer from './location';
 
+import sideBarReducer from '../components/SideBar/modules/sideBar';
+
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
-    ...asyncReducers
+    ...asyncReducers,
+    sideBar: sideBarReducer
   })
 };
 

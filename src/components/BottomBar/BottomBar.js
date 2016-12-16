@@ -2,7 +2,7 @@ import React from 'react';
 import './BottomBar.scss';
 
 
-class BottomBar extends React.Component {
+export class BottomBar extends React.Component {
 
   render() {
 
