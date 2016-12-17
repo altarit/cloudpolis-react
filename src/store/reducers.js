@@ -2,12 +2,14 @@ import { combineReducers } from 'redux';
 import locationReducer from './location';
 
 import sideBarReducer from '../components/SideBar/modules/sideBar';
+import barsReducer from '../modules/barsReducer';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     ...asyncReducers,
-    sideBar: sideBarReducer
+    sideBar: sideBarReducer,
+    bars: barsReducer
   })
 };
 

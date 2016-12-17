@@ -8,7 +8,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  isOpen: state.sidebar /*.isOpen*/ || 'qwe'
+  //isOpen: state.sidebar /*.isOpen*/ || 'qwe'
+  isOpen: state.bars
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

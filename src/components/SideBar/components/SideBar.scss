@@ -2,8 +2,51 @@
 .sidebar {
   background-color: #aaaaaa;
   position: fixed;
-  width: 320px;
+  width: 360px;
   top: 0px;
   bottom: 50px;
   right: 0px;
+
+  transition: right 0.3s ease-out;
 }
+
+.sidebar_open {
+  right: -360px;
+}
+
+.sidebar__widget {
+  height: 100%;
+  margin: 0
+}
+
+.playmenu {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.playmenu__top {
+  background-color: #997788;
+  flex: 0 1 32px;
+}
+
+.playmenu__tabs {
+  background-color: #889977;
+  flex: 0 1 42px;
+}
+
+.playmenu__list {
+  background-color: #998877;
+  flex: 1 1 auto;
+}
+
+.playmenu__status {
+  background-color: #887799;
+  flex: 0 1 24px;;
+}
+
+.playmenu__bottom {
+  background-color: #779988;
+  flex: 0 1 32px;;
+}
+

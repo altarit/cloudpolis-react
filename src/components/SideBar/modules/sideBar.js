@@ -14,7 +14,6 @@ export const actions = {
 
 const initialState = '';
 export default function sideBarReducer(state = initialState, action) {
-  console.log('reduce: ' + action.type);
   switch (action.type) {
     case USELESS_ACTION:
       return action.payload;
