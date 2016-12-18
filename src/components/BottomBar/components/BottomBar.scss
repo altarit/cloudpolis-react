@@ -1,4 +1,81 @@
-/* NavBar */
-.navbar-toggle {
-  display: block;
+/* Components */
+.player {
+  display: flex;
+  flex-flow: row;
+  background: rgba(255, 255, 255, 0.7);
 }
+
+.player__buttons {
+  flex: 0 1 120px;
+  min-width: 120px;
+}
+
+.player__progress {
+  flex: 1 1;
+}
+
+.player__other {
+  flex: 0 1 auto;
+}
+
+.player__btn {
+  background: none;
+  font-size: 20px;
+  margin: 0 5px;
+  padding: 0px;
+  width: 30px;
+  height: 100%;
+  vertical-align: middle;
+}
+
+
+/* Progress */
+.player__progress {
+  cursor: default;
+  margin: 5px auto;
+  height: 40px;
+  position: relative;
+  background: #ADEBFF;
+  overflow: hidden;
+}
+
+.player__progress_loaded {
+  left: 0px;
+  transition: none;
+  height: 2px;
+  left: 30%;
+  bottom: 0px;
+  position: absolute;
+}
+
+.player__progress_played {
+  left: 0px;
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+  height: 100%;
+  position: absolute;
+}
+
+.player__progress_title {
+  padding-top: 5px;
+  padding-left: 15px;
+  height: 40px;
+  position: absolute;
+}
+
+.player__progress_time {
+  right: 5px;
+  top: 3px;
+  position: absolute;
+}
+
+.player__progress_length {
+  right: 5px;
+  top: 22px;
+  position: absolute;
+}
+
+
+
