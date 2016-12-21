@@ -37,13 +37,13 @@
   position: relative;
   background: #ADEBFF;
   overflow: hidden;
+  font-size: 14px;
 }
 
 .player__progress_loaded {
   left: 0px;
   transition: none;
   height: 2px;
-  left: 30%;
   bottom: 0px;
   position: absolute;
 }
@@ -59,10 +59,19 @@
 }
 
 .player__progress_title {
-  padding-top: 5px;
-  padding-left: 15px;
-  height: 40px;
+  top: 0px;
+  padding-left: 10px;
+  height: 20px;
   position: absolute;
+  font-size: 16px;
+}
+
+.player__progress_info {
+  top: 20px;
+  padding-left: 10px;
+  height: 20px;
+  position: absolute;
+  font-size: 14px;
 }
 
 .player__progress_time {

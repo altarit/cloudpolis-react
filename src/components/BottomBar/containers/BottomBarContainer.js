@@ -13,8 +13,8 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = (state) => ({
-  //isOpen: state.sidebar /*.isOpen*/ || 'qwe'
-  isPlayed: state.player
+  track: state.player.track,
+  isPlayed: state.player.isPlayed
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);
