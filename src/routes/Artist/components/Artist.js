@@ -1,12 +1,16 @@
 import React from 'react';
 import {Link} from 'react-router';
 
-import Song from '../../../components/Song'
+import Track from '../../../components/Track'
 
 export class Artist extends React.Component {
 
   componentDidMount() {
     this.props.getArtist(this.props.artistName);
+  }
+
+  updatePlaylist = () => {
+    this.props.updatePlaylist(null, this.props.songs)
   }
 
 
@@ -17,11 +21,14 @@ export class Artist extends React.Component {
           <div>Loading...</div>
         ) : (
           <div>
-            <h2>{this.props.name}!</h2>
+            <h2>{this.props.name}</h2>
             <div>
-              {this.props.songs.map(song =>
-                <Song key={song.href} {...song} />
-              )}
+              <ul>
+                {this.props.songs.map(song =>
+                  <Track key={song.href} {...song}
+                        updatePlaylist={this.updatePlaylist}/>
+                )}
+              </ul>
             </div>
           </div>
         )}

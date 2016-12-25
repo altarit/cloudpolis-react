@@ -1,0 +1,76 @@
+/* Tracklist */
+.track {
+  display: block;
+  list-style-type: none;
+  margin-left: -40px;
+  cursor: default;
+  min-width: 300px;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 50px;
+}
+
+.track__cover {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  padding-top: 8px;
+  vertical-align: top;
+}
+
+.track__info {
+  display: inline-block;
+  overflow: hidden;
+  height: 48px;
+}
+
+.playing {
+  background-color: rgba(20, 40, 20, 0.2);
+  border-radius: 7px;
+}
+
+.track__title {
+  font-size: 14pt;
+}
+
+.track__artist {
+  font-size: 10pt;
+}
+
+.track__end {
+  display: inline-block;
+  float: right;
+}
+
+.track__clear_left {
+  clear: both;
+}
+
+/* Tracklist for sidebar*/
+
+.tracklist_mini {
+  margin-left: 0px;
+}
+
+.tracklist_mini .track {
+  height: 40px;
+  padding-top: 5px;
+  margin-top: 5px;
+}
+
+.tracklist_mini .track__info {
+  overflow: hidden;
+  width: 240px;
+  white-space: nowrap;
+}
+
+.tracklist_mini .track__title {
+  font-size: 10pt;
+  width: 230px;
+}
+
+.tracklist_mini .track__artist {
+  font-size: 8pt;
+  width: 230px;
+}

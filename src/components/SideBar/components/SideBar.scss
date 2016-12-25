@@ -27,26 +27,32 @@
 
 .playmenu__top {
   background-color: #997788;
-  flex: 0 1 32px;
+  flex: 0 1;
+  min-height: 32px;
 }
 
 .playmenu__tabs {
   background-color: #889977;
-  flex: 0 1 42px;
+  flex: 0 1;
+  min-height: 42px;
 }
 
 .playmenu__list {
   background-color: #998877;
   flex: 1 1 auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .playmenu__status {
   background-color: #887799;
-  flex: 0 1 24px;;
+  flex: 0 1;
+  min-height: 24px;
 }
 
 .playmenu__bottom {
   background-color: #779988;
-  flex: 0 1 32px;;
+  flex: 0 1;
+  min-height: 32px;
 }
 

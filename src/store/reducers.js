@@ -3,7 +3,7 @@ import locationReducer from './location';
 
 import sideBarReducer from '../components/SideBar/modules/sideBar';
 import barsReducer from '../modules/barsReducer';
-import playerReducer from '../components/BottomBar/modules/bottomBar';
+import playerReducer from '../modules/player';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({

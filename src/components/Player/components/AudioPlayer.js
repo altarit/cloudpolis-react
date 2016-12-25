@@ -27,14 +27,16 @@ export class AudioPlayer extends React.Component {
   update() {
     let audio = this.refs.audio;
 
-    if (this.props.isPlayed == true) {
-      //console.log('AudioPlayer.render: ' + this.props.isPlayed);
-      if (audio.paused) {
-        audio.play();
-      }
-    } else {
-      if (!audio.paused) {
-        audio.pause();
+    if (!audio.ended) {
+      if (this.props.isPlayed == true) {
+        //console.log('AudioPlayer.render: ' + this.props.isPlayed);
+        if (audio.paused) {
+          audio.play();
+        }
+      } else {
+        if (!audio.paused) {
+          audio.pause();
+        }
       }
     }
   }
@@ -85,7 +87,7 @@ export class AudioPlayer extends React.Component {
 
   handleEnded = () => {
     console.log('AudioPlayer.ended');
-    this.refs.audio.pause();
+    //this.refs.audio.pause();
   }
 
 

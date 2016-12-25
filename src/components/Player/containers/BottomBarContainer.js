@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import BottomBar from '../components/BottomBar';
 
 import {toogleSidebar} from '../../../modules/barsReducer';
-import {play, pause} from '../modules/bottomBar';
+import {play, pause} from '../../../modules/player';
 
 const mapDispatchToProps = {
   toogleSidebar: toogleSidebar,

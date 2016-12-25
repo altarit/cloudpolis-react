@@ -1,15 +1,28 @@
-import React from 'react';
-import './SideBar.scss';
+import React from 'react'
+import cn from 'classnames'
 
-var cn = require('classnames');
+import './SideBar.scss'
+import Track from '../../Track'
+
 
 export class SideBar extends React.Component {
+
+  getPlaylist = () => {
+    let current = this.props.pls[this.props.plTab]
+    if (current) {
+      return current.map(track => (
+        <Track key={track.href} {...track} />
+      ))
+    } else {
+      return <div>Empty</div>
+    }
+  }
+
   render() {
     let classes = cn({
       "sidebar": true,
       "sidebar_open": this.props.isOpen
     });
-
 
     return (
       <div className={classes}>
@@ -26,14 +39,19 @@ export class SideBar extends React.Component {
 
             <div className="playmenu__tabs">
               <ul className="nav nav-tabs">
-                <li className="active"><a href="#home">Stored</a></li>
-                <li><a href="#profile">Current</a></li>
-                <li><a href="#messages">Random</a></li>
-                <li><a href="#settings">History</a></li>
+                {this.props.plKeys.map(plName => (
+                  <li key={plName}
+                      className={this.props.plTab == plName ? "active" : ""}
+                      onClick={e => {this.props.selectTab(plName)}}
+                  ><a href="#">{plName}</a></li>
+                ))}
               </ul>
             </div>
 
             <div className="playmenu__list">
+              <ul className="tracklist_mini">
+                {this.getPlaylist()}
+              </ul>
             </div>
 
             <div className="playmenu__status">
