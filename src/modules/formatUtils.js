@@ -1,4 +1,5 @@
 export function toMMSS(val) {
+  if (!val) return '-:--'
   var minutes = Math.floor(val / 60);
   var seconds = Math.floor(val - minutes * 60);
   return (seconds < 10)

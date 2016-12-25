@@ -31,10 +31,10 @@ export const actions = {
 const initialState = {
   isPlayed: false,
   track: {
-    title: "Open Your Eyes",
-    artist: "Aviators",
-    src: "song1.mp3",
-    duration: 180
+    title: "",
+    artist: "",
+    src: "",
+    duration: ""
   }
 };
 export default function playerReducer(state = initialState, action) {

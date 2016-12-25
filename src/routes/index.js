@@ -4,6 +4,8 @@ import Home from './Home';
 import CounterRoute from './Counter';
 import ThirdRoute from './Third';
 import FourthRoute from './Fourth';
+import Artists from './Artists'
+import Artist from './Artist'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -15,7 +17,9 @@ export const createRoutes = (store) => ({
   childRoutes: [
     CounterRoute(store),
     ThirdRoute,
-    FourthRoute(store)
+    FourthRoute(store),
+    Artists(store),
+    Artist(store)
   ]
 });
 

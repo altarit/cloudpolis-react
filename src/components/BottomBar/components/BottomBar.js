@@ -30,7 +30,7 @@ export class BottomBar extends React.Component {
           <AudioPlayer isPlayed={this.props.isPlayed}
                        title={this.props.track.title}
                        artist={this.props.track.artist}
-                       src={this.props.track.src}
+                       src={this.props.track.href || this.props.track.src}
                        duration={this.props.track.duration}
           />
 
