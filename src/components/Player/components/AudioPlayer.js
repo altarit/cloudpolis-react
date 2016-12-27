@@ -20,24 +20,43 @@ export class AudioPlayer extends React.Component {
 
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('AudioPlayer.componentWillReceiveProps')
+    let audio = this.refs.audio
+    if (!audio) return
+
+    if (this.props.src != nextProps.src) {
+      console.log('reset')
+      this.setState({
+        ...this.state,
+        time: 0,
+        progress: 0,
+        duration: 0
+      })
+    }
+  }
+
   componentDidUpdate() {
     this.update();
   }
 
   update() {
     let audio = this.refs.audio;
+    if (!audio) return
 
-    if (!audio.ended) {
-      if (this.props.isPlayed == true) {
-        //console.log('AudioPlayer.render: ' + this.props.isPlayed);
-        if (audio.paused) {
-          audio.play();
-        }
-      } else {
-        if (!audio.paused) {
-          audio.pause();
-        }
+    if (this.props.isPlayed == true && audio.paused) {
+      if (audio.ended) {
+        this.setState({
+          ...this.state,
+          time: 0,
+          progress: 0,
+          duration: 0
+        })
       }
+      audio.play()
+    }
+    if (!this.props.isPlayed == true && !audio.paused) {
+      audio.pause()
     }
   }
 
@@ -71,7 +90,7 @@ export class AudioPlayer extends React.Component {
   }
 
   handleCanPlayThrough = () => {
-    console.log('AudioPlayer.canPlayThrough');
+    //console.log('AudioPlayer.canPlayThrough');
 
     let audio = this.refs.audio;
     //audio.play();
@@ -82,12 +101,13 @@ export class AudioPlayer extends React.Component {
   }
 
   handleCanPlay = () => {
-    console.log('AudioPlayer.canPlay');
+    //console.log('AudioPlayer.canPlay');
   }
 
   handleEnded = () => {
     console.log('AudioPlayer.ended');
     //this.refs.audio.pause();
+    this.props.endTrack()
   }
 
 
@@ -128,16 +148,16 @@ export class AudioPlayer extends React.Component {
           {this.props.duration}
         </div>
 
-        {this.props.src ? (
-          <audio id="cp_audio" src={'http://localhost/artists/' + this.props.src} ref="audio"
-                 onTimeUpdate={this.handleTimeUpdate}
-                 onProgress={this.handleProgress}
-                 onDurationChange={this.handleDurationChange}
-                 onCanPlayThrough={this.handleCanPlayThrough}
-                 onCanPlay={this.handleCanPlay}
-                 onEnded={this.handleEnded}
-          ></audio>
-        ):''}
+        <audio id="cp_audio"
+               ref="audio"
+               src={this.props.src ? 'http://localhost/artists/' + this.props.src : null}
+               onTimeUpdate={this.handleTimeUpdate}
+               onProgress={this.handleProgress}
+               onDurationChange={this.handleDurationChange}
+               onCanPlayThrough={this.handleCanPlayThrough}
+               onCanPlay={this.handleCanPlay}
+               onEnded={this.handleEnded}
+        ></audio>
       </div>
     );
   }

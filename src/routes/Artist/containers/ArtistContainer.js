@@ -2,11 +2,12 @@ import {connect} from 'react-redux';
 
 import {getArtist} from '../modules/artist'
 import Artist from '../components/Artist'
-import {updatePlaylist} from '../../../modules/player'
+import {updatePlaylist, setCurrentPlaylist} from '../../../modules/player'
 
 const mapDispatchToProps = {
   getArtist,
-  updatePlaylist
+  updatePlaylist,
+  setCurrentPlaylist
 }
 
 const mapStateToProps = (state, props) => ({

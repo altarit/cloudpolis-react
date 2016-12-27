@@ -5,12 +5,13 @@
 // Just remove them if they're not what you want
 html {
   box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+  /*margin: 0;
+  padding: 0;  */
   height: 100%;
 }
 
@@ -18,4 +19,22 @@ body {
 *:before,
 *:after {
   box-sizing: inherit;
+}
+
+
+
+
+
+
+/* Input */
+#searchclear {
+  position: absolute;
+  right: 5px;
+  top: 30px;
+  bottom: 0;
+  height: 30px;
+  margin: auto;
+  font-size: 20px;
+  cursor: pointer;
+  color: #ccc;
 }

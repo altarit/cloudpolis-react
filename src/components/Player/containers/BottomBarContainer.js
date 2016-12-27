@@ -4,12 +4,15 @@ import {connect} from 'react-redux';
 import BottomBar from '../components/BottomBar';
 
 import {toogleSidebar} from '../../../modules/barsReducer';
-import {play, pause} from '../../../modules/player';
+import {play, pause, nextTrack, prevTrack, endTrack} from '../../../modules/player';
 
 const mapDispatchToProps = {
   toogleSidebar: toogleSidebar,
   play: play,
-  pause: pause
+  pause: pause,
+  nextTrack,
+  prevTrack,
+  endTrack
 };
 
 const mapStateToProps = (state) => ({

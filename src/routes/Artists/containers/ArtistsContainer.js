@@ -1,15 +1,17 @@
 import {connect} from 'react-redux';
 
-import {getArtists} from '../modules/artists'
+import {getArtists, changeArtistsFilter} from '../modules/artists'
 import Artists from '../components/Artists'
 
 const mapDispatchToProps = {
-  getArtists
+  getArtists,
+  changeArtistsFilter
 }
 
 const mapStateToProps = (state) => ({
   fetching: state.artists.fetching,
-  artists: state.artists.artists
+  artists: state.artists.artists,
+  artistsMask: state.artists.artistsMask
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artists);

@@ -11,17 +11,18 @@ export class Artist extends React.Component {
 
   updatePlaylist = () => {
     this.props.updatePlaylist(null, this.props.songs)
+    //this.props.setCurrentPlaylist()
   }
 
 
   render() {
     return (
       <div>
+        <h2>{this.props.artistName}</h2>
         {this.props.fetching ? (
           <div>Loading...</div>
         ) : (
           <div>
-            <h2>{this.props.name}</h2>
             <div>
               <ul>
                 {this.props.songs.map(song =>

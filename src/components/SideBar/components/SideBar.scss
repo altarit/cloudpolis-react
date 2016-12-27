@@ -3,6 +3,7 @@
   background-color: #aaaaaa;
   position: fixed;
   width: 360px;
+  max-width: 100%;
   top: 0px;
   bottom: 50px;
   right: 0px;
@@ -56,3 +57,8 @@
   min-height: 32px;
 }
 
+/* Tab */
+.nav-tabs > li > a {
+  cursor: pointer;
+  user-select: none;
+}
