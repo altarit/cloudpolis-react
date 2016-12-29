@@ -7,11 +7,11 @@ import * as actions from '../../src/store/action_creators';
 
 describe('reducer', () => {
 
-  describe('toogleSidebar', () => {
+  describe('toggleSidebar', () => {
 
     it('from empty state to true', () => {
       const state = Map();
-      const action = actions.toogleSidebar();
+      const action = actions.toggleSidebar();
 
       const newState = reducer(state, action);
       expect(newState).to.equals(fromJS({
@@ -27,7 +27,7 @@ describe('reducer', () => {
           isOpen: true
         }
       });
-      const action = actions.toogleSidebar();
+      const action = actions.toggleSidebar();
 
       const newState = reducer(state, action);
       expect(newState).to.equals(fromJS({

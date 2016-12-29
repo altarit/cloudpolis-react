@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
 import locationReducer from './location';
 
-import sideBarReducer from '../components/SideBar/modules/sideBar';
-import barsReducer from '../modules/barsReducer';
+import sidebarReducer from '../components/Sidebar/modules/sidebar';
 import playerReducer from '../modules/player';
+import popupReducer from '../modules/popups'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     ...asyncReducers,
-    sideBar: sideBarReducer,
-    bars: barsReducer,
-    player: playerReducer
+    sidebar: sidebarReducer,
+    player: playerReducer,
+    popups: popupReducer
   })
 };
 

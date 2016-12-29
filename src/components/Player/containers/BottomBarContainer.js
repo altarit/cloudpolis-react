@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 //import {doNothing} from '../modules/bottomBar';
 import BottomBar from '../components/BottomBar';
 
-import {toogleSidebar} from '../../../modules/barsReducer';
+import {toggleSidebar} from '../../../components/Sidebar/modules/sidebar';
 import {play, pause, nextTrack, prevTrack, endTrack} from '../../../modules/player';
 
 const mapDispatchToProps = {
-  toogleSidebar: toogleSidebar,
-  play: play,
-  pause: pause,
+  toggleSidebar,
+  play,
+  pause,
   nextTrack,
   prevTrack,
   endTrack

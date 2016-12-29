@@ -127,7 +127,7 @@ const initialState = {
   },
   plTab: DEFAULT_PL,
   currentPl: DEFAULT_PL,
-  plKeys: [DEFAULT_PL, '1234'],
+  plKeys: [DEFAULT_PL, '1234', 'Depeche Mode', '4everfreebrony', 'Wasteland Walliers'],
   pls: {
     [DEFAULT_PL]: []
   }

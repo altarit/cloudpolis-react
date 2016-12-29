@@ -39,7 +39,7 @@ export class BottomBar extends React.Component {
           />
 
           <div className="player__other">
-            <button type="button" className="btn player__btn fa fa-bars" onClick={this.props.toogleSidebar}/>
+            <button type="button" className="btn player__btn fa fa-bars" onClick={this.props.toggleSidebar}/>
           </div>
         </div>
       </nav>
