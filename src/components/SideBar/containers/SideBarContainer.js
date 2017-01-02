@@ -2,13 +2,16 @@ import {connect} from 'react-redux';
 
 import {doNothing, scrollLeft, scrollRight} from '../modules/sidebar';
 import Sidebar from '../components/Sidebar';
-import {selectTab} from '../../../modules/player'
+import {selectTab, createPlaylist, closeOpenPlaylist, closeOtherPlaylists} from '../../../modules/player'
 
 const mapDispatchToProps = {
   doNothing,
   selectTab,
   scrollLeft,
-  scrollRight
+  scrollRight,
+  createPlaylist,
+  closeOpenPlaylist,
+  closeOtherPlaylists
 };
 
 const mapStateToProps = (state) => ({
@@ -19,7 +22,8 @@ const mapStateToProps = (state) => ({
   pls: state.player.pls,
   currentPl: state.player.currentPl,
   track: state.player.track,
-  popups: state.popups
+  popups: state.popups,
+  errors: state.player.errors
 
 });
 

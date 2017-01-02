@@ -1,0 +1,26 @@
+.filedialog {
+  padding: 5px;
+}
+
+.filedialog__list {
+  list-style-type: none;
+  padding: 0px 5px;
+}
+
+.filedialog__list li {
+  display: flex;
+  flex-flow: row;
+}
+
+
+.filedialog__list span {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.filedialog__list a {
+  flex: 0 1 20px;
+  width: 20px;
+}
+
+

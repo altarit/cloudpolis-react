@@ -40,8 +40,8 @@ export class Artists extends React.Component {
       <div>
         <h2>Artists:</h2>
         <div className="btn-group">
-          <label htmlFor="artists-filter">Filter</label>
-          <input type="search" className="form-control" id="artists-filter" onChange={this.changeFilter} ref="artistsFilter" />
+          <label>Filter</label>
+          <input type="search" className="form-control" onChange={this.changeFilter} ref="artistsFilter" />
           <span id="searchclear" className="fa fa-close" onClick={this.clearFilter}></span>
         </div>
         {this.props.fetching ? (

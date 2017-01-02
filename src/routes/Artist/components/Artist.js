@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router';
 
 import Track from '../../../components/Track'
+import {DEFAULT_PL} from '../../../modules/player'
 
 export class Artist extends React.Component {
 
@@ -11,7 +12,22 @@ export class Artist extends React.Component {
 
   updatePlaylist = () => {
     this.props.updatePlaylist(null, this.props.songs)
-    //this.props.setCurrentPlaylist()
+  }
+
+  getPlaylist = () => {
+    let current = this.props.songs
+    if (current) {
+      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
+      return current.map(track => (
+        <Track key={track.href} {...track}
+               updatePlaylist={this.updatePlaylist}
+               playing={currentSrc && (track.src || track.href) == currentSrc && (this.props.currentPl == DEFAULT_PL)}
+               pl={DEFAULT_PL}
+        />
+      ))
+    } else {
+      return <div>Empty</div>
+    }
   }
 
 
@@ -25,10 +41,7 @@ export class Artist extends React.Component {
           <div>
             <div>
               <ul>
-                {this.props.songs.map(song =>
-                  <Track key={song.href} {...song}
-                        updatePlaylist={this.updatePlaylist}/>
-                )}
+                {this.getPlaylist()}
               </ul>
             </div>
           </div>

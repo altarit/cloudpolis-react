@@ -7,6 +7,13 @@ export const SET_CURRENT_PL = 'SET_CURRENT_PL'
 export const PLAYER_NEXT = 'PLAYER_NEXT'
 export const PLAYER_PREV = 'PLAYER_PREV'
 export const PLAYER_END = 'PLAYER_END'
+export const CREATE_PLAYLIST = 'CREATE_PLAYLIST'
+export const CLOSE_OPEN_PLAYLIST = 'CLOSE_OPEN_PLAYLIST'
+export const CLOSE_OTHER_PLAYLISTS = 'CLOSE_OTHER_PLAYLISTS'
+export const STORAGE_LOAD_PLAYLISTS = 'STORAGE_LOAD_PLAYLISTS'
+export const STORAGE_SAVE_PLAYLISTS = 'STORAGE_SAVE_PLAYLISTS'
+export const STORAGE_OPEN_PLAYLIST = 'STORAGE_OPEN_PLAYLIST'
+export const STORAGE_DELETE_PLAYLIST = 'STORAGE_DELETE_PLAYLIST'
 
 export const DEFAULT_PL = 'Default'
 
@@ -69,6 +76,53 @@ export function endTrack() {
   }
 }
 
+export function createPlaylist(name) {
+  return {
+    type: CREATE_PLAYLIST,
+    name
+  }
+}
+
+export function closeOpenPlaylist() {
+  return {
+    type: CLOSE_OPEN_PLAYLIST
+  }
+}
+
+export function closeOtherPlaylists() {
+  return {
+    type: CLOSE_OTHER_PLAYLISTS
+  }
+}
+
+export function loadPlaylistsFromStorage() {
+  return {
+    type: STORAGE_LOAD_PLAYLISTS
+  }
+}
+
+export function savePlaylistsToStorage(filename, playlist) {
+  return {
+    type: STORAGE_SAVE_PLAYLISTS,
+    filename,
+    playlist
+  }
+}
+
+export function openPlaylistFromStorage(filename) {
+  return {
+    type: STORAGE_OPEN_PLAYLIST,
+    filename
+  }
+}
+
+export function deletePlaylistFromStorage(filename) {
+  return {
+    type: STORAGE_DELETE_PLAYLIST,
+    filename
+  }
+}
+
 export const actions = {
   nextTrack,
   prevTrack,
@@ -117,6 +171,78 @@ function selectNextTrack(player, type) {
   }
 }
 
+function addPlaylist(name, plKeys, pls) {
+  if (!name) return {
+    errors: {createPlaylist: 'Type something'}
+  }
+  if (name.length > 32) return {
+    errors: {createPlaylist: 'Too long'}
+  }
+  if (~plKeys.indexOf(name)) return {
+    errors: {createPlaylist: `Playlist ${name} already exists`}
+  }
+  if (plKeys.length >= 32) return {
+    errors: {createPlaylist: `Too many playlists`}
+  }
+
+  return {
+    plKeys: [...plKeys, name],
+    pls: {...pls, [name]: []},
+    plTab: name,
+    errors: {}
+  }
+}
+
+function excludeOpenPlaylust(plTab, plKeys, pls) {
+  let index = plKeys.indexOf(plTab)
+  if (!~index) return
+
+  let nextPlKeys = [...plKeys]
+  nextPlKeys.splice(index, 1)
+  let nextPls = {...pls}
+  delete nextPls[plTab]
+  if (!nextPlKeys.length) {
+    nextPlKeys.push(DEFAULT_PL)
+    nextPls[DEFAULT_PL] = []
+  }
+  let nextPlTab = index < nextPlKeys.length ? nextPlKeys[index] : nextPlKeys[index - 1]
+  return {
+    plKeys: nextPlKeys,
+    pls: nextPls,
+    plTab: nextPlTab
+  }
+}
+
+function _savePlaylistToStorage(state, filename, playlist) {
+  let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+  let nextPlaylists = {...safe, [filename]: playlist}
+  localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
+  return {...state, safePlaylists: nextPlaylists}
+}
+
+function _openPlaylistFromStorage(state, filename) {
+  let safeForOpen = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+  let newPl = safeForOpen[filename]
+  if (newPl) {
+    return {
+      ...state,
+      pls: {...state.pls, [filename]: newPl},
+      plKeys: ~state.plKeys.indexOf(filename) ? state.plKeys : [...state.plKeys, filename],
+      plTab: filename
+    }
+  } else {
+    console.log(filename + ' not found')
+    return state
+  }
+}
+
+function _deletePlaylistFromStorage(state, filename) {
+  let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+  delete safe[filename]
+  localStorage.setItem('safePlaylists', JSON.stringify(safe))
+  return {...state, safePlaylists: safe}
+}
+
 const initialState = {
   isPlayed: false,
   track: {
@@ -127,10 +253,12 @@ const initialState = {
   },
   plTab: DEFAULT_PL,
   currentPl: DEFAULT_PL,
-  plKeys: [DEFAULT_PL, '1234', 'Depeche Mode', '4everfreebrony', 'Wasteland Walliers'],
+  plKeys: [DEFAULT_PL],
   pls: {
     [DEFAULT_PL]: []
-  }
+  },
+  safePlaylists: {},
+  errors: {}
 }
 
 export default function playerReducer(state = initialState, action) {
@@ -140,11 +268,15 @@ export default function playerReducer(state = initialState, action) {
     case PLAYER_PAUSE:
       return {...state, isPlayed: false};
     case SET_TRACK:
-      return {...state, track: action.payload, isPlayed: true};
+      return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true};
     case SELECT_TAB:
       return {...state, plTab: action.payload};
     case UPDATE_PLAYLIST:
-      return {...state, pls: {...state.pls, [action.name]: action.content}};
+      return {
+        ...state,
+        pls: {...state.pls, [action.name]: action.content},
+        plKeys: ~state.plKeys.indexOf(action.name) ? state.plKeys : [...state.plKeys, action.name]
+      };
     case SET_CURRENT_PL:
       return {...state, currentPl: action.name}
     case PLAYER_NEXT:
@@ -153,7 +285,20 @@ export default function playerReducer(state = initialState, action) {
       return {...state, ...selectNextTrack(state, action.type)}
     case PLAYER_END:
       return {...state, ...selectNextTrack(state, action.type)}
-    default:
-      return state;
+    case CREATE_PLAYLIST:
+      return {...state, ...addPlaylist(action.name, state.plKeys, state.pls)}
+    case CLOSE_OPEN_PLAYLIST:
+      return {...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls)}
+    case CLOSE_OTHER_PLAYLISTS:
+      return {...state, plKeys: [state.plTab], pls: {[state.plTab]: state.pls[state.plTab]}}
+    case STORAGE_LOAD_PLAYLISTS:
+      return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
+    case STORAGE_SAVE_PLAYLISTS:
+      return {...state, ..._savePlaylistToStorage(state, action.filename, action.playlist)}
+    case STORAGE_OPEN_PLAYLIST:
+      return {...state, ..._openPlaylistFromStorage(state, action.filename)}
+    case STORAGE_DELETE_PLAYLIST:
+      return {...state, ..._deletePlaylistFromStorage(state, action.filename)}
   }
+  return state;
 }

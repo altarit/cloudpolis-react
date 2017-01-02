@@ -21,7 +21,9 @@ class AppContainer extends Component {
       if (dataClick) {
         switch (dataClick) {
           case 'dropdown':
-                return this.props.store.dispatch(openPopup(target.dataset.for, e.pageX, e.pageY))
+            return this.props.store.dispatch(openPopup(target.dataset.for, target.dataset.from, e.clientX, e.clientY, window.innerWidth - e.clientX, window.innerHeight - e.clientY))
+          case 'closeall':
+            return this.props.store.dispatch(closeAllPopups())
         }
 
         return

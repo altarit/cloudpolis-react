@@ -13,6 +13,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => ({
   ...state.artist,
   artistName: props.params.artistName,
+  currentPl: state.player.currentPl,
+  track: state.player.track
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);
