@@ -10,7 +10,7 @@ export function getArtists() {
       type: GET_ARTISTS_REQUEST
     })
 
-    fetch('http://localhost/api/music/artists/').then(res => {
+    fetch('http://localhost' +'/api/music/artists/').then(res => {
       return res.json()
     }).then(artists => {
       dispatch({

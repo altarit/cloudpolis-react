@@ -15,7 +15,7 @@ export class BottomBar extends React.Component {
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-bottom">
-        <div className="container_fluid player">
+        <div className="container player">
           <div className="player__buttons">
             <button type="button" className="btn player__btn fa fa-fast-backward" onClick={this.props.prevTrack}/>
             {!this.props.isPlayed ? (
@@ -33,11 +33,13 @@ export class BottomBar extends React.Component {
                        src={this.props.track.href || this.props.track.src}
                        duration={this.props.track.duration}
 
+                       volume={this.props.volume}
+                       muted={this.props.muted}
+
                        endTrack={this.props.endTrack}
                        play={this.props.play}
                        pause={this.props.pause}
           />
-
           <div className="player__other">
             <button type="button" className="btn player__btn fa fa-bars" onClick={this.props.toggleSidebar}/>
           </div>

@@ -6,6 +6,7 @@ import ThirdRoute from './Third';
 import FourthRoute from './Fourth';
 import Artists from './Artists'
 import Artist from './Artist'
+import Search from './Search'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -19,7 +20,8 @@ export const createRoutes = (store) => ({
     ThirdRoute,
     FourthRoute(store),
     Artists(store),
-    Artist(store)
+    Artist(store),
+    Search(store)
   ]
 });
 

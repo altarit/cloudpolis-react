@@ -14,8 +14,23 @@ export const STORAGE_LOAD_PLAYLISTS = 'STORAGE_LOAD_PLAYLISTS'
 export const STORAGE_SAVE_PLAYLISTS = 'STORAGE_SAVE_PLAYLISTS'
 export const STORAGE_OPEN_PLAYLIST = 'STORAGE_OPEN_PLAYLIST'
 export const STORAGE_DELETE_PLAYLIST = 'STORAGE_DELETE_PLAYLIST'
+export const SET_VOLUME = 'SET_VOLUME'
+export const TOGGLE_MUTE = 'TOGGLE_MUTE'
+export const MOVE_TRACK = 'MOVE_TRACK'
+//export const COPY_TRACK = 'COPY_TRACK'
+export const SORT_PLAYLIST = 'SORT_PLAYLIST'
+
 
 export const DEFAULT_PL = 'Default'
+export const ARTIST_PL = '__Artist__'
+export const SEARCH_PL = '__Search__'
+
+export const BY_TITLE = 'BY_TITLE'
+export const BY_ARTIST = 'BY_ARTIST'
+export const BY_DURATION = 'BY_DURATION'
+export const SHUFFLE = 'SHUFFLE'
+export const REVERSE = 'REVERSE'
+
 
 export function play() {
   return {
@@ -47,7 +62,7 @@ export function updatePlaylist(name, content) {
   return {
     type: UPDATE_PLAYLIST,
     name: name || DEFAULT_PL,
-    content: content
+    content: [...content]
   }
 }
 
@@ -123,6 +138,72 @@ export function deletePlaylistFromStorage(filename) {
   }
 }
 
+
+export function setVolume(val) {
+  return {
+    type: SET_VOLUME,
+    val
+  }
+
+}
+
+export function toggleMute() {
+  return {
+    type: TOGGLE_MUTE
+  }
+}
+
+export function moveTrack(track, plFrom, posFrom, plTo, posTo) {
+  return {
+    type: MOVE_TRACK,
+    track,
+    plFrom,
+    posFrom,
+    plTo,
+    posTo
+  }
+}
+
+/*export function copyTrack(track, plTo, posTo) {
+ return {
+ type: MOVE_TRACK,
+ track,
+ plTo,
+ posTo
+ }
+ }*/
+
+export function sortByTitle() {
+  return {
+    type: SORT_PLAYLIST,
+    by: BY_TITLE
+  }
+}
+export function sortByArtist() {
+  return {
+    type: SORT_PLAYLIST,
+    by: BY_ARTIST
+  }
+}
+export function sortByDuration() {
+  return {
+    type: SORT_PLAYLIST,
+    by: BY_DURATION
+  }
+}
+export function shuffle() {
+  return {
+    type: SORT_PLAYLIST,
+    by: SHUFFLE
+  }
+}
+export function reverse() {
+  return {
+    type: SORT_PLAYLIST,
+    by: REVERSE
+  }
+}
+
 export const actions = {
   nextTrack,
   prevTrack,
@@ -132,6 +213,8 @@ export const actions = {
 function getCurrentTrackIndex(player) {
   let pl = player.pls[player.currentPl]
   if (!pl) return -1
+
+  return player.pos
 
   for (let i = 0; i < pl.length; i++) {
     let track = pl[i]
@@ -157,17 +240,34 @@ function getTrackByActionType(player, currentIndex, type) {
   return null
 }
 
-function selectNextTrack(player, type) {
+function getNextIndexByType(currentIndex, type) {
+  switch (type) {
+    case PLAYER_NEXT:
+    case PLAYER_END:
+      return currentIndex + 1
+    case PLAYER_PREV:
+      return currentIndex - 1
+  }
+  return null
+}
 
-  let currentIndex = getCurrentTrackIndex(player)
+function selectNextTrack(player, type) {
+  let pl = player.pls[player.currentPl]
+  if (!pl) return null
+
+  let currentIndex = player.pos
+  //let currentIndex = getCurrentTrackIndex(player)
   if (currentIndex < 0) return {isPlayed: type != PLAYER_END}
 
-  let track = getTrackByActionType(player, currentIndex, type)
+  let nextIndex = getNextIndexByType(currentIndex, type)
+  let track = pl[nextIndex]
+  //let track = getTrackByActionType(player, currentIndex, type)
   if (!track) return {isPlayed: type != PLAYER_END}
 
   return {
     track: track,
-    isPlayed: true
+    isPlayed: true,
+    pos: nextIndex
   }
 }
 
@@ -181,7 +281,8 @@ function addPlaylist(name, plKeys, pls) {
   if (~plKeys.indexOf(name)) return {
     errors: {createPlaylist: `Playlist ${name} already exists`}
   }
-  if (plKeys.length >= 32) return {
+  console.log('Too many playlists: ' + plKeys.length)
+  if (plKeys.length >= 20) return {
     errors: {createPlaylist: `Too many playlists`}
   }
 
@@ -215,7 +316,7 @@ function excludeOpenPlaylust(plTab, plKeys, pls) {
 
 function _savePlaylistToStorage(state, filename, playlist) {
   let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  let nextPlaylists = {...safe, [filename]: playlist}
+  let nextPlaylists = {...safe, [filename]: playlist.map(_cloneTrack)}
   localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
   return {...state, safePlaylists: nextPlaylists}
 }
@@ -245,12 +346,15 @@ function _deletePlaylistFromStorage(state, filename) {
 
 const initialState = {
   isPlayed: false,
+  volume: 0.25,
+  muted: false,
   track: {
     title: "",
     artist: "",
     src: "",
     duration: ""
   },
+  pos: 0,
   plTab: DEFAULT_PL,
   currentPl: DEFAULT_PL,
   plKeys: [DEFAULT_PL],
@@ -261,6 +365,102 @@ const initialState = {
   errors: {}
 }
 
+function _cloneTrack(track) {
+  return {
+    title: track.title,
+    artist: track.artist,
+    src: (track.src || track.href),
+    duration: track.duration
+  }
+}
+
+function _moveTrack(state, oldTrack, plFromName, posFrom, plToName, posTo) {
+  console.log(`_moveTrack: ${plFromName}:${posFrom} -> ${plToName}:${posTo}`)
+  let track = _cloneTrack(oldTrack)
+  console.log(`${track.title}`)
+  let pls = {...state.pls}
+  if (plFromName) {
+    let plFrom = [...pls[plFromName]]
+    if (plFrom) {
+      plFrom.splice(posFrom, 1)
+      pls[plFromName] = plFrom
+    }
+  }
+  //let track = plFrom.splice(posFrom, 1)
+  let plTo = [...pls[plToName]]
+  pls[plToName] = plTo
+  let offset = (plFromName == plToName && posFrom < posTo) ? -1 : 0
+  plTo.splice(posTo + offset, 0, track)
+
+  //move current track marker
+  let currentIndex = state.pos
+  let offsetPos = 0
+  if (state.currentPl === plFromName && state.pos >= posFrom) {
+    offsetPos--
+  }
+  if (state.currentPl === plToName && state.pos >= posTo) {
+    offsetPos++
+  }
+  let nextIndex = currentIndex + offsetPos
+  if (state.currentPl === plFromName && state.pos == posFrom) {
+    nextIndex = posTo + offsetPos
+  }
+
+
+  return {pls, pos: nextIndex}
+}
+
+/*function _copyTrack(stateOld, track, plToName, posTo) {
+ console.log(`_copyTrack: -> ${plToName}:${posTo}`)
+ let pls = {...stateOld.pls}
+ let plTo = pls[plToName]
+ plTo.splice(posTo, 0, track)
+ return {pls}
+ }*/
+
+function _sortBy(state, by) {
+  let newPls = {...state.pls}
+  let newPl = [...newPls[state.plTab]]
+
+  switch (by) {
+    case BY_TITLE:
+      newPl.sort((a, b) => a.title.localeCompare(b.title))
+      break
+    case BY_ARTIST:
+      newPl.sort((a, b) => a.artist.localeCompare(b.artist))
+      break
+    case BY_DURATION:
+      newPl.sort((a, b) => a.duration.localeCompare(b.duration))
+      break
+    case SHUFFLE:
+      let j, temp
+      for (let i = newPl.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1))
+        temp = newPl[j]
+        newPl[j] = newPl[i]
+        newPl[i] = temp
+      }
+      break
+    case REVERSE:
+      newPl.reverse()
+      break
+  }
+  newPls[state.plTab] = newPl
+
+  //change current pos
+  let newPos = state.pos
+  if (state.currentPl == state.plTab) {
+    for (let i = 0; i < newPl.length; i++) {
+      let track = newPl[i]
+      if ((track.href || track.src) === (state.track.href || state.track.src) && track.title === state.track.title) {
+        newPos = i
+      }
+    }
+  }
+
+  return {pls: newPls, pos: newPos}
+}
+
 export default function playerReducer(state = initialState, action) {
   switch (action.type) {
     case PLAYER_PLAY:
@@ -268,7 +468,7 @@ export default function playerReducer(state = initialState, action) {
     case PLAYER_PAUSE:
       return {...state, isPlayed: false};
     case SET_TRACK:
-      return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true};
+      return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true, pos: action.payload.pos}
     case SELECT_TAB:
       return {...state, plTab: action.payload};
     case UPDATE_PLAYLIST:
@@ -290,7 +490,7 @@ export default function playerReducer(state = initialState, action) {
     case CLOSE_OPEN_PLAYLIST:
       return {...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls)}
     case CLOSE_OTHER_PLAYLISTS:
-      return {...state, plKeys: [state.plTab], pls: {[state.plTab]: state.pls[state.plTab]}}
+      return {...state, plKeys: [state.plTab], pls: {[state.plTab]: state.pls[state.plTab]}, plTab: state.plTab}
     case STORAGE_LOAD_PLAYLISTS:
       return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
     case STORAGE_SAVE_PLAYLISTS:
@@ -299,6 +499,16 @@ export default function playerReducer(state = initialState, action) {
       return {...state, ..._openPlaylistFromStorage(state, action.filename)}
     case STORAGE_DELETE_PLAYLIST:
       return {...state, ..._deletePlaylistFromStorage(state, action.filename)}
+    case SET_VOLUME:
+      return {...state, volume: action.val}
+    case TOGGLE_MUTE:
+      return {...state, muted: !state.muted}
+    case MOVE_TRACK:
+      return {...state, ..._moveTrack(state, action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)}
+    /*case COPY_TRACK:
+     return {...state, ..._copyTrack(state, action.track, action.plTo, action.posTo)}*/
+    case SORT_PLAYLIST:
+      return {...state, ..._sortBy(state, action.by)}
   }
   return state;
 }

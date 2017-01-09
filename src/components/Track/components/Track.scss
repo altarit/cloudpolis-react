@@ -6,7 +6,7 @@
   margin-left: -40px;
   cursor: default;
   min-width: 300px;
-  overflow: hidden;
+  overflow: visible;
   white-space: nowrap;
   height: 50px;
   padding-right: 5px;
@@ -53,6 +53,7 @@
 .track__control {
   flex: 0 1;
   display: none;
+  padding-top: 6px;
 }
 
 .track__end {

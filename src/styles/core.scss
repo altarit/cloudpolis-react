@@ -27,6 +27,11 @@ body {
 
 
 /* Input */
+.form-search .btn-group {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
 #searchclear {
   position: absolute;
   right: 5px;
@@ -38,3 +43,4 @@ body {
   cursor: pointer;
   color: #ccc;
 }
+

@@ -17,7 +17,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   track: state.player.track,
-  isPlayed: state.player.isPlayed
+  isPlayed: state.player.isPlayed,
+  volume: state.player.volume,
+  muted: state.player.muted
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);

@@ -21,8 +21,12 @@ export const Header = () => (
       Fourth
     </Link>
     {' · '}
-    <Link to='music/artists' activeClassName='route--active'>
+    <Link to='/music/artists' activeClassName='route--active'>
       Artists
+    </Link>
+    {' · '}
+    <Link to='/music/search' activeClassName='route--active'>
+      Search
     </Link>
   </div>
 );

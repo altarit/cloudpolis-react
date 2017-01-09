@@ -126,3 +126,19 @@
   position: fixed;
 }
 
+.playmenu__volume {
+  display: inline-block;
+  float: right;
+
+}
+
+.playmenu__volume-slider {
+  display: inline-block;
+  float: right;
+  max-width: 80px;
+  margin: 5px;
+}
+
+.tracklist_mini {
+  margin-bottom: 40px;
+}

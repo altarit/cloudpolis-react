@@ -18,11 +18,14 @@ export class Artist extends React.Component {
     let current = this.props.songs
     if (current) {
       let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
+      let i = 0
       return current.map(track => (
-        <Track key={track.href} {...track}
+        <Track key={i} {...track}
                updatePlaylist={this.updatePlaylist}
-               playing={currentSrc && (track.src || track.href) == currentSrc && (this.props.currentPl == DEFAULT_PL)}
+               playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == DEFAULT_PL)}
                pl={DEFAULT_PL}
+               pos={i++}
+               immutable={true}
         />
       ))
     } else {
@@ -39,11 +42,9 @@ export class Artist extends React.Component {
           <div>Loading...</div>
         ) : (
           <div>
-            <div>
-              <ul>
-                {this.getPlaylist()}
-              </ul>
-            </div>
+            <ul>
+              {this.getPlaylist()}
+            </ul>
           </div>
         )}
       </div>

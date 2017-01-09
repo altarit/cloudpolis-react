@@ -10,8 +10,7 @@ export class AudioPlayer extends React.Component {
     this.state = {
       time: 0,
       progress: 0,
-      duration: 0,
-      volume: 0.25
+      duration: 0
     };
   }
 
@@ -21,17 +20,20 @@ export class AudioPlayer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('AudioPlayer.componentWillReceiveProps')
+    //console.log('AudioPlayer.componentWillReceiveProps')
     let audio = this.refs.audio
     if (!audio) return
 
+
+    audio.volume = nextProps.volume
+
     if (this.props.src != nextProps.src) {
-      console.log('reset')
+      //console.log('reset')
       this.setState({
         ...this.state,
         time: 0,
-        progress: 0,
-        duration: 0
+        progress: 0/*,
+        duration: 0  */
       })
     }
   }
@@ -46,14 +48,17 @@ export class AudioPlayer extends React.Component {
 
     if (this.props.isPlayed == true && audio.paused) {
       if (audio.ended) {
-        this.setState({
+        /*this.setState({
           ...this.state,
           time: 0,
           progress: 0,
           duration: 0
-        })
+        }) */
+
+        audio.currentTime = 0
+      } else {
+        audio.play()
       }
-      audio.play()
     }
     if (!this.props.isPlayed == true && !audio.paused) {
       audio.pause()
@@ -94,7 +99,6 @@ export class AudioPlayer extends React.Component {
 
     let audio = this.refs.audio;
     //audio.play();
-    audio.volume = this.state.volume;
     window.p = audio;
     this.update();
     this.handleProgress();
@@ -120,6 +124,12 @@ export class AudioPlayer extends React.Component {
       ...this.state,
       time: progress * this.props.duration
     });
+
+    console.log((this.state.time/this.state.duration*100)+'%')
+  }
+
+  dragStart = (e) => {
+    e.dataTransfer.setData('track', JSON.stringify(this.props))
   }
 
 
@@ -128,7 +138,8 @@ export class AudioPlayer extends React.Component {
     //console.log(this.changeTime);
     //console.log('AudioPlayer.render: ' + this.props.isPlayed)
     return (
-      <div className="progress player__progress" onClick={this.changeTime}>
+      <div className="progress player__progress" onClick={this.changeTime}
+           draggable="true" onDragStart={this.dragStart}>
         <div className="progress-bar progress-bar-info player__progress_played"
              style={{width: (this.state.time/this.state.duration*100)+'%'}}>
         </div>
@@ -150,7 +161,7 @@ export class AudioPlayer extends React.Component {
 
         <audio id="cp_audio"
                ref="audio"
-               src={this.props.src ? 'http://localhost/artists/' + this.props.src : null}
+               src={this.props.src ? 'http://localhost' + '/artists/' + this.props.src : null}
                onTimeUpdate={this.handleTimeUpdate}
                onProgress={this.handleProgress}
                onDurationChange={this.handleDurationChange}
