@@ -4,13 +4,15 @@ export const GET_ARTISTS_FAILED = 'GET_ARTISTS_FAILED';
 
 export const CHANGE_ARTISTS_FILTER = 'CHANGE_ARTISTS_FILTER'
 
+import {apiLink} from '../../../modules/formatUtils'
+
 export function getArtists() {
   return (dispatch) => {
     dispatch({
       type: GET_ARTISTS_REQUEST
     })
 
-    fetch('http://localhost' +'/api/music/artists/').then(res => {
+    fetch(apiLink('/music/artists/')).then(res => {
       return res.json()
     }).then(artists => {
       dispatch({

@@ -3,6 +3,7 @@ export const GET_TRACKS_BY_QUERY_SUCCESS = 'GET_TRACKS_BY_QUERY_SUCCESS';
 export const GET_TRACKS_BY_QUERY_FAILED = 'GET_TRACKS_BY_QUERY_FAILED';
 
 import {updatePlaylist} from '../../../modules/player'
+import {apiLink} from '../../../modules/formatUtils'
 
 export function getTracksByQuery(query) {
   return (dispatch) => {
@@ -10,7 +11,7 @@ export function getTracksByQuery(query) {
       type: GET_TRACKS_BY_QUERY_REQUEST
     })
 
-    fetch('http://localhost' + '/api/music/search?query=' + query).then( res => {
+    fetch(apiLink('/music/search?query=' + query)).then( res => {
       return res.json()
     }).then(result => {
       dispatch({

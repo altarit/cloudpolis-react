@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {toMMSS} from '../../../modules/formatUtils';
+import {toMMSS, trackLink} from '../../../modules/formatUtils';
 
 export class AudioPlayer extends React.Component {
   constructor(props) {
@@ -28,6 +28,7 @@ export class AudioPlayer extends React.Component {
     audio.volume = nextProps.volume
 
     if (this.props.src != nextProps.src) {
+      console.log('changed src')
       //console.log('reset')
       this.setState({
         ...this.state,
@@ -35,34 +36,25 @@ export class AudioPlayer extends React.Component {
         progress: 0/*,
         duration: 0  */
       })
+      audio.play()
     }
-  }
 
-  componentDidUpdate() {
-    this.update();
-  }
-
-  update() {
-    let audio = this.refs.audio;
-    if (!audio) return
-
-    if (this.props.isPlayed == true && audio.paused) {
+    if (!this.props.isPlayed && nextProps.isPlayed) {
+      console.log('changed to played')
       if (audio.ended) {
-        /*this.setState({
-          ...this.state,
-          time: 0,
-          progress: 0,
-          duration: 0
-        }) */
-
         audio.currentTime = 0
+        audio.play()
       } else {
         audio.play()
       }
     }
-    if (!this.props.isPlayed == true && !audio.paused) {
+    if (this.props.isPlayed && !nextProps.isPlayed) {
+      console.log('changed to paused')
       audio.pause()
     }
+  }
+
+  componentDidUpdate() {
   }
 
   handleTimeUpdate = () => {
@@ -100,7 +92,6 @@ export class AudioPlayer extends React.Component {
     let audio = this.refs.audio;
     //audio.play();
     window.p = audio;
-    this.update();
     this.handleProgress();
   }
 
@@ -112,6 +103,16 @@ export class AudioPlayer extends React.Component {
     console.log('AudioPlayer.ended');
     //this.refs.audio.pause();
     this.props.endTrack()
+  }
+
+  handlePause = (e) => {
+    console.log('AudioPlayer.pause')
+    this.props.pause()
+  }
+
+  handlePlay = (e) => {
+    console.log('AudioPlayer.play')
+    this.props.play()
   }
 
 
@@ -159,15 +160,17 @@ export class AudioPlayer extends React.Component {
           {this.props.duration}
         </div>
 
-        <audio id="cp_audio"
+        <audio autoPlay="autoplay"
                ref="audio"
-               src={this.props.src ? 'http://localhost' + '/artists/' + this.props.src : null}
+               src={this.props.src ? trackLink(this.props.src) : null}
                onTimeUpdate={this.handleTimeUpdate}
                onProgress={this.handleProgress}
                onDurationChange={this.handleDurationChange}
                onCanPlayThrough={this.handleCanPlayThrough}
                onCanPlay={this.handleCanPlay}
                onEnded={this.handleEnded}
+               onPause={this.handlePause}
+               onPlay={this.handlePlay}
         ></audio>
       </div>
     );

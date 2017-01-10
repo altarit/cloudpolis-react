@@ -10,3 +10,12 @@ export function toMMSS(val) {
 export function randomString() {
   return Math.random().toString(36).substring(7);
 }
+
+//http://localhost
+export function apiLink(link) {
+  return '/api' + link
+}
+
+export function trackLink(src) {
+  return '/artists/' + src
+}

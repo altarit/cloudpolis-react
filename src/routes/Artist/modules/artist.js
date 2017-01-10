@@ -3,6 +3,8 @@ export const GET_ARTIST_SUCCESS = 'GET_ARTIST_SUCCESS';
 export const GET_ARTIST_FAILED = 'GET_ARTIST_FAILED';
 
 import {updatePlaylist} from '../../../modules/player'
+import {apiLink} from '../../../modules/formatUtils'
+
 
 export function getArtist(artistName) {
   return (dispatch) => {
@@ -10,7 +12,7 @@ export function getArtist(artistName) {
       type: GET_ARTIST_REQUEST
     })
 
-    fetch('http://localhost' + '/api/music/artists/' + artistName).then( res => {
+    fetch(apiLink('/music/artists/' + artistName)).then( res => {
       return res.json()
     }).then(artist => {
       dispatch({

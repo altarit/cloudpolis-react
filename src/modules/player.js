@@ -17,8 +17,10 @@ export const STORAGE_DELETE_PLAYLIST = 'STORAGE_DELETE_PLAYLIST'
 export const SET_VOLUME = 'SET_VOLUME'
 export const TOGGLE_MUTE = 'TOGGLE_MUTE'
 export const MOVE_TRACK = 'MOVE_TRACK'
-//export const COPY_TRACK = 'COPY_TRACK'
+export const REMOVE_TRACK = 'REMOVE_TRACK'
 export const SORT_PLAYLIST = 'SORT_PLAYLIST'
+export const SCROLL_LEFT = 'SCROLL_LEFT'
+export const SCROLL_RIGHT = 'SCROLL_RIGHT'
 
 
 export const DEFAULT_PL = 'Default'
@@ -28,6 +30,7 @@ export const SEARCH_PL = '__Search__'
 export const BY_TITLE = 'BY_TITLE'
 export const BY_ARTIST = 'BY_ARTIST'
 export const BY_DURATION = 'BY_DURATION'
+export const BY_PATH = 'BY_PATH'
 export const SHUFFLE = 'SHUFFLE'
 export const REVERSE = 'REVERSE'
 
@@ -164,14 +167,13 @@ export function moveTrack(track, plFrom, posFrom, plTo, posTo) {
   }
 }
 
-/*export function copyTrack(track, plTo, posTo) {
- return {
- type: MOVE_TRACK,
- track,
- plTo,
- posTo
- }
- }*/
+export function removeTrack(plName, pos) {
+  return {
+    type: REMOVE_TRACK,
+    plName,
+    pos
+  }
+}
 
 export function sortByTitle() {
   return {
@@ -191,6 +193,12 @@ export function sortByDuration() {
     by: BY_DURATION
   }
 }
+export function sortByPath() {
+  return {
+    type: SORT_PLAYLIST,
+    by: BY_PATH
+  }
+}
 export function shuffle() {
   return {
     type: SORT_PLAYLIST,
@@ -201,6 +209,18 @@ export function reverse() {
   return {
     type: SORT_PLAYLIST,
     by: REVERSE
+  }
+}
+
+export function scrollLeft() {
+  return {
+    type: SCROLL_LEFT
+  }
+}
+
+export function scrollRight() {
+  return {
+    type: SCROLL_RIGHT
   }
 }
 
@@ -356,6 +376,7 @@ const initialState = {
   },
   pos: 0,
   plTab: DEFAULT_PL,
+  scrolledTabs: 0,
   currentPl: DEFAULT_PL,
   plKeys: [DEFAULT_PL],
   pls: {
@@ -370,7 +391,8 @@ function _cloneTrack(track) {
     title: track.title,
     artist: track.artist,
     src: (track.src || track.href),
-    duration: track.duration
+    duration: track.duration,
+    compilation: track.compilation
   }
 }
 
@@ -410,13 +432,19 @@ function _moveTrack(state, oldTrack, plFromName, posFrom, plToName, posTo) {
   return {pls, pos: nextIndex}
 }
 
-/*function _copyTrack(stateOld, track, plToName, posTo) {
- console.log(`_copyTrack: -> ${plToName}:${posTo}`)
- let pls = {...stateOld.pls}
- let plTo = pls[plToName]
- plTo.splice(posTo, 0, track)
- return {pls}
- }*/
+function _removeTrack(state, plName, pos) {
+  console.log(`_removeTrack: ${plName}:${pos}`)
+  let pls = {...state.pls}
+  let plNext = pls[plName]
+  plNext.splice(pos, 1)
+  if (pos < state.pos) {
+    return {pls, pos: state.pos - 1}
+  } else if (pos == state.pos && plNext.length > 0) {
+    let nextPos = plNext.length == state.pos ? state.pos - 1 : state.pos
+    return {pls, pos: nextPos, track: plNext[nextPos]}
+  }
+  return {pls}
+}
 
 function _sortBy(state, by) {
   let newPls = {...state.pls}
@@ -431,6 +459,9 @@ function _sortBy(state, by) {
       break
     case BY_DURATION:
       newPl.sort((a, b) => a.duration.localeCompare(b.duration))
+      break
+    case BY_PATH:
+      newPl.sort((a, b) => (a.src || a.href).localeCompare(b.src || b.href))
       break
     case SHUFFLE:
       let j, temp
@@ -461,6 +492,14 @@ function _sortBy(state, by) {
   return {pls: newPls, pos: newPos}
 }
 
+function _getNextScrolledTabs(tabs, tabName, scrolledTabs) {
+  let currentTabIndex = tabs.indexOf(tabName)
+  let nextScrolledTabs = scrolledTabs
+  if (nextScrolledTabs > currentTabIndex) nextScrolledTabs = currentTabIndex
+  if (nextScrolledTabs < currentTabIndex - 2) nextScrolledTabs = currentTabIndex - 2
+  return nextScrolledTabs
+}
+
 export default function playerReducer(state = initialState, action) {
   switch (action.type) {
     case PLAYER_PLAY:
@@ -470,7 +509,11 @@ export default function playerReducer(state = initialState, action) {
     case SET_TRACK:
       return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true, pos: action.payload.pos}
     case SELECT_TAB:
-      return {...state, plTab: action.payload};
+      return {
+        ...state,
+        plTab: action.payload,
+        scrolledTabs: _getNextScrolledTabs(state.plKeys, action.payload, state.scrolledTabs)
+      };
     case UPDATE_PLAYLIST:
       return {
         ...state,
@@ -490,7 +533,13 @@ export default function playerReducer(state = initialState, action) {
     case CLOSE_OPEN_PLAYLIST:
       return {...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls)}
     case CLOSE_OTHER_PLAYLISTS:
-      return {...state, plKeys: [state.plTab], pls: {[state.plTab]: state.pls[state.plTab]}, plTab: state.plTab}
+      return {
+        ...state,
+        plKeys: [state.plTab],
+        pls: {[state.plTab]: state.pls[state.plTab]},
+        plTab: state.plTab,
+        scrolledTabs: 0
+      }
     case STORAGE_LOAD_PLAYLISTS:
       return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
     case STORAGE_SAVE_PLAYLISTS:
@@ -505,10 +554,14 @@ export default function playerReducer(state = initialState, action) {
       return {...state, muted: !state.muted}
     case MOVE_TRACK:
       return {...state, ..._moveTrack(state, action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)}
-    /*case COPY_TRACK:
-     return {...state, ..._copyTrack(state, action.track, action.plTo, action.posTo)}*/
+    case REMOVE_TRACK:
+      return {...state, ..._removeTrack(state, action.plName, action.pos)}
     case SORT_PLAYLIST:
       return {...state, ..._sortBy(state, action.by)}
+    case SCROLL_LEFT:
+      return {...state, scrolledTabs: state.scrolledTabs > 0 ? state.scrolledTabs - 1 : state.scrolledTabs}
+    case SCROLL_RIGHT:
+      return {...state, scrolledTabs: state.scrolledTabs + 1}
   }
   return state;
 }
