@@ -4,6 +4,7 @@ import locationReducer from './location';
 import sidebarReducer from '../components/Sidebar/modules/sidebar';
 import playerReducer from '../modules/player';
 import popupReducer from '../modules/popups'
+import homeReducer from '../routes/Home/modules/home'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -11,7 +12,8 @@ export const makeRootReducer = (asyncReducers) => {
     ...asyncReducers,
     sidebar: sidebarReducer,
     player: playerReducer,
-    popups: popupReducer
+    popups: popupReducer,
+    home: homeReducer
   })
 };
 

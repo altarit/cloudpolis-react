@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost'
+
 export function toMMSS(val) {
   if (!val) return '-:--'
   var minutes = Math.floor(val / 60);
@@ -13,9 +15,9 @@ export function randomString() {
 
 //http://localhost
 export function apiLink(link) {
-  return '/api' + link
+  return BASE_URL + '/api' + link
 }
 
 export function trackLink(src) {
-  return '/artists/' + src
+  return BASE_URL + '/artists/' + src
 }

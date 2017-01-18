@@ -1,6 +1,6 @@
 import {connect} from 'react-redux';
 
-import {doNothing, scrollLeft, scrollRight} from '../modules/sidebar';
+import {doNothing} from '../modules/sidebar';
 import Sidebar from '../components/Sidebar';
 import {selectTab,
   createPlaylist,
@@ -12,8 +12,11 @@ import {selectTab,
   sortByTitle,
   sortByArtist,
   sortByDuration,
+  sortByPath,
   shuffle,
-  reverse
+  reverse,
+  scrollLeft,
+  scrollRight
 } from '../../../modules/player'
 
 const mapDispatchToProps = {
@@ -30,13 +33,14 @@ const mapDispatchToProps = {
   sortByTitle,
   sortByArtist,
   sortByDuration,
+  sortByPath,
   shuffle,
   reverse
 };
 
 const mapStateToProps = (state) => ({
   isOpen: !state.sidebar.isOpen,
-  scrolledTabs: state.sidebar.scrolledTabs,
+  scrolledTabs: state.player.scrolledTabs,
   plKeys: state.player.plKeys,
   plTab: state.player.plTab,
   pls: state.player.pls,
