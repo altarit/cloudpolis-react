@@ -14,7 +14,6 @@ const mapStateToProps = (state, props) => ({
   tracks: state.home.tracks.slice(0, 5),
   currentPl: state.player.currentPl,
   track: state.player.track,
-  pos: state.player.pos,
   sidebar: state.sidebar.isOpen
 })
 

@@ -1,31 +1,21 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-import Track from '../../../components/Track'
+import TrackList from '../../../components/TrackList'
 import {SEARCH_PL} from '../../../modules/player'
 
 export class Search extends React.Component {
 
-  componentDidMount() {
-    this.props.getTracksByQuery('');
+  static propTypes = {
+    songs: PropTypes.arrayOf(PropTypes.object),
+    fetching: PropTypes.bool,
+
+    getTracksByQuery: PropTypes.func.isRequired,
+    setCurrentPlaylist: PropTypes.func.isRequired
   }
 
-  getPlaylist = () => {
-    let current = this.props.songs
-    if (current) {
-      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
-      let i = 0
-      return current.map(track => (
-        <Track key={i} {...track}
-               playing={currentSrc && (track.src || track.href) == currentSrc && (this.props.currentPl == SEARCH_PL)}
-               pl={SEARCH_PL}
-               pos={i++}
-               immutable={true}
-        />
-      ))
-    } else {
-      return <div>Empty</div>
-    }
+  componentDidMount() {
+    this.props.getTracksByQuery('');
   }
 
   changeFilter = (e) => {
@@ -54,9 +44,7 @@ export class Search extends React.Component {
             <div>Loading...</div>
           ) : (
             <div>
-              <ul>
-                {this.getPlaylist()}
-              </ul>
+              <TrackList songs={this.props.songs} pl={SEARCH_PL} immutable={true}/>
             </div>
           )}
         </div>

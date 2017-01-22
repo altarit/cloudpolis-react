@@ -1,6 +1,5 @@
 import {connect} from 'react-redux';
 
-import {doNothing} from '../modules/sidebar';
 import Sidebar from '../components/Sidebar';
 import {selectTab,
   createPlaylist,
@@ -20,7 +19,6 @@ import {selectTab,
 } from '../../../modules/player'
 
 const mapDispatchToProps = {
-  doNothing,
   selectTab,
   scrollLeft,
   scrollRight,
@@ -49,7 +47,6 @@ const mapStateToProps = (state) => ({
   popups: state.popups,
   errors: state.player.errors,
   pos: state.player.pos
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

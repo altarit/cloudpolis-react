@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Link} from 'react-router';
 
-import Track from '../../../components/Track'
+import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player'
 
 export class Artist extends React.Component {
+
+  static propTypes = {
+    artistName: PropTypes.string.isRequired,
+    songs: PropTypes.arrayOf(PropTypes.object),
+    library: PropTypes.string,
+    count: PropTypes.number,
+
+    getArtist: PropTypes.func.isRequired,
+    updatePlaylist: PropTypes.func.isRequired
+  }
 
   componentDidMount() {
     this.props.getArtist(this.props.artistName);
@@ -14,26 +24,6 @@ export class Artist extends React.Component {
     this.props.updatePlaylist(null, this.props.songs)
   }
 
-  getPlaylist = () => {
-    let current = this.props.songs
-    if (current) {
-      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
-      let i = 0
-      return current.map(track => (
-        <Track key={i} {...track}
-               updatePlaylist={this.updatePlaylist}
-               playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == DEFAULT_PL)}
-               pl={DEFAULT_PL}
-               pos={i++}
-               immutable={true}
-        />
-      ))
-    } else {
-      return <div>Empty</div>
-    }
-  }
-
-
   render() {
     return (
       <div>
@@ -42,9 +32,7 @@ export class Artist extends React.Component {
           <div>Loading...</div>
         ) : (
           <div>
-            <ul>
-              {this.getPlaylist()}
-            </ul>
+            <TrackList songs={this.props.songs} pl={DEFAULT_PL} immutable={true} updatePlaylist={this.updatePlaylist}/>
           </div>
         )}
       </div>

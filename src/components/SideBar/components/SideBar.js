@@ -3,30 +3,14 @@ import cn from 'classnames'
 
 import './Sidebar.scss'
 import Track from '../../Track'
+import TrackList from '../../TrackList'
 import OpenPlaylistDialog from '../../OpenPlaylistDialog'
 
 
 export class Sidebar extends React.Component {
 
-  getPlaylist = () => {
-    let current = this.props.pls[this.props.plTab]
-    if (current) {
-      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
-      //console.log('currentSrc: ' + currentSrc)
-      //console.log(this.props.track)
-      let i = 0
-      return current.map(track => (
-        <Track key={i}
-          {...track}
-               playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == this.props.plTab)}
-               pl={this.props.plTab}
-               pos={i++}
-               mutable={true}
-        />
-      ))
-    } else {
-      return <div>Empty</div>
-    }
+  static propTypes = {
+
   }
 
   getTabs = () => {
@@ -116,9 +100,7 @@ export class Sidebar extends React.Component {
             </div>
 
             <div className="playmenu__list" onDrop={this.drop} onDragOver={this.dragOver}>
-              <ul className="tracklist_mini">
-                {this.getPlaylist()}
-              </ul>
+              <TrackList songs={this.props.pls[this.props.plTab]} pl={this.props.plTab} immutable={false} className="tracklist_mini"/>
             </div>
 
             <div className="playmenu__status">

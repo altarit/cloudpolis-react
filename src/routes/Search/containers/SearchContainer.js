@@ -6,15 +6,12 @@ import {updatePlaylist, setCurrentPlaylist} from '../../../modules/player'
 
 const mapDispatchToProps = {
   getTracksByQuery,
-  updatePlaylist,
   setCurrentPlaylist
 }
 
 const mapStateToProps = (state, props) => ({
-  ...state.search,
-  currentPl: state.player.currentPl,
-  track: state.player.track,
-  pos: state.player.pos
+  songs: state.search.songs,
+  fetching: state.search.fetching
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

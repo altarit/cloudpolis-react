@@ -46,7 +46,7 @@ export class Track extends React.Component {
   }
 
   drop = (e) => {
-    if (!this.props.mutable) return
+    if (this.props.immutable) return
 
     e.preventDefault()
     e.stopPropagation()
@@ -61,19 +61,19 @@ export class Track extends React.Component {
   }
 
   dragOver = (e) => {
-    if (!this.props.mutable) return
+    if (this.props.immutable) return
     e.preventDefault()
     this.setState({isAbove: true})
   }
 
   dragLeave = (e) => {
-    if (!this.props.mutable) return
+    if (this.props.immutable) return
     e.preventDefault()
     this.setState({isAbove: null})
   }
 
   openMenu = (e) => {
-    this.props.openPopup("trackAdd", `${this.props.pl}:${this.props.pos}:${this.props.mutable}`)
+    this.props.openPopup("trackAdd", `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`)
   }
 
   getFullLink = () => {
@@ -110,11 +110,11 @@ export class Track extends React.Component {
         </div>
 
         <div className="dropdown open">
-          {this.props.trackAdd && this.props.trackAdd.from == `${this.props.pl}:${this.props.pos}:${this.props.mutable}` ?
+          {this.props.trackAdd && this.props.trackAdd.from == `${this.props.pl}:${this.props.pos}:${!this.props.immutable}` ?
             (
               <ul className="dropdown-menu track_dropdown">
                 <li><a className="fa fa-plus"> Add into the end of {this.props.currentPl}</a></li>
-                {this.props.mutable ? (
+                {!this.props.immutable ? (
                   <li><a className="fa fa-plus" onClick={this.removeTrack}> Remove from {this.props.pl}</a></li>
                 ) : null}
                 {this.props.compilation ? (

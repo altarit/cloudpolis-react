@@ -6,16 +6,14 @@ import {updatePlaylist, setCurrentPlaylist} from '../../../modules/player'
 
 const mapDispatchToProps = {
   getArtist,
-  updatePlaylist,
-  setCurrentPlaylist
+  updatePlaylist
 }
 
 const mapStateToProps = (state, props) => ({
-  ...state.artist,
-  artistName: props.params.artistName,
-  currentPl: state.player.currentPl,
-  track: state.player.track,
-  pos: state.player.pos
+  songs: state.artist.songs,
+  library: state.artist.library,
+  count: state.artist.count,
+  artistName: props.params.artistName
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist);

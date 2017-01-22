@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import DuckImage from '../assets/Duck.jpg';
 import './HomeView.scss';
-import Track from '../../../components/Track'
+import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player'
 
 export class HomeView extends React.Component {
+
+  static propTypes = {
+    tracks: PropTypes.arrayOf(PropTypes.object),
+    fetchingTracks: PropTypes.bool,
+    currentPl: PropTypes.string,
+    track: PropTypes.object,
+    sidebar: PropTypes.bool.isRequired,
+
+    getFeaturedTracks: PropTypes.func.isRequired,
+    updatePlaylist: PropTypes.func.isRequired
+  }
 
   componentDidMount() {
     this.props.getFeaturedTracks()
@@ -13,25 +24,6 @@ export class HomeView extends React.Component {
 
   updatePlaylist = () => {
     this.props.updatePlaylist(null, this.props.tracks)
-  }
-
-  getPlaylist = () => {
-    let current = this.props.tracks
-    if (current) {
-      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
-      let i = 0
-      return current.map(track => (
-        <Track key={i} {...track}
-               updatePlaylist={this.updatePlaylist}
-               playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == DEFAULT_PL)}
-               pl={DEFAULT_PL}
-               pos={i++}
-               immutable={true}
-        />
-      ))
-    } else {
-      return <div>Empty</div>
-    }
   }
 
   render() {
@@ -66,9 +58,7 @@ export class HomeView extends React.Component {
           </div>
           <div className="col-md-6">
             <h2>Random tracks</h2>
-            <ul>
-              {this.getPlaylist()}
-            </ul>
+            <TrackList songs={this.props.tracks} pl={DEFAULT_PL} immutable={true} updatePlaylist={this.updatePlaylist}/>
           </div>
         </div>
 
@@ -116,6 +106,5 @@ export class HomeView extends React.Component {
     )
   }
 }
-;
 
-export default HomeView;
+export default HomeView
