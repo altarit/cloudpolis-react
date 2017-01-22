@@ -1,17 +1,9 @@
-import React from 'react';
-var cn = require('classnames');
+import React from 'react'
 
-import './BottomBar.scss';
-import AudioPlayer from './AudioPlayer';
+import './BottomBar.scss'
+import AudioPlayer from '../../AudioPlayer'
 
 export class BottomBar extends React.Component {
-
-  constructor(props) {
-    super(props);
-    console.log('BottomBar.constructor');
-
-  }
-
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-bottom">
@@ -23,30 +15,28 @@ export class BottomBar extends React.Component {
             ) : (
               < button type="button" className="btn player__btn fa fa-pause" onClick={this.props.pause}/>
             )}
-
             <button type="button" className="btn player__btn fa fa-fast-forward" onClick={this.props.nextTrack}/>
           </div>
 
-          <AudioPlayer isPlayed={this.props.isPlayed}
-                       title={this.props.track.title}
-                       artist={this.props.track.artist}
-                       src={this.props.track.href || this.props.track.src}
-                       duration={this.props.track.duration}
+          <AudioPlayer/>
 
-                       volume={this.props.volume}
-                       muted={this.props.muted}
-
-                       endTrack={this.props.endTrack}
-                       play={this.props.play}
-                       pause={this.props.pause}
-          />
           <div className="player__other">
             <button type="button" className="btn player__btn fa fa-bars" onClick={this.props.toggleSidebar}/>
           </div>
         </div>
       </nav>
-    );
+    )
   }
 }
 
-export default BottomBar;
+BottomBar.propTypes = {
+  isPlayed: React.PropTypes.bool.isRequired,
+
+  toggleSidebar: React.PropTypes.func.isRequired,
+  nextTrack: React.PropTypes.func.isRequired,
+  prevTrack: React.PropTypes.func.isRequired,
+  play: React.PropTypes.func.isRequired,
+  pause: React.PropTypes.func.isRequired
+}
+
+export default BottomBar

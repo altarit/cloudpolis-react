@@ -1,25 +1,20 @@
 import {connect} from 'react-redux';
 
-//import {doNothing} from '../modules/bottomBar';
 import BottomBar from '../components/BottomBar';
 
 import {toggleSidebar} from '../../../components/Sidebar/modules/sidebar';
-import {play, pause, nextTrack, prevTrack, endTrack} from '../../../modules/player';
+import {nextTrack, prevTrack, play, pause} from '../../../modules/player';
 
 const mapDispatchToProps = {
   toggleSidebar,
-  play,
-  pause,
   nextTrack,
   prevTrack,
-  endTrack
+  play,
+  pause
 };
 
 const mapStateToProps = (state) => ({
-  track: state.player.track,
-  isPlayed: state.player.isPlayed,
-  volume: state.player.volume,
-  muted: state.player.muted
+  isPlayed: state.player.isPlayed
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar);

@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import Player from '../../components/Player';
+import BottomBar from '../../components/BottomBar';
 import './CoreLayout.scss';
 import '../../styles/core.scss';
 
@@ -12,7 +12,7 @@ export const CoreLayout = ({ children }) => (
       {children}
     </div>
     <Sidebar />
-    <Player />
+    <BottomBar />
   </div>
 );
 

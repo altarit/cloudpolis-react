@@ -135,9 +135,6 @@ export class AudioPlayer extends React.Component {
 
 
   render() {
-    //console.log('render')
-    //console.log(this.changeTime);
-    //console.log('AudioPlayer.render: ' + this.props.isPlayed)
     return (
       <div className="progress player__progress" onClick={this.changeTime}
            draggable="true" onDragStart={this.dragStart}>
@@ -162,7 +159,7 @@ export class AudioPlayer extends React.Component {
 
         <audio autoPlay="autoplay"
                ref="audio"
-               src={this.props.src ? trackLink(this.props.src) : null}
+               src={trackLink(this.props.src)}
                onTimeUpdate={this.handleTimeUpdate}
                onProgress={this.handleProgress}
                onDurationChange={this.handleDurationChange}
@@ -175,6 +172,21 @@ export class AudioPlayer extends React.Component {
       </div>
     );
   }
+}
+
+AudioPlayer.propTypes = {
+  title: React.PropTypes.string,
+  artist: React.PropTypes.string,
+  src: React.PropTypes.string,
+  duration: React.PropTypes.string,
+
+  volume: React.PropTypes.number.isRequired,
+  muted: React.PropTypes.bool.isRequired,
+  isPlayed: React.PropTypes.bool.isRequired,
+
+  play: React.PropTypes.func.isRequired,
+  pause: React.PropTypes.func.isRequired,
+  endTrack: React.PropTypes.func.isRequired
 }
 
 export default AudioPlayer;

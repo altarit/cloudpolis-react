@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost'
+const BASE_URL = __DEV__ ? 'http://localhost' : ''
+//const BASE_URL = ''
 
 export function toMMSS(val) {
   if (!val) return '-:--'
@@ -19,5 +20,6 @@ export function apiLink(link) {
 }
 
 export function trackLink(src) {
+  if (!src) return null
   return BASE_URL + '/artists/' + src
 }
