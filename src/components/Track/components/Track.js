@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 import './Track.scss'
@@ -6,6 +6,19 @@ import './Track.scss'
 import {trackLink} from '../../../modules/formatUtils';
 
 export class Track extends React.Component {
+
+  static propTypes = {
+    title: PropTypes.string.isRequired,
+    artist: PropTypes.string.isRequired,
+    compilation: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    duration: PropTypes.string.isRequired,
+
+    isPlayed: PropTypes.bool.isRequired,
+
+    currentPl: PropTypes.string.isRequired,
+    pl: PropTypes.arrayOf(PropTypes.object)
+  }
 
   constructor(props) {
     super(props)
@@ -116,8 +129,6 @@ export class Track extends React.Component {
             ) : null }
         </div>
       </div>
-
-
     )
   }
 }

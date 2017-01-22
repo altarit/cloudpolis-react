@@ -1,8 +1,24 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 
 import {toMMSS, trackLink} from '../../../modules/formatUtils';
 
 export class AudioPlayer extends React.Component {
+
+  static propTypes = {
+    title: PropTypes.string,
+    artist: PropTypes.string,
+    src: PropTypes.string,
+    duration: PropTypes.string,
+
+    volume: PropTypes.number.isRequired,
+    muted: PropTypes.bool.isRequired,
+    isPlayed: PropTypes.bool.isRequired,
+
+    play: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
+    endTrack: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props);
     console.log('AudioPlayer.constructor');
@@ -172,21 +188,6 @@ export class AudioPlayer extends React.Component {
       </div>
     );
   }
-}
-
-AudioPlayer.propTypes = {
-  title: React.PropTypes.string,
-  artist: React.PropTypes.string,
-  src: React.PropTypes.string,
-  duration: React.PropTypes.string,
-
-  volume: React.PropTypes.number.isRequired,
-  muted: React.PropTypes.bool.isRequired,
-  isPlayed: React.PropTypes.bool.isRequired,
-
-  play: React.PropTypes.func.isRequired,
-  pause: React.PropTypes.func.isRequired,
-  endTrack: React.PropTypes.func.isRequired
 }
 
 export default AudioPlayer;

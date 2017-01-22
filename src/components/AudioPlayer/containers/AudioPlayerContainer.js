@@ -14,6 +14,7 @@ const mapStateProps = (state) => ({
   artist: state.player.track.artist,
   src: state.player.track.href || state.player.track.src,
   duration: state.player.track.duration,
+  compilation: state.player.track.compiltaion,
 
   isPlayed: state.player.isPlayed,
   volume: state.player.volume,

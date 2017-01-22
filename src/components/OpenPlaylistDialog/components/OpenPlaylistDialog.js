@@ -1,16 +1,29 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import './OpenPlaylistDialog.scss'
 
 
 export class OpenPlaylistDialog extends React.Component {
 
+  static propTypes = {
+    safePlaylists: PropTypes.arrayOf(PropTypes.string).isRequired,
+    playlist: PropTypes.object.isRequired,
+    forSave: PropTypes.bool.isRequired,
+
+    loadPlaylistsFromStorage: PropTypes.func.isRequired,
+    savePlaylistsToStorage: PropTypes.func.isRequired,
+    openPlaylistFromStorage: PropTypes.func.isRequired,
+    deletePlaylistFromStorage: PropTypes.func.isRequired
+  }
+
   componentDidMount() {
     this.props.loadPlaylistsFromStorage()
     this.refs.filename.value = this.props.filename || ''
   }
 
-  openOrSavePlaylist = () => {
+  openOrSavePlaylist = (e) => {
+    e.preventDefault()
+
     let filename = this.refs.filename.value
     let playlist = this.props.playlist
     if (this.props.forSave) {
@@ -44,7 +57,7 @@ export class OpenPlaylistDialog extends React.Component {
             </li>
           ))}
         </ul>
-        <form onSubmit={(e) => {e.preventDefault(); this.openOrSavePlaylist()}}>
+        <form onSubmit={this.openOrSavePlaylist}>
           <div className="form-group">
             <label htmlFor="artists-filter">Filename</label>
             <input type="text" className="form-control" ref="filename"/>

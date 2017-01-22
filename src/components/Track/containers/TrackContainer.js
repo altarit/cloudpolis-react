@@ -15,7 +15,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, props) => ({
   isPlayed: state.player.isPlayed,
-  trackAdd: state.popups.trackAdd
+  trackAdd: state.popups.trackAdd,
+  src: props.src || props.href
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Track)

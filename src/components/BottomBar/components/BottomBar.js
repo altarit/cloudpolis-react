@@ -1,9 +1,20 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 import './BottomBar.scss'
 import AudioPlayer from '../../AudioPlayer'
 
 export class BottomBar extends React.Component {
+
+  static propTypes = {
+    isPlayed: PropTypes.bool.isRequired,
+
+    toggleSidebar: PropTypes.func.isRequired,
+    nextTrack: PropTypes.func.isRequired,
+    prevTrack: PropTypes.func.isRequired,
+    play: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired
+  }
+
   render() {
     return (
       <nav className="navbar navbar-inverse navbar-fixed-bottom">
@@ -27,16 +38,6 @@ export class BottomBar extends React.Component {
       </nav>
     )
   }
-}
-
-BottomBar.propTypes = {
-  isPlayed: React.PropTypes.bool.isRequired,
-
-  toggleSidebar: React.PropTypes.func.isRequired,
-  nextTrack: React.PropTypes.func.isRequired,
-  prevTrack: React.PropTypes.func.isRequired,
-  play: React.PropTypes.func.isRequired,
-  pause: React.PropTypes.func.isRequired
 }
 
 export default BottomBar
