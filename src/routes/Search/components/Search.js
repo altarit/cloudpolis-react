@@ -30,7 +30,7 @@ export class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2>Search</h2>
         <form className="form-horizontal form-search" className="form-search">
           <div className="btn-group">

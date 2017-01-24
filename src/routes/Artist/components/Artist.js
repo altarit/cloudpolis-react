@@ -26,7 +26,7 @@ export class Artist extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2>{this.props.artistName}</h2>
         {this.props.fetching ? (
           <div>Loading...</div>

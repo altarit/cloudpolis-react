@@ -37,7 +37,7 @@ export class Artists extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h2>Artists:</h2>
         <div className="btn-group">
           <label>Filter</label>

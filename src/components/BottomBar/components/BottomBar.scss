@@ -1,8 +1,11 @@
 /* Components */
+.navbar-fixed-bottom {
+  background: #B0B0B0;
+}
+
 .player {
   display: flex;
   flex-flow: row;
-  background: rgba(255, 255, 255, 0.7);
 }
 
 .player__buttons {

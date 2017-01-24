@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 
-import DuckImage from '../assets/Duck.jpg';
+import LogoImage from '../assets/logo.png';
 import './HomeView.scss';
 import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player'
@@ -28,7 +28,7 @@ export class HomeView extends React.Component {
 
   render() {
     return (
-      <div className={"container container__content" + (this.props.sidebar ? " container__content_shifted" : "")}>
+      <div className="container">
         <div className="row">
           <div className="col-md-6">
             <h2>Welcome to Cloudpolis!</h2>
@@ -36,9 +36,9 @@ export class HomeView extends React.Component {
             <div className="row">
               <div className="col-sm-7">
                 <img
-                  alt='This is a duck, because Redux!'
-                  className='duck'
-                  src={DuckImage}/>
+                  alt='Cloudpolis Logo!'
+                  className='logo'
+                  src={LogoImage}/>
               </div>
 
               <div className="col-sm-5">

@@ -2,3 +2,19 @@
   padding-top: 4rem;
   padding-bottom: 50px;
 }
+
+@media (min-width: 768px) {
+
+  .content__out {
+    transition: padding-right 0.3s ease-out;
+  }
+
+  .content__out_shifted {
+    padding-right: 360px;
+  }
+
+  /*.content_shifted-out > div {
+    margin-right: 360px;
+    transition: margin-right 0.3s ease-out;
+  }*/
+}
