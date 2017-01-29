@@ -9,7 +9,7 @@ describe('(View) Home', () => {
     expect('please fix')
   })
 
-  /*beforeEach(() => {
+  /* beforeEach(() => {
     _component = render(<HomeView />)
   })
 

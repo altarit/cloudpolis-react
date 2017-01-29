@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react'
 
-import {toMMSS, trackLink} from '../../../modules/formatUtils';
+import { toMMSS, trackLink } from '../../../modules/formatUtils'
 
 export class AudioPlayer extends React.Component {
 
@@ -19,33 +19,31 @@ export class AudioPlayer extends React.Component {
     endTrack: PropTypes.func.isRequired
   }
 
-  constructor(props) {
-    super(props);
-    console.log('AudioPlayer.constructor');
+  constructor (props) {
+    super(props)
+    console.log('AudioPlayer.constructor')
 
     this.state = {
       time: 0,
       progress: 0,
       duration: 0
-    };
+    }
   }
 
-  componentDidMount() {
-    console.log('AudioPlayer.componentDidMount');
-
+  componentDidMount () {
+    console.log('AudioPlayer.componentDidMount')
   }
 
-  componentWillReceiveProps(nextProps) {
-    //console.log('AudioPlayer.componentWillReceiveProps')
+  componentWillReceiveProps (nextProps) {
+    // console.log('AudioPlayer.componentWillReceiveProps')
     let audio = this.refs.audio
     if (!audio) return
-
 
     audio.volume = nextProps.volume
 
     if (this.props.src != nextProps.src) {
       console.log('changed src')
-      //console.log('reset')
+      // console.log('reset')
       this.setState({
         ...this.state,
         time: 0,
@@ -70,28 +68,28 @@ export class AudioPlayer extends React.Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate () {
   }
 
   handleTimeUpdate = () => {
     this.setState({
       ...this.state,
       time: this.refs.audio.currentTime
-    });
+    })
   }
 
   handleProgress = () => {
-    let audio = this.refs.audio;
-    let len = audio.buffered.length;
-    //console.log('PROGRESS: ' + audio.buffered.length);
+    let audio = this.refs.audio
+    let len = audio.buffered.length
+    // console.log('PROGRESS: ' + audio.buffered.length);
     if (audio.buffered.length) {
-      //let start = audio.buffered.start(len - 1) / this.props.duration;
-      let end = audio.buffered.end(len - 1) / audio.duration;
-      //console.log('===' + end * 100);
+      // let start = audio.buffered.start(len - 1) / this.props.duration;
+      let end = audio.buffered.end(len - 1) / audio.duration
+      // console.log('===' + end * 100);
       this.setState({
         ...this.state,
         progress: end * 100
-      });
+      })
     }
   }
 
@@ -99,25 +97,25 @@ export class AudioPlayer extends React.Component {
     this.setState({
       ...this.state,
       duration: this.refs.audio.duration
-    });
+    })
   }
 
   handleCanPlayThrough = () => {
-    //console.log('AudioPlayer.canPlayThrough');
+    // console.log('AudioPlayer.canPlayThrough');
 
-    let audio = this.refs.audio;
-    //audio.play();
-    window.p = audio;
-    this.handleProgress();
+    let audio = this.refs.audio
+    // audio.play();
+    window.p = audio
+    this.handleProgress()
   }
 
   handleCanPlay = () => {
-    //console.log('AudioPlayer.canPlay');
+    // console.log('AudioPlayer.canPlay');
   }
 
   handleEnded = () => {
-    console.log('AudioPlayer.ended');
-    //this.refs.audio.pause();
+    console.log('AudioPlayer.ended')
+    // this.refs.audio.pause();
     this.props.endTrack()
   }
 
@@ -131,63 +129,59 @@ export class AudioPlayer extends React.Component {
     this.props.play()
   }
 
-
   changeTime = (e) => {
-    let progress = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.getBoundingClientRect().width;
-    //console.log(progress * this.props.duration);
+    let progress = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.getBoundingClientRect().width
+    // console.log(progress * this.props.duration);
     this.refs.audio.currentTime = progress * (this.refs.audio.duration)
 
     this.setState({
       ...this.state,
       time: progress * this.props.duration
-    });
+    })
 
-    console.log((this.state.time/this.state.duration*100)+'%')
+    console.log((this.state.time / this.state.duration * 100) + '%')
   }
 
   dragStart = (e) => {
     e.dataTransfer.setData('track', JSON.stringify(this.props))
   }
 
-
-  render() {
+  render () {
     return (
-      <div className="progress player__progress" onClick={this.changeTime}
-           draggable="true" onDragStart={this.dragStart}>
-        <div className="progress-bar progress-bar-info player__progress_played"
-             style={{width: (this.state.time/this.state.duration*100)+'%'}}>
-        </div>
-        <div className="progress-bar progress-bar-striped player__progress_loaded"
-             style={{width: this.state.progress+'%'}}>
-        </div>
-        <div className="player__progress_title">
+      <div className='progress player__progress' onClick={this.changeTime}
+        draggable='true' onDragStart={this.dragStart}>
+        <div className='progress-bar progress-bar-info player__progress_played'
+          style={{ width: (this.state.time / this.state.duration * 100) + '%' }} />
+        <div className='progress-bar progress-bar-striped player__progress_loaded'
+          style={{ width: this.state.progress + '%' }} />
+        <div className='player__progress_title'>
           <b>{this.props.title}</b>
         </div>
-        <div className="player__progress_info">
+        <div className='player__progress_info'>
           {this.props.artist}
         </div>
-        <div className="player__progress_time">
+        <div className='player__progress_time'>
           {toMMSS(this.state.time)}
         </div>
-        <div className="player__progress_length">
+        <div className='player__progress_length'>
           {this.props.duration}
         </div>
 
-        <audio autoPlay="autoplay"
-               ref="audio"
-               src={trackLink(this.props.src)}
-               onTimeUpdate={this.handleTimeUpdate}
-               onProgress={this.handleProgress}
-               onDurationChange={this.handleDurationChange}
-               onCanPlayThrough={this.handleCanPlayThrough}
-               onCanPlay={this.handleCanPlay}
-               onEnded={this.handleEnded}
-               onPause={this.handlePause}
-               onPlay={this.handlePlay}
-        ></audio>
+        <audio autoPlay='autoplay'
+          ref='audio'
+          src={trackLink(this.props.src)}
+          onTimeUpdate={this.handleTimeUpdate}
+          onProgress={this.handleProgress}
+          onDurationChange={this.handleDurationChange}
+          onCanPlayThrough={this.handleCanPlayThrough}
+          onCanPlay={this.handleCanPlay}
+          onEnded={this.handleEnded}
+          onPause={this.handlePause}
+          onPlay={this.handlePlay}
+         />
       </div>
-    );
+    )
   }
 }
 
-export default AudioPlayer;
+export default AudioPlayer

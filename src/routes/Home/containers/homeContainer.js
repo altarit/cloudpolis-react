@@ -1,8 +1,8 @@
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 import Home from '../components/HomeView'
-import {getFeaturedTracks} from '../modules/home'
-import {updatePlaylist} from '../../../modules/player'
+import { getFeaturedTracks } from '../modules/home'
+import { updatePlaylist } from '../../../modules/player'
 
 const mapDispatchToProps = {
   getFeaturedTracks,
@@ -17,4 +17,4 @@ const mapStateToProps = (state, props) => ({
   sidebar: state.sidebar.isOpen
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

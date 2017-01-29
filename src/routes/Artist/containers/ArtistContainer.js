@@ -1,8 +1,8 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux'
 
-import {getArtist} from '../modules/artist'
+import { getArtist } from '../modules/artist'
 import Artist from '../components/Artist'
-import {updatePlaylist, setCurrentPlaylist} from '../../../modules/player'
+import { updatePlaylist, setCurrentPlaylist } from '../../../modules/player'
 
 const mapDispatchToProps = {
   getArtist,
@@ -16,4 +16,4 @@ const mapStateToProps = (state, props) => ({
   artistName: props.params.artistName
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Artist);
+export default connect(mapStateToProps, mapDispatchToProps)(Artist)

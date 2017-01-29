@@ -1,9 +1,9 @@
-import React, {PropTypes} from 'react'
-import {Link} from 'react-router'
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 import './Track.scss'
 
-import {trackLink} from '../../../modules/formatUtils';
+import { trackLink } from '../../../modules/formatUtils'
 
 export class Track extends React.Component {
 
@@ -20,7 +20,7 @@ export class Track extends React.Component {
     pl: PropTypes.arrayOf(PropTypes.object)
   }
 
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       isAbove: null
@@ -39,7 +39,7 @@ export class Track extends React.Component {
   }
 
   dragStart = (e) => {
-    //console.log('start ' + this.props.pos)
+    // console.log('start ' + this.props.pos)
     e.dataTransfer.setData('pos', this.props.pos)
     e.dataTransfer.setData('pl', this.props.pl)
     e.dataTransfer.setData('track', JSON.stringify(this.props))
@@ -50,7 +50,7 @@ export class Track extends React.Component {
 
     e.preventDefault()
     e.stopPropagation()
-    this.setState({isAbove: null})
+    this.setState({ isAbove: null })
     let track = JSON.parse(e.dataTransfer.getData('track'))
     if (track.immutable) {
       console.log('immutable')
@@ -63,17 +63,17 @@ export class Track extends React.Component {
   dragOver = (e) => {
     if (this.props.immutable) return
     e.preventDefault()
-    this.setState({isAbove: true})
+    this.setState({ isAbove: true })
   }
 
   dragLeave = (e) => {
     if (this.props.immutable) return
     e.preventDefault()
-    this.setState({isAbove: null})
+    this.setState({ isAbove: null })
   }
 
   openMenu = (e) => {
-    this.props.openPopup("trackAdd", `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`)
+    this.props.openPopup('trackAdd', `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`)
   }
 
   getFullLink = () => {
@@ -84,46 +84,46 @@ export class Track extends React.Component {
     this.props.removeTrack(this.props.pl, this.props.pos)
   }
 
-  render() {
+  render () {
     return (
       <div>
-        <div className={"track" + (this.props.playing && " playing" || "")}
-             style={{
-            borderTopStyle: this.state.isAbove ? 'solid' : null,
+        <div className={'track' + (this.props.playing && ' playing' || '')}
+          style={{
+            borderTopStyle: this.state.isAbove ? 'solid' : null
           }}
-             draggable="true" onDragStart={this.dragStart}
-             onDrop={this.drop} onDragOver={this.dragOver} onDragLeave={this.dragLeave}>
-          <div className="track__cover" onClick={this.handlePlayButton}>
-            <span className={this.props.playing && this.props.isPlayed ? "fa fa-pause" : "fa fa-play"}></span>
+          draggable='true' onDragStart={this.dragStart}
+          onDrop={this.drop} onDragOver={this.dragOver} onDragLeave={this.dragLeave}>
+          <div className='track__cover' onClick={this.handlePlayButton}>
+            <span className={this.props.playing && this.props.isPlayed ? 'fa fa-pause' : 'fa fa-play'} />
           </div>
-          <div className="track__info" onDoubleClick={this.handlePlayButton}>
-            <div className="track__title">{this.props.title}</div>
-            <div className="track__artist">{this.props.artist} ({this.props.pl}:{this.props.pos})</div>
+          <div className='track__info' onDoubleClick={this.handlePlayButton}>
+            <div className='track__title'>{this.props.title}</div>
+            <div className='track__artist'>{this.props.artist} ({this.props.pl}:{this.props.pos})</div>
           </div>
 
-          <div className="track__control">
-            <button type="button" className="btn fa fa-plus" data-click="nothing" onClick={this.openMenu}/>
+          <div className='track__control'>
+            <button type='button' className='btn fa fa-plus' data-click='nothing' onClick={this.openMenu} />
           </div>
-          <div className="track__end">
+          <div className='track__end'>
             {this.props.duration}
           </div>
         </div>
 
-        <div className="dropdown open">
-          {this.props.trackAdd && this.props.trackAdd.from == `${this.props.pl}:${this.props.pos}:${!this.props.immutable}` ?
-            (
-              <ul className="dropdown-menu track_dropdown">
-                <li><a className="fa fa-plus"> Add into the end of {this.props.currentPl}</a></li>
+        <div className='dropdown open'>
+          {this.props.trackAdd && this.props.trackAdd.from == `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`
+            ? (
+              <ul className='dropdown-menu track_dropdown'>
+                <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>
                 {!this.props.immutable ? (
-                  <li><a className="fa fa-plus" onClick={this.removeTrack}> Remove from {this.props.pl}</a></li>
+                  <li><a className='fa fa-plus' onClick={this.removeTrack}> Remove from {this.props.pl}</a></li>
                 ) : null}
                 {this.props.compilation ? (
-                  <li><Link className="fa fa-plus"
-                            to={`/music/artists/${this.props.compilation}`}> Go to {this.props.compilation}</Link></li>
+                  <li><Link className='fa fa-plus'
+                    to={`/music/artists/${this.props.compilation}`}> Go to {this.props.compilation}</Link></li>
                 ) : null}
 
-                <li><a className="fa fa-plus" href={this.getFullLink()} download> Download</a></li>
-                <li><a className="fa fa-plus" href={this.getFullLink()} target="_blank"> Open
+                <li><a className='fa fa-plus' href={this.getFullLink()} download> Download</a></li>
+                <li><a className='fa fa-plus' href={this.getFullLink()} target='_blank'> Open
                   link in a new tab</a></li>
               </ul>
             ) : null }

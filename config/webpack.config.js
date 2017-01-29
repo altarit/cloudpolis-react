@@ -1,13 +1,13 @@
-const webpack = require('webpack');
-const debug = require('debug')('app:config:webpack');
-const cssnano = require('cssnano');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const project = require('./project.config');
+const webpack = require('webpack')
+const debug = require('debug')('app:config:webpack')
+const cssnano = require('cssnano')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const project = require('./project.config')
 const argv = require('yargs').argv
 
-const __DEV__ = project.globals.__DEV__;
-const __PROD__ = project.globals.__PROD__;
-const __TEST__ = project.globals.__TEST__;
+const __DEV__ = project.globals.__DEV__
+const __PROD__ = project.globals.__PROD__
+const __TEST__ = project.globals.__TEST__
 
 const webpackConfig = {
   name: 'client',
@@ -20,36 +20,36 @@ const webpackConfig = {
   module: {
     loaders: []
   }
-};
+}
 
-const APP_ENTRY = project.paths.client('main.js');
+const APP_ENTRY = project.paths.client('main.js')
 
 webpackConfig.entry = {
   app : __DEV__
     ? [APP_ENTRY].concat(`webpack-hot-middleware/client?path=${project.compiler_public_path}__webpack_hmr`)
     : [APP_ENTRY],
   vendor: project.compiler_vendors
-};
+}
 
 webpackConfig.output = {
   filename: `[name].[${project.compiler_hash_type}].js`,
   path: project.paths.dist(),
   publicPath: project.compiler_public_path
-};
+}
 
 webpackConfig.plugins = [
   new webpack.DefinePlugin(project.globals),
   new HtmlWebpackPlugin({
     template: project.paths.client('index.html'),
     hash: false,
-    //favicon: project.paths.public('favicon.ico'),
+    // favicon: project.paths.public('favicon.ico'),
     filename: 'index.html',
     inject: 'body',
     minify: {
       collapseWhitespace: true
     }
   })
-];
+]
 
 // Ensure that the compiler exits on errors during testing so that
 // they do not get skipped and misreported.
@@ -67,12 +67,11 @@ if (__TEST__ && !argv.watch) {
   })
 }
 
-
 if (__DEV__) {
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
-  );
+  )
 } else if (__PROD__) {
   debug('Enabling plugins for production (OccurenceOrder, Dedupe & UglifyJS).')
   webpackConfig.plugins.push(
@@ -85,10 +84,8 @@ if (__DEV__) {
         warnings  : false
       }
     })
-  );
+  )
 }
-
-
 
 // Don't split bundles during testing, since we only want import one bundle
 if (!__TEST__) {
@@ -96,9 +93,8 @@ if (!__TEST__) {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor']
     })
-  );
+  )
 }
-
 
 // ------------------------------------
 // Loaders
@@ -112,8 +108,7 @@ webpackConfig.module.loaders.push({
 }, {
   test: /\.json$/,
   loader: 'json'
-});
-
+})
 
 // ------------------------------------
 // Style Loaders
@@ -131,7 +126,7 @@ webpackConfig.module.loaders.push({
     'postcss',
     'sass?sourceMap'
   ]
-});
+})
 webpackConfig.module.loaders.push({
   test    : /\.css$/,
   exclude : null,
@@ -140,11 +135,11 @@ webpackConfig.module.loaders.push({
     BASE_CSS_LOADER,
     'postcss'
   ]
-});
+})
 
 webpackConfig.sassLoader = {
   includePaths : project.paths.client('styles')
-};
+}
 
 webpackConfig.postcss = [
   cssnano({
@@ -162,9 +157,10 @@ webpackConfig.postcss = [
     safe          : true,
     sourcemap     : true
   })
-];
+]
 
 // File loaders
+/* eslint-disable */
 webpackConfig.module.loaders.push(
   { test: /\.woff(\?.*)?$/,  loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff' },
   { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
@@ -174,8 +170,6 @@ webpackConfig.module.loaders.push(
   { test: /\.svg(\?.*)?$/,   loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml' },
   { test: /\.(png|jpg)$/,    loader: 'url?limit=8192' }
 )
+/* eslint-enable */
 
-
-
-
-module.exports = webpackConfig;
+module.exports = webpackConfig

@@ -1,8 +1,8 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 import TrackList from '../../../components/TrackList'
-import {SEARCH_PL} from '../../../modules/player'
+import { SEARCH_PL } from '../../../modules/player'
 
 export class Search extends React.Component {
 
@@ -14,8 +14,8 @@ export class Search extends React.Component {
     setCurrentPlaylist: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    this.props.getTracksByQuery('');
+  componentDidMount () {
+    this.props.getTracksByQuery('')
   }
 
   changeFilter = (e) => {
@@ -28,15 +28,15 @@ export class Search extends React.Component {
     this.refs.searchQuery.focus()
   }
 
-  render() {
+  render () {
     return (
-      <div className="container">
+      <div className='container'>
         <h2>Search</h2>
-        <form className="form-horizontal form-search" className="form-search">
-          <div className="btn-group">
+        <form className='form-horizontal form-search' className='form-search'>
+          <div className='btn-group'>
             <label>Query</label>
-            <input type="search" className="form-control" onChange={this.changeFilter} ref="searchQuery"/>
-            <span id="searchclear" className="fa fa-close" onClick={this.clearFilter}></span>
+            <input type='search' className='form-control' onChange={this.changeFilter} ref='searchQuery' />
+            <span id='searchclear' className='fa fa-close' onClick={this.clearFilter} />
           </div>
         </form>
         <div>
@@ -44,7 +44,7 @@ export class Search extends React.Component {
             <div>Loading...</div>
           ) : (
             <div>
-              <TrackList songs={this.props.songs} pl={SEARCH_PL} immutable={true}/>
+              <TrackList songs={this.props.songs} pl={SEARCH_PL} immutable />
             </div>
           )}
         </div>
@@ -53,4 +53,4 @@ export class Search extends React.Component {
   }
 }
 
-export default Search;
+export default Search

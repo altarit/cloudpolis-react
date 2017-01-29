@@ -1,9 +1,9 @@
 // We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout/CoreLayout';
-import Home from './Home';
-import CounterRoute from './Counter';
-import ThirdRoute from './Third';
-import FourthRoute from './Fourth';
+import CoreLayout from '../layouts/CoreLayout/CoreLayout'
+import Home from './Home'
+import CounterRoute from './Counter'
+import ThirdRoute from './Third'
+import FourthRoute from './Fourth'
 import Artists from './Artists'
 import Artist from './Artist'
 import Search from './Search'
@@ -23,7 +23,7 @@ export const createRoutes = (store) => ({
     Artist(store),
     Search(store)
   ]
-});
+})
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
  using getChildRoutes with the following signature:
@@ -43,4 +43,4 @@ export const createRoutes = (store) => ({
  when the route exists and matches.
  */
 
-export default createRoutes;
+export default createRoutes

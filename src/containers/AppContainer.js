@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { browserHistory, Router } from 'react-router';
-import { Provider } from 'react-redux';
+import React, { Component, PropTypes } from 'react'
+import { browserHistory, Router } from 'react-router'
+import { Provider } from 'react-redux'
 
-import {closeAllPopups, openPopup} from '../modules/popups'
+import { closeAllPopups, openPopup } from '../modules/popups'
 
 class AppContainer extends Component {
   static propTypes = {
@@ -10,8 +10,8 @@ class AppContainer extends Component {
     store: PropTypes.object.isRequired
   };
 
-  shouldComponentUpdate() {
-    return false;
+  shouldComponentUpdate () {
+    return false
   }
 
   handleClick = (e) => {
@@ -37,17 +37,17 @@ class AppContainer extends Component {
     this.props.store.dispatch(closeAllPopups())
   }
 
-  render() {
-    const { routes, store } = this.props;
+  render () {
+    const { routes, store } = this.props
 
     return (
       <Provider store={store}>
         <div style={{ height: '100%' }} onClick={this.handleClick}>
-          <Router history={browserHistory} children={routes}/>
+          <Router history={browserHistory} children={routes} />
         </div>
       </Provider>
-    );
+    )
   }
 }
 
-export default AppContainer;
+export default AppContainer

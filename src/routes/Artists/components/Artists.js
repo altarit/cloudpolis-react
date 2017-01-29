@@ -1,15 +1,15 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React from 'react'
+import { Link } from 'react-router'
 
 export class Artists extends React.Component {
 
-  componentDidMount() {
-    this.props.getArtists();
+  componentDidMount () {
+    this.props.getArtists()
     this.props.changeArtistsFilter('')
   }
 
   getArtists = () => {
-    let result = [];
+    let result = []
     let rx = new RegExp(this.props.artistsMask, 'i')
 
     this.props.artists.forEach(artist => {
@@ -35,14 +35,14 @@ export class Artists extends React.Component {
     this.refs.artistsFilter.focus()
   }
 
-  render() {
+  render () {
     return (
-      <div className="container">
+      <div className='container'>
         <h2>Artists:</h2>
-        <div className="btn-group">
+        <div className='btn-group'>
           <label>Filter</label>
-          <input type="search" className="form-control" onChange={this.changeFilter} ref="artistsFilter" />
-          <span id="searchclear" className="fa fa-close" onClick={this.clearFilter}></span>
+          <input type='search' className='form-control' onChange={this.changeFilter} ref='artistsFilter' />
+          <span id='searchclear' className='fa fa-close' onClick={this.clearFilter} />
         </div>
         {this.props.fetching ? (
           <div>Loading...</div>
@@ -58,4 +58,4 @@ export class Artists extends React.Component {
   }
 }
 
-export default Artists;
+export default Artists

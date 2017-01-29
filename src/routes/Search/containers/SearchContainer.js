@@ -1,8 +1,8 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux'
 
-import {getTracksByQuery} from '../modules/search'
+import { getTracksByQuery } from '../modules/search'
 import Search from '../components/Search'
-import {updatePlaylist, setCurrentPlaylist} from '../../../modules/player'
+import { updatePlaylist, setCurrentPlaylist } from '../../../modules/player'
 
 const mapDispatchToProps = {
   getTracksByQuery,
@@ -14,4 +14,4 @@ const mapStateToProps = (state, props) => ({
   fetching: state.search.fetching
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

@@ -1,8 +1,8 @@
-const path = require('path');
-const debug = require('debug')('app:config:project');
+const path = require('path')
+const debug = require('debug')('app:config:project')
 const argv = require('yargs').argv
 
-debug('Creating default configuration');
+debug('Creating default configuration')
 
 const config = {
   env: process.env.NODE_ENV || 'development',
@@ -43,7 +43,7 @@ const config = {
     { type : 'text-summary' },
     { type : 'lcov', dir : 'coverage' }
   ]
-};
+}
 
 // N.B.: globals added here must _also_ be added to .eslintrc
 config.globals = {
@@ -55,12 +55,11 @@ config.globals = {
   '__PROD__': config.env == 'production',
   '__TEST__': config.env == 'test',
   '__COVERAGE__' : !argv.watch && config.env === 'test'
-};
+}
 
-
-function base() {
-  const args = [config.path_base].concat([].slice.call(arguments));
-  return path.resolve.apply(path, args);
+function base () {
+  const args = [config.path_base].concat([].slice.call(arguments))
+  return path.resolve.apply(path, args)
 }
 
 config.paths = {
@@ -68,6 +67,6 @@ config.paths = {
   client: base.bind(null, config.dir_client),
   public: base.bind(null, config.dir_public),
   dist: base.bind(null, config.dir_dist)
-};
+}
 
-module.exports = config;
+module.exports = config

@@ -1,8 +1,8 @@
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 
 import TrackList from '../../../components/TrackList'
-import {DEFAULT_PL} from '../../../modules/player'
+import { DEFAULT_PL } from '../../../modules/player'
 
 export class Artist extends React.Component {
 
@@ -16,23 +16,23 @@ export class Artist extends React.Component {
     updatePlaylist: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    this.props.getArtist(this.props.artistName);
+  componentDidMount () {
+    this.props.getArtist(this.props.artistName)
   }
 
   updatePlaylist = () => {
     this.props.updatePlaylist(null, this.props.songs)
   }
 
-  render() {
+  render () {
     return (
-      <div className="container">
+      <div className='container'>
         <h2>{this.props.artistName}</h2>
         {this.props.fetching ? (
           <div>Loading...</div>
         ) : (
           <div>
-            <TrackList songs={this.props.songs} pl={DEFAULT_PL} immutable={true} updatePlaylist={this.updatePlaylist}/>
+            <TrackList songs={this.props.songs} pl={DEFAULT_PL} immutable updatePlaylist={this.updatePlaylist} />
           </div>
         )}
       </div>
@@ -40,4 +40,4 @@ export class Artist extends React.Component {
   }
 }
 
-export default Artist;
+export default Artist

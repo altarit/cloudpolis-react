@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
 import Track from '../../Track'
-import {SEARCH_PL} from '../../../modules/player'
+import { SEARCH_PL } from '../../../modules/player'
 
 export class TrackList extends React.Component {
 
@@ -12,12 +12,12 @@ export class TrackList extends React.Component {
       let i = 0
       return current.map(track => (
         <Track key={i} {...track}
-               playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == this.props.pl)}
-               pl={this.props.pl}
-               pos={i++}
-               immutable={this.props.immutable}
-               mutable={this.props.mutable}
-               updatePlaylist={this.props.updatePlaylist}
+          playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == this.props.pl)}
+          pl={this.props.pl}
+          pos={i++}
+          immutable={this.props.immutable}
+          mutable={this.props.mutable}
+          updatePlaylist={this.props.updatePlaylist}
         />
       ))
     } else {
@@ -25,7 +25,7 @@ export class TrackList extends React.Component {
     }
   }
 
-  render() {
+  render () {
     return <ul className={this.props.className}>
       {this.getPlaylist()}
     </ul>

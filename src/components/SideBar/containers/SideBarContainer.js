@@ -1,7 +1,7 @@
-import {connect} from 'react-redux';
+import { connect } from 'react-redux'
 
-import Sidebar from '../components/Sidebar';
-import {selectTab,
+import Sidebar from '../components/Sidebar'
+import { selectTab,
   createPlaylist,
   closeOpenPlaylist,
   closeOtherPlaylists,
@@ -34,7 +34,7 @@ const mapDispatchToProps = {
   sortByPath,
   shuffle,
   reverse
-};
+}
 
 const mapStateToProps = (state) => ({
   isOpen: !state.sidebar.isOpen,
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => ({
   popups: state.popups,
   errors: state.player.errors,
   pos: state.player.pos
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)
 
