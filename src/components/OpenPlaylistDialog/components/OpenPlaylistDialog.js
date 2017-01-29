@@ -8,6 +8,7 @@ export class OpenPlaylistDialog extends React.Component {
     safePlaylists: PropTypes.arrayOf(PropTypes.string).isRequired,
     playlist: PropTypes.object.isRequired,
     forSave: PropTypes.bool.isRequired,
+    filename: PropTypes.string,
 
     loadPlaylistsFromStorage: PropTypes.func.isRequired,
     savePlaylistsToStorage: PropTypes.func.isRequired,

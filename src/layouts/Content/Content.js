@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 import Header from '../../components/Header'
 
-export class Content extends React.Component {
-
-  render () {
-    return <div className={'content__out' + (this.props.sidebar ? ' content__out_shifted' : '')}>
-      <Header />
-      <div className='core-layout__viewport'>
-        {this.props.children}
-      </div>
+export const Content = (props) => (
+  <div className={'content__out' + (props.sidebar ? ' content__out_shifted' : '')}>
+    <Header />
+    <div className='core-layout__viewport'>
+      {props.children}
     </div>
-  }
+  </div>
+)
+
+Content.propTypes = {
+  sidebar: PropTypes.bool.isRequired,
+  children: PropTypes.object.isRequired
 }
 
 export default Content

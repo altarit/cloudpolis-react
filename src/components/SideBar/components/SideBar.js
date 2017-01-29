@@ -1,21 +1,43 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import cn from 'classnames'
 
 import './Sidebar.scss'
-import Track from '../../Track'
 import TrackList from '../../TrackList'
 import OpenPlaylistDialog from '../../OpenPlaylistDialog'
 
 export class Sidebar extends React.Component {
 
   static propTypes = {
+    isOpen: PropTypes.bool,
+    popups: PropTypes.object.isRequired,
+    plKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+    pls: PropTypes.object.isRequired,
+    plTab: PropTypes.string.isRequired,
+    currentPl: PropTypes.string.isRequired,
+    scrolledTabs: PropTypes.number.isRequired,
+    errors: PropTypes.object.isRequired,
 
+    scrollLeft: PropTypes.func.isRequired,
+    scrollRight: PropTypes.func.isRequired,
+    selectTab: PropTypes.func.isRequired,
+    setVolume: PropTypes.func.isRequired,
+    moveTrack: PropTypes.func.isRequired,
+    mute: PropTypes.func.isRequired,
+    sortByTitle: PropTypes.func.isRequired,
+    sortByArtist: PropTypes.func.isRequired,
+    sortByDuration: PropTypes.func.isRequired,
+    sortByPath: PropTypes.func.isRequired,
+    shuffle: PropTypes.func.isRequired,
+    reverse: PropTypes.func.isRequired,
+    closeOpenPlaylist: PropTypes.func.isRequired,
+    closeOtherPlaylists: PropTypes.func.isRequired,
+    createPlaylist: PropTypes.func.isRequired
   }
 
   getTabs = () => {
     return this.props.plKeys.map(plName => (
       <li key={plName}
-        className={this.props.plTab == plName ? 'active' : ''}
+        className={this.props.plTab === plName ? 'active' : ''}
         onClick={e => { this.props.selectTab(plName) }}
       ><a draggable='true'>{plName}</a></li>
     ))
@@ -40,10 +62,13 @@ export class Sidebar extends React.Component {
   drop = (e) => {
     e.preventDefault()
     let track = JSON.parse(e.dataTransfer.getData('track'))
+    let playlistLength = this.props.pls[this.props.plTab].length
     if (track.immutable) {
-      this.props.moveTrack(track, null, null, this.props.plTab, this.props.pls[this.props.plTab].length)
+      this.props.moveTrack(track, null, null, this.props.plTab, playlistLength)
     } else {
-      this.props.moveTrack(track, e.dataTransfer.getData('pl'), e.dataTransfer.getData('pos'), this.props.plTab, this.props.pls[this.props.plTab].length)
+      let transferPlName = e.dataTransfer.getData('pl')
+      let transferTrackPos = e.dataTransfer.getData('pos')
+      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.plTab, playlistLength)
     }
   }
 
@@ -51,11 +76,17 @@ export class Sidebar extends React.Component {
     e.preventDefault()
   }
 
+  createPlaylist = (e) => {
+    e.preventDefault()
+    this.props.createPlaylist(this.refs.menuPlCreationInput.value)
+  }
+
   render () {
     let classes = cn({
       'sidebar': true,
       'sidebar_open': this.props.isOpen
     })
+    let songs = this.props.pls[this.props.plTab]
 
     return (
       <div className={classes}>
@@ -99,7 +130,7 @@ export class Sidebar extends React.Component {
             </div>
 
             <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-              <TrackList songs={this.props.pls[this.props.plTab]} pl={this.props.plTab} immutable={false} className='tracklist_mini' />
+              <TrackList songs={songs} pl={this.props.plTab} immutable={false} className='tracklist_mini' />
             </div>
 
             <div className='playmenu__status'>
@@ -133,7 +164,10 @@ export class Sidebar extends React.Component {
 
               {this.props.popups.bottomRemove ? (
                 <ul className='dropdown-menu dropdown_fixed'
-                  style={{ bottom: this.props.popups.bottomRemove.ry + 20, left: this.props.popups.bottomRemove.x - 175 }}>
+                  style={{
+                    bottom: this.props.popups.bottomRemove.ry + 20,
+                    left: this.props.popups.bottomRemove.x - 175
+                  }}>
                   <li><a className='fa fa-minus'> Remove current track from playlist</a></li>
                   <li><a className='fa fa-minus'> Remove all in "{this.props.plTab}"</a></li>
                   <li><a className='fa fa-minus'> Remove selected tracks</a></li>
@@ -171,7 +205,7 @@ export class Sidebar extends React.Component {
               {this.props.popups.playlistCreation ? (
                 <div className='dropdown-menu' data-click='none'>
                   <form
-                    onSubmit={(e) => { e.preventDefault(); this.props.createPlaylist(this.refs.menuPlCreationInput.value) }}>
+                    onSubmit={this.createPlaylist}>
                     <div className='form-group'>
                       <label htmlFor='artists-filter'>Playlist name</label>
                       <input type='text' className='form-control' ref='menuPlCreationInput' />

@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 
 import TrackList from '../../../components/TrackList'
 import { DEFAULT_PL } from '../../../modules/player'
@@ -11,6 +10,7 @@ export class Artist extends React.Component {
     songs: PropTypes.arrayOf(PropTypes.object),
     library: PropTypes.string,
     count: PropTypes.number,
+    fetching: PropTypes.bool,
 
     getArtist: PropTypes.func.isRequired,
     updatePlaylist: PropTypes.func.isRequired

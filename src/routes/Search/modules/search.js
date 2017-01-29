@@ -2,7 +2,6 @@ export const GET_TRACKS_BY_QUERY_REQUEST = 'GET_TRACKS_BY_QUERY_REQUEST'
 export const GET_TRACKS_BY_QUERY_SUCCESS = 'GET_TRACKS_BY_QUERY_SUCCESS'
 export const GET_TRACKS_BY_QUERY_FAILED = 'GET_TRACKS_BY_QUERY_FAILED'
 
-import { updatePlaylist } from '../../../modules/player'
 import { apiLink } from '../../../modules/formatUtils'
 
 export function getTracksByQuery (query) {

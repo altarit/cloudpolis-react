@@ -1,7 +1,7 @@
 import HomeRoute from 'routes/Home'
 
 describe('(Route) Home', () => {
-  let _component
+  // let _component
 
   beforeEach(() => {
   })

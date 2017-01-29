@@ -3,13 +3,11 @@ const debug = require('debug')('app:server')
 const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
-const compress = require('compress')
 const connectHistoryApiFallback = require('connect-history-api-fallback')
 
 const app = express()
 
 app.use(connectHistoryApiFallback())
-// app.use(compress());
 
 if (project.env === 'development') {
   const compiler = webpack(webpackConfig)
@@ -29,7 +27,7 @@ if (project.env === 'development') {
   app.use(express.static(project.paths.public()))
 } else {
   debug('HMR only for development mode')
-  app.use(require('webpack-hot-middleware')(compiler))
+  app.use(express.static(project.paths.dist()))
 }
 
 module.exports = app

@@ -1,22 +1,33 @@
 import React, { PropTypes } from 'react'
 
 import Track from '../../Track'
-import { SEARCH_PL } from '../../../modules/player'
 
 export class TrackList extends React.Component {
+
+  static propTypes = {
+    songs: PropTypes.arrayOf(PropTypes.object).isRequired,
+    track: PropTypes.object,
+    pos: PropTypes.number,
+    currentPl: PropTypes.string,
+    pl: PropTypes.string.isRequired,
+    className: PropTypes.string,
+    immutable: PropTypes.bool.isRequired,
+
+    updatePlaylist: PropTypes.func
+  }
 
   getPlaylist = () => {
     let current = this.props.songs
     if (current) {
       let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
       let i = 0
+      let isCurrentPl = this.props.currentPl === this.props.pl
       return current.map(track => (
         <Track key={i} {...track}
-          playing={currentSrc && this.props.pos === i && (track.src || track.href) == currentSrc && (this.props.currentPl == this.props.pl)}
+          playing={currentSrc && this.props.pos === i && (track.src || track.href) === currentSrc && isCurrentPl}
           pl={this.props.pl}
           pos={i++}
           immutable={this.props.immutable}
-          mutable={this.props.mutable}
           updatePlaylist={this.props.updatePlaylist}
         />
       ))

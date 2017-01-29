@@ -12,12 +12,24 @@ export class Track extends React.Component {
     artist: PropTypes.string.isRequired,
     compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
+    href: PropTypes.string,
     duration: PropTypes.string.isRequired,
 
     isPlayed: PropTypes.bool.isRequired,
+    playing: PropTypes.bool.isRequired,
+    pos: PropTypes.number.isRequired,
+    immutable: PropTypes.bool.isRequired,
 
     currentPl: PropTypes.string.isRequired,
-    pl: PropTypes.arrayOf(PropTypes.object)
+    pl: PropTypes.arrayOf(PropTypes.object),
+
+    pause: PropTypes.func.isRequired,
+    playSong: PropTypes.func.isRequired,
+    updatePlaylist: PropTypes.func.isRequired,
+    moveTrack: PropTypes.func.isRequired,
+    openPopup: PropTypes.func.isRequired,
+    trackAdd: PropTypes.func.isRequired,
+    removeTrack: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -56,7 +68,9 @@ export class Track extends React.Component {
       console.log('immutable')
       this.props.moveTrack(track, null, null, this.props.pl, this.props.pos)
     } else {
-      this.props.moveTrack(track, e.dataTransfer.getData('pl'), e.dataTransfer.getData('pos'), this.props.pl, this.props.pos)
+      let transferPlName = e.dataTransfer.getData('pl')
+      let transferTrackPos = e.dataTransfer.getData('pos')
+      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.pl, this.props.pos)
     }
   }
 
@@ -85,6 +99,8 @@ export class Track extends React.Component {
   }
 
   render () {
+    let trackPID = `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`
+
     return (
       <div>
         <div className={'track' + (this.props.playing && ' playing' || '')}
@@ -110,7 +126,7 @@ export class Track extends React.Component {
         </div>
 
         <div className='dropdown open'>
-          {this.props.trackAdd && this.props.trackAdd.from == `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`
+          {this.props.trackAdd && this.props.trackAdd.from === trackPID
             ? (
               <ul className='dropdown-menu track_dropdown'>
                 <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>

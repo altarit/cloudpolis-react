@@ -226,6 +226,7 @@ export const actions = {
   actions
 }
 
+/* isn't used
 function getCurrentTrackIndex (player) {
   let pl = player.pls[player.currentPl]
   if (!pl) return -1
@@ -234,7 +235,7 @@ function getCurrentTrackIndex (player) {
 
   for (let i = 0; i < pl.length; i++) {
     let track = pl[i]
-    if ((track.src || track.href) == (player.track.src || player.track.href)) {
+    if ((track.src || track.href) === (player.track.src || player.track.href)) {
       return i
     }
   }
@@ -254,7 +255,7 @@ function getTrackByActionType (player, currentIndex, type) {
       return pl[currentIndex - 1]
   }
   return null
-}
+} */
 
 function getNextIndexByType (currentIndex, type) {
   switch (type) {
@@ -273,12 +274,12 @@ function selectNextTrack (player, type) {
 
   let currentIndex = player.pos
   // let currentIndex = getCurrentTrackIndex(player)
-  if (currentIndex < 0) return { isPlayed: type != PLAYER_END }
+  if (currentIndex < 0) return { isPlayed: type !== PLAYER_END }
 
   let nextIndex = getNextIndexByType(currentIndex, type)
   let track = pl[nextIndex]
   // let track = getTrackByActionType(player, currentIndex, type)
-  if (!track) return { isPlayed: type != PLAYER_END }
+  if (!track) return { isPlayed: type !== PLAYER_END }
 
   return {
     track: track,
@@ -415,7 +416,7 @@ function _moveTrack (state, oldTrack, plFromName, posFrom, plToName, posTo) {
   // let track = plFrom.splice(posFrom, 1)
   let plTo = [...pls[plToName]]
   pls[plToName] = plTo
-  let offset = (plFromName == plToName && posFrom < posTo) ? -1 : 0
+  let offset = (plFromName === plToName && posFrom < posTo) ? -1 : 0
   plTo.splice(posTo + offset, 0, track)
 
   // move current track marker
@@ -428,7 +429,7 @@ function _moveTrack (state, oldTrack, plFromName, posFrom, plToName, posTo) {
     offsetPos++
   }
   let nextIndex = currentIndex + offsetPos
-  if (state.currentPl === plFromName && state.pos == posFrom) {
+  if (state.currentPl === plFromName && state.pos === posFrom) {
     nextIndex = posTo + offsetPos
   }
 
@@ -442,8 +443,8 @@ function _removeTrack (state, plName, pos) {
   plNext.splice(pos, 1)
   if (pos < state.pos) {
     return { pls, pos: state.pos - 1 }
-  } else if (pos == state.pos && plNext.length > 0) {
-    let nextPos = plNext.length == state.pos ? state.pos - 1 : state.pos
+  } else if (pos === state.pos && plNext.length > 0) {
+    let nextPos = plNext.length === state.pos ? state.pos - 1 : state.pos
     return { pls, pos: nextPos, track: plNext[nextPos] }
   }
   return { pls }
@@ -483,7 +484,7 @@ function _sortBy (state, by) {
 
   // change current pos
   let newPos = state.pos
-  if (state.currentPl == state.plTab) {
+  if (state.currentPl === state.plTab) {
     for (let i = 0; i < newPl.length; i++) {
       let track = newPl[i]
       if ((track.href || track.src) === (state.track.href || state.track.src) && track.title === state.track.title) {

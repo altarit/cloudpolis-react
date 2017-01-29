@@ -1,7 +1,12 @@
 import { connect } from 'react-redux'
 
 import OpenPlaylistDialog from '../components/OpenPlaylistDialog'
-import { loadPlaylistsFromStorage, savePlaylistsToStorage, openPlaylistFromStorage, deletePlaylistFromStorage } from '../../../modules/player'
+import {
+  loadPlaylistsFromStorage,
+  savePlaylistsToStorage,
+  openPlaylistFromStorage,
+  deletePlaylistFromStorage
+} from '../../../modules/player'
 
 const mapDispatchToProps = {
   loadPlaylistsFromStorage,

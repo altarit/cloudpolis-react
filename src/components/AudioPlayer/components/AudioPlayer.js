@@ -41,7 +41,7 @@ export class AudioPlayer extends React.Component {
 
     audio.volume = nextProps.volume
 
-    if (this.props.src != nextProps.src) {
+    if (this.props.src !== nextProps.src) {
       console.log('changed src')
       // console.log('reset')
       this.setState({
@@ -130,8 +130,8 @@ export class AudioPlayer extends React.Component {
   }
 
   changeTime = (e) => {
-    let progress = (e.pageX - e.currentTarget.getBoundingClientRect().left) / e.currentTarget.getBoundingClientRect().width
-    // console.log(progress * this.props.duration);
+    let clientRect = e.currentTarget.getBoundingClientRect()
+    let progress = (e.pageX - clientRect.left) / clientRect.width
     this.refs.audio.currentTime = progress * (this.refs.audio.duration)
 
     this.setState({

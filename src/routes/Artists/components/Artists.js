@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 
 export class Artists extends React.Component {
+
+  static propTypes = {
+    artists: PropTypes.arrayOf(PropTypes.string).isRequired,
+    artistsMask: PropTypes.string,
+    fetching: PropTypes.bool,
+
+    getArtists: PropTypes.func.isRequired,
+    changeArtistsFilter: PropTypes.func.isRequired
+  }
 
   componentDidMount () {
     this.props.getArtists()

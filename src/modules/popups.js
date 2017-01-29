@@ -34,9 +34,8 @@ export default function popupReducer (state = initialState, action) {
       return initialState
     case POPUP_OPEN:
       if (state[action.name] && !action.from) return initialState
-      let popupId = state[action.name]
       return {
-        [action.name]: !state[action.name] || state[action.name].from != action.from
+        [action.name]: !state[action.name] || state[action.name].from !== action.from
           ? { open: true, from: action.from, x: action.x, y: action.y, rx: action.rx, ry: action.ry }
           : null
       }

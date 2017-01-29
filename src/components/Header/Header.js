@@ -17,10 +17,6 @@ export const Header = () => (
       Third
     </Link>
     {' · '}
-    <Link to='/fourth' activeClassName='route--active'>
-      Fourth
-    </Link>
-    {' · '}
     <Link to='/music/artists' activeClassName='route--active'>
       Artists
     </Link>

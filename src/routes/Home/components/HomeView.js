@@ -97,7 +97,8 @@ export class HomeView extends React.Component {
         <div className='row'>
           <div className='col-md-12'>
             <h2>More</h2>
-            If you have any questions, please feel free to contact me at <a href='mailto:admin@cloudpolis.ru'>admin@cloudpolis.ru</a>
+            If you have any questions, please feel free to contact me at
+            <a href='mailto:admin@cloudpolis.ru'>admin@cloudpolis.ru</a>
           </div>
         </div>
       </div>

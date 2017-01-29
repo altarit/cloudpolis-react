@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
 
 import TrackList from '../../../components/TrackList'
 import { SEARCH_PL } from '../../../modules/player'
@@ -32,7 +31,7 @@ export class Search extends React.Component {
     return (
       <div className='container'>
         <h2>Search</h2>
-        <form className='form-horizontal form-search' className='form-search'>
+        <form className='form-horizontal form-search'>
           <div className='btn-group'>
             <label>Query</label>
             <input type='search' className='form-control' onChange={this.changeFilter} ref='searchQuery' />

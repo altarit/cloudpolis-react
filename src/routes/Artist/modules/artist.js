@@ -2,7 +2,6 @@ export const GET_ARTIST_REQUEST = 'GET_ARTIST_REQUEST'
 export const GET_ARTIST_SUCCESS = 'GET_ARTIST_SUCCESS'
 export const GET_ARTIST_FAILED = 'GET_ARTIST_FAILED'
 
-import { updatePlaylist } from '../../../modules/player'
 import { apiLink } from '../../../modules/formatUtils'
 
 export function getArtist (artistName) {
