@@ -1,5 +1,6 @@
 const path = require('path');
 const debug = require('debug')('app:config:project');
+const argv = require('yargs').argv
 
 debug('Creating default configuration');
 
@@ -37,6 +38,10 @@ const config = {
     'react-redux',
     'react-router',
     'redux'
+  ],
+  coverage_reporters : [
+    { type : 'text-summary' },
+    { type : 'lcov', dir : 'coverage' }
   ]
 };
 
@@ -48,7 +53,8 @@ config.globals = {
   'NODE_ENV': config.env,
   '__DEV__': config.env == 'development',
   '__PROD__': config.env == 'production',
-  '__TEST__': config.env == 'test'
+  '__TEST__': config.env == 'test',
+  '__COVERAGE__' : !argv.watch && config.env === 'test'
 };
 
 

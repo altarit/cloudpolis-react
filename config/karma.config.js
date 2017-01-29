@@ -51,8 +51,23 @@ const karmaConfig = {
   },
   webpackMiddleware : {
     noInfo : true
+  },
+  coverageReporter : {
+    reporters : project.coverage_reporters
   }
 }
 
+if (project.globals.__COVERAGE__) {
+  karmaConfig.reporters.push('coverage')
+  karmaConfig.webpack.module.preLoaders = [{
+    test    : /\.(js|jsx)$/,
+    include : new RegExp(project.dir_client),
+    exclude : /node_modules/,
+    loader  : 'babel',
+    query   : Object.assign({}, project.compiler_babel, {
+      plugins : (project.compiler_babel.plugins || []).concat('istanbul')
+    })
+  }]
+}
 
 module.exports = (cfg) => cfg.set(karmaConfig)
