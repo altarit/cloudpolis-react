@@ -45,7 +45,7 @@ const config = {
   ]
 };
 
-
+// N.B.: globals added here must _also_ be added to .eslintrc
 config.globals = {
   'process.env': {
     'NODE_ENV': JSON.stringify(config.env)
