@@ -7,6 +7,12 @@ import sinonChai from 'sinon-chai'
 import chaiAsPromised from 'chai-as-promised'
 import chaiEnzyme from 'chai-enzyme'
 
+import 'babel-polyfill'
+import 'whatwg-fetch'
+import fmock from 'fetch-mock'
+import configureStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
 chai.use(sinonChai)
 chai.use(chaiAsPromised)
 chai.use(chaiEnzyme())
@@ -15,6 +21,9 @@ global.chai = chai
 global.sinon = sinon
 global.expect = chai.expect
 global.should = chai.should()
+global.fmock = fmock
+global.configureStore = configureStore
+global.middlewares = [ thunk ]
 
 // ---------------------------------------
 // Require Tests

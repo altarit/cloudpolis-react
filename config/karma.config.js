@@ -45,9 +45,11 @@ const karmaConfig = {
     externals : Object.assign({}, webpackConfig.externals, {
       'react/addons'                   : true,
       'react/lib/ExecutionEnvironment' : true,
-      'react/lib/ReactContext'         : 'window'
+      'react/lib/ReactContext'         : 'window',
+      'fs'                             : {}
     }),
-    sassLoader : webpackConfig.sassLoader
+    sassLoader : webpackConfig.sassLoader,
+    postcss: webpackConfig.postcss
   },
   webpackMiddleware : {
     noInfo : true
