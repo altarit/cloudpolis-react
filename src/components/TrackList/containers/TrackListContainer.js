@@ -1,9 +1,8 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 import TrackList from '../components/TrackList'
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 const mapStateToProps = (state) => ({
   currentPl: state.player.currentPl,

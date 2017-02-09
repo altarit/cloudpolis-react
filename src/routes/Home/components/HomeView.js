@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import LogoImage from '../assets/logo.png'
 import './HomeView.scss'
 import TrackList from '../../../components/TrackList'
-import { DEFAULT_PL } from '../../../modules/player'
+import {DEFAULT_PL} from '../../../modules/player'
 
 export class HomeView extends React.Component {
 
@@ -18,7 +18,7 @@ export class HomeView extends React.Component {
     updatePlaylist: PropTypes.func.isRequired
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getFeaturedTracks()
   }
 
@@ -26,7 +26,7 @@ export class HomeView extends React.Component {
     this.props.updatePlaylist(null, this.props.tracks)
   }
 
-  render () {
+  render() {
     return (
       <div className='container'>
         <div className='row'>

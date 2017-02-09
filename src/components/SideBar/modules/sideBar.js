@@ -1,6 +1,6 @@
 export const TOOGLE_SIDEBAR = 'TOOGLE_SIDEBAR'
 
-export function toggleSidebar () {
+export function toggleSidebar() {
   return {
     type: TOOGLE_SIDEBAR
   }
@@ -14,10 +14,10 @@ const initialState = {
   isOpen: true
 }
 
-export default function sidebarReducer (state = initialState, action) {
+export default function sidebarReducer(state = initialState, action) {
   switch (action.type) {
     case TOOGLE_SIDEBAR:
-      return { ...state, isOpen: !state.isOpen }
+      return {...state, isOpen: !state.isOpen}
   }
   return state
 }

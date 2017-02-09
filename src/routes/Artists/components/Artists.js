@@ -1,5 +1,5 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {PropTypes} from 'react'
+import {Link} from 'react-router'
 
 export class Artists extends React.Component {
 
@@ -12,7 +12,7 @@ export class Artists extends React.Component {
     changeArtistsFilter: PropTypes.func.isRequired
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getArtists()
     this.props.changeArtistsFilter('')
   }
@@ -44,7 +44,7 @@ export class Artists extends React.Component {
     this.refs.artistsFilter.focus()
   }
 
-  render () {
+  render() {
     return (
       <div className='container'>
         <h2>Artists:</h2>

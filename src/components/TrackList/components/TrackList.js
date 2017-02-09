@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import Track from '../../Track'
 
@@ -36,7 +36,7 @@ export class TrackList extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return <ul className={this.props.className}>
       {this.getPlaylist()}
     </ul>

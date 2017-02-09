@@ -76,11 +76,10 @@ describe('components/Auth - Reducer', () => {
 
   it('AUTH_LOGOUT_SUCCESS', () => {
     const nextState = reducer(undefined, {
-      type: types.AUTH_LOGOUT_SUCCESS,
-      name: 'Aj'
+      type: types.AUTH_LOGOUT_SUCCESS
     })
     expect(nextState).to.deep.equal({
-      name: 'Aj',
+      name: undefined,
       fetching: false
     })
   })

@@ -22,6 +22,12 @@ export default function authReducer(state = initialState, action) {
       return {...state, fetching: false, name: action.name}
     case types.AUTH_SIGNUP_FAILURE:
       return {...state, fetching: false}
+    case types.AUTH_LOGOUT_REQUEST:
+      return {...state, fetching: true}
+    case types.AUTH_LOGOUT_SUCCESS:
+      return {...state, fetching: false, name: undefined}
+    case types.AUTH_LOGOUT_FAILURE:
+      return {...state, fetching: false}
   }
   return state
 }

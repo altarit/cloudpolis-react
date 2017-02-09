@@ -1,6 +1,6 @@
 import Third from './components/Third'
 
 export default {
-  path : 'third',
+  path: 'third',
   component: Third
 }

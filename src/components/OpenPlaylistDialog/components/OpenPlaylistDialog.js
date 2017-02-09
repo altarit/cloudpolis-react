@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import './OpenPlaylistDialog.scss'
 
@@ -16,7 +16,7 @@ export class OpenPlaylistDialog extends React.Component {
     deletePlaylistFromStorage: PropTypes.func.isRequired
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.loadPlaylistsFromStorage()
     this.refs.filename.value = this.props.filename || ''
   }
@@ -45,7 +45,7 @@ export class OpenPlaylistDialog extends React.Component {
     this.props.deletePlaylistFromStorage(e.target.parentNode.children[0].innerHTML)
   }
 
-  render () {
+  render() {
     return (
       <div className='dropdown open dropdown-menu filedialog' data-click='none'>
         <h3>{this.props.forSave ? 'Save playlist' : 'Open playlist'}</h3>

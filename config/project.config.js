@@ -40,8 +40,8 @@ const config = {
     'redux'
   ],
   coverage_reporters : [
-    { type : 'text-summary' },
-    { type : 'lcov', dir : 'coverage' }
+    {type : 'text-summary'},
+    {type : 'lcov', dir : 'coverage'}
   ]
 }
 
@@ -57,7 +57,7 @@ config.globals = {
   '__COVERAGE__' : !argv.watch && config.env === 'test'
 }
 
-function base () {
+function base() {
   const args = [config.path_base].concat([].slice.call(arguments))
   return path.resolve.apply(path, args)
 }

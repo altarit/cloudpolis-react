@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import TrackList from '../../../components/TrackList'
-import { SEARCH_PL } from '../../../modules/player'
+import {SEARCH_PL} from '../../../modules/player'
 
 export class Search extends React.Component {
 
@@ -13,7 +13,7 @@ export class Search extends React.Component {
     setCurrentPlaylist: PropTypes.func.isRequired
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getTracksByQuery('')
   }
 
@@ -27,7 +27,7 @@ export class Search extends React.Component {
     this.refs.searchQuery.focus()
   }
 
-  render () {
+  render() {
     return (
       <div className='container'>
         <h2>Search</h2>

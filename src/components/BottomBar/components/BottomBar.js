@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import './BottomBar.scss'
 import AudioPlayer from '../../AudioPlayer'
@@ -15,7 +15,7 @@ export class BottomBar extends React.Component {
     pause: PropTypes.func.isRequired
   }
 
-  render () {
+  render() {
     return (
       <nav className='navbar navbar-inverse navbar-fixed-bottom'>
         <div className='container player'>

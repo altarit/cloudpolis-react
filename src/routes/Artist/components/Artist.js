@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
 import TrackList from '../../../components/TrackList'
-import { DEFAULT_PL } from '../../../modules/player'
+import {DEFAULT_PL} from '../../../modules/player'
 
 export class Artist extends React.Component {
 
@@ -16,7 +16,7 @@ export class Artist extends React.Component {
     updatePlaylist: PropTypes.func.isRequired
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.props.getArtist(this.props.artistName)
   }
 
@@ -24,7 +24,7 @@ export class Artist extends React.Component {
     this.props.updatePlaylist(null, this.props.songs)
   }
 
-  render () {
+  render() {
     return (
       <div className='container'>
         <h2>{this.props.artistName}</h2>

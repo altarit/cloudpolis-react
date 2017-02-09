@@ -1,9 +1,8 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
 import Content from './Content'
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
 const mapStateToProps = (state, props) => ({
   sidebar: state.sidebar.isOpen

@@ -33,33 +33,33 @@ export const BY_PATH = 'BY_PATH'
 export const SHUFFLE = 'SHUFFLE'
 export const REVERSE = 'REVERSE'
 
-export function play () {
+export function play() {
   return {
     type: PLAYER_PLAY
   }
 }
 
-export function pause () {
+export function pause() {
   return {
     type: PLAYER_PAUSE
   }
 }
 
-export function setTrack (track) {
+export function setTrack(track) {
   return {
     type: SET_TRACK,
     payload: track
   }
 }
 
-export function selectTab (playlistName) {
+export function selectTab(playlistName) {
   return {
     type: SELECT_TAB,
     payload: playlistName
   }
 }
 
-export function updatePlaylist (name, content) {
+export function updatePlaylist(name, content) {
   return {
     type: UPDATE_PLAYLIST,
     name: name || DEFAULT_PL,
@@ -67,57 +67,57 @@ export function updatePlaylist (name, content) {
   }
 }
 
-export function setCurrentPlaylist (name) {
+export function setCurrentPlaylist(name) {
   return {
     type: SET_CURRENT_PL,
     name: name || DEFAULT_PL
   }
 }
 
-export function nextTrack () {
+export function nextTrack() {
   return {
     type: PLAYER_NEXT
   }
 }
 
-export function prevTrack () {
+export function prevTrack() {
   return {
     type: PLAYER_PREV
   }
 }
 
-export function endTrack () {
+export function endTrack() {
   return {
     type: PLAYER_END
   }
 }
 
-export function createPlaylist (name) {
+export function createPlaylist(name) {
   return {
     type: CREATE_PLAYLIST,
     name
   }
 }
 
-export function closeOpenPlaylist () {
+export function closeOpenPlaylist() {
   return {
     type: CLOSE_OPEN_PLAYLIST
   }
 }
 
-export function closeOtherPlaylists () {
+export function closeOtherPlaylists() {
   return {
     type: CLOSE_OTHER_PLAYLISTS
   }
 }
 
-export function loadPlaylistsFromStorage () {
+export function loadPlaylistsFromStorage() {
   return {
     type: STORAGE_LOAD_PLAYLISTS
   }
 }
 
-export function savePlaylistsToStorage (filename, playlist) {
+export function savePlaylistsToStorage(filename, playlist) {
   return {
     type: STORAGE_SAVE_PLAYLISTS,
     filename,
@@ -125,34 +125,34 @@ export function savePlaylistsToStorage (filename, playlist) {
   }
 }
 
-export function openPlaylistFromStorage (filename) {
+export function openPlaylistFromStorage(filename) {
   return {
     type: STORAGE_OPEN_PLAYLIST,
     filename
   }
 }
 
-export function deletePlaylistFromStorage (filename) {
+export function deletePlaylistFromStorage(filename) {
   return {
     type: STORAGE_DELETE_PLAYLIST,
     filename
   }
 }
 
-export function setVolume (val) {
+export function setVolume(val) {
   return {
     type: SET_VOLUME,
     val
   }
 }
 
-export function toggleMute () {
+export function toggleMute() {
   return {
     type: TOGGLE_MUTE
   }
 }
 
-export function moveTrack (track, plFrom, posFrom, plTo, posTo) {
+export function moveTrack(track, plFrom, posFrom, plTo, posTo) {
   return {
     type: MOVE_TRACK,
     track,
@@ -163,7 +163,7 @@ export function moveTrack (track, plFrom, posFrom, plTo, posTo) {
   }
 }
 
-export function removeTrack (plName, pos) {
+export function removeTrack(plName, pos) {
   return {
     type: REMOVE_TRACK,
     plName,
@@ -171,50 +171,50 @@ export function removeTrack (plName, pos) {
   }
 }
 
-export function sortByTitle () {
+export function sortByTitle() {
   return {
     type: SORT_PLAYLIST,
     by: BY_TITLE
   }
 }
-export function sortByArtist () {
+export function sortByArtist() {
   return {
     type: SORT_PLAYLIST,
     by: BY_ARTIST
   }
 }
-export function sortByDuration () {
+export function sortByDuration() {
   return {
     type: SORT_PLAYLIST,
     by: BY_DURATION
   }
 }
-export function sortByPath () {
+export function sortByPath() {
   return {
     type: SORT_PLAYLIST,
     by: BY_PATH
   }
 }
-export function shuffle () {
+export function shuffle() {
   return {
     type: SORT_PLAYLIST,
     by: SHUFFLE
   }
 }
-export function reverse () {
+export function reverse() {
   return {
     type: SORT_PLAYLIST,
     by: REVERSE
   }
 }
 
-export function scrollLeft () {
+export function scrollLeft() {
   return {
     type: SCROLL_LEFT
   }
 }
 
-export function scrollRight () {
+export function scrollRight() {
   return {
     type: SCROLL_RIGHT
   }
@@ -227,37 +227,37 @@ export const actions = {
 }
 
 /* isn't used
-function getCurrentTrackIndex (player) {
-  let pl = player.pls[player.currentPl]
-  if (!pl) return -1
+ function getCurrentTrackIndex (player) {
+ let pl = player.pls[player.currentPl]
+ if (!pl) return -1
 
-  return player.pos
+ return player.pos
 
-  for (let i = 0; i < pl.length; i++) {
-    let track = pl[i]
-    if ((track.src || track.href) === (player.track.src || player.track.href)) {
-      return i
-    }
-  }
+ for (let i = 0; i < pl.length; i++) {
+ let track = pl[i]
+ if ((track.src || track.href) === (player.track.src || player.track.href)) {
+ return i
+ }
+ }
 
-  return -1
-}
+ return -1
+ }
 
-function getTrackByActionType (player, currentIndex, type) {
-  let pl = player.pls[player.currentPl]
-  if (!pl) return null
+ function getTrackByActionType (player, currentIndex, type) {
+ let pl = player.pls[player.currentPl]
+ if (!pl) return null
 
-  switch (type) {
-    case PLAYER_NEXT:
-    case PLAYER_END:
-      return pl[currentIndex + 1]
-    case PLAYER_PREV:
-      return pl[currentIndex - 1]
-  }
-  return null
-} */
+ switch (type) {
+ case PLAYER_NEXT:
+ case PLAYER_END:
+ return pl[currentIndex + 1]
+ case PLAYER_PREV:
+ return pl[currentIndex - 1]
+ }
+ return null
+ } */
 
-function getNextIndexByType (currentIndex, type) {
+function getNextIndexByType(currentIndex, type) {
   switch (type) {
     case PLAYER_NEXT:
     case PLAYER_END:
@@ -268,18 +268,18 @@ function getNextIndexByType (currentIndex, type) {
   return null
 }
 
-function selectNextTrack (player, type) {
+function selectNextTrack(player, type) {
   let pl = player.pls[player.currentPl]
   if (!pl) return null
 
   let currentIndex = player.pos
   // let currentIndex = getCurrentTrackIndex(player)
-  if (currentIndex < 0) return { isPlayed: type !== PLAYER_END }
+  if (currentIndex < 0) return {isPlayed: type !== PLAYER_END}
 
   let nextIndex = getNextIndexByType(currentIndex, type)
   let track = pl[nextIndex]
   // let track = getTrackByActionType(player, currentIndex, type)
-  if (!track) return { isPlayed: type !== PLAYER_END }
+  if (!track) return {isPlayed: type !== PLAYER_END}
 
   return {
     track: track,
@@ -288,44 +288,44 @@ function selectNextTrack (player, type) {
   }
 }
 
-function addPlaylist (name, plKeys, pls) {
+function addPlaylist(name, plKeys, pls) {
   if (!name) {
     return {
-      errors: { createPlaylist: 'Type something' }
+      errors: {createPlaylist: 'Type something'}
     }
   }
   if (name.length > 32) {
     return {
-      errors: { createPlaylist: 'Too long' }
+      errors: {createPlaylist: 'Too long'}
     }
   }
   if (~plKeys.indexOf(name)) {
     return {
-      errors: { createPlaylist: `Playlist ${name} already exists` }
+      errors: {createPlaylist: `Playlist ${name} already exists`}
     }
   }
   console.log('Too many playlists: ' + plKeys.length)
   if (plKeys.length >= 20) {
     return {
-      errors: { createPlaylist: `Too many playlists` }
+      errors: {createPlaylist: `Too many playlists`}
     }
   }
 
   return {
     plKeys: [...plKeys, name],
-    pls: { ...pls, [name]: [] },
+    pls: {...pls, [name]: []},
     plTab: name,
     errors: {}
   }
 }
 
-function excludeOpenPlaylust (plTab, plKeys, pls) {
+function excludeOpenPlaylust(plTab, plKeys, pls) {
   let index = plKeys.indexOf(plTab)
   if (!~index) return
 
   let nextPlKeys = [...plKeys]
   nextPlKeys.splice(index, 1)
-  let nextPls = { ...pls }
+  let nextPls = {...pls}
   delete nextPls[plTab]
   if (!nextPlKeys.length) {
     nextPlKeys.push(DEFAULT_PL)
@@ -339,20 +339,20 @@ function excludeOpenPlaylust (plTab, plKeys, pls) {
   }
 }
 
-function _savePlaylistToStorage (state, filename, playlist) {
+function _savePlaylistToStorage(state, filename, playlist) {
   let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  let nextPlaylists = { ...safe, [filename]: playlist.map(_cloneTrack) }
+  let nextPlaylists = {...safe, [filename]: playlist.map(_cloneTrack)}
   localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
-  return { ...state, safePlaylists: nextPlaylists }
+  return {...state, safePlaylists: nextPlaylists}
 }
 
-function _openPlaylistFromStorage (state, filename) {
+function _openPlaylistFromStorage(state, filename) {
   let safeForOpen = JSON.parse(localStorage.getItem('safePlaylists')) || {}
   let newPl = safeForOpen[filename]
   if (newPl) {
     return {
       ...state,
-      pls: { ...state.pls, [filename]: newPl },
+      pls: {...state.pls, [filename]: newPl},
       plKeys: ~state.plKeys.indexOf(filename) ? state.plKeys : [...state.plKeys, filename],
       plTab: filename
     }
@@ -362,11 +362,11 @@ function _openPlaylistFromStorage (state, filename) {
   }
 }
 
-function _deletePlaylistFromStorage (state, filename) {
+function _deletePlaylistFromStorage(state, filename) {
   let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
   delete safe[filename]
   localStorage.setItem('safePlaylists', JSON.stringify(safe))
-  return { ...state, safePlaylists: safe }
+  return {...state, safePlaylists: safe}
 }
 
 const initialState = {
@@ -391,7 +391,7 @@ const initialState = {
   errors: {}
 }
 
-function _cloneTrack (track) {
+function _cloneTrack(track) {
   return {
     title: track.title,
     artist: track.artist,
@@ -401,11 +401,11 @@ function _cloneTrack (track) {
   }
 }
 
-function _moveTrack (state, oldTrack, plFromName, posFrom, plToName, posTo) {
+function _moveTrack(state, oldTrack, plFromName, posFrom, plToName, posTo) {
   console.log(`_moveTrack: ${plFromName}:${posFrom} -> ${plToName}:${posTo}`)
   let track = _cloneTrack(oldTrack)
   console.log(`${track.title}`)
-  let pls = { ...state.pls }
+  let pls = {...state.pls}
   if (plFromName) {
     let plFrom = [...pls[plFromName]]
     if (plFrom) {
@@ -433,25 +433,25 @@ function _moveTrack (state, oldTrack, plFromName, posFrom, plToName, posTo) {
     nextIndex = posTo + offsetPos
   }
 
-  return { pls, pos: nextIndex }
+  return {pls, pos: nextIndex}
 }
 
-function _removeTrack (state, plName, pos) {
+function _removeTrack(state, plName, pos) {
   console.log(`_removeTrack: ${plName}:${pos}`)
-  let pls = { ...state.pls }
+  let pls = {...state.pls}
   let plNext = pls[plName]
   plNext.splice(pos, 1)
   if (pos < state.pos) {
-    return { pls, pos: state.pos - 1 }
+    return {pls, pos: state.pos - 1}
   } else if (pos === state.pos && plNext.length > 0) {
     let nextPos = plNext.length === state.pos ? state.pos - 1 : state.pos
-    return { pls, pos: nextPos, track: plNext[nextPos] }
+    return {pls, pos: nextPos, track: plNext[nextPos]}
   }
-  return { pls }
+  return {pls}
 }
 
-function _sortBy (state, by) {
-  let newPls = { ...state.pls }
+function _sortBy(state, by) {
+  let newPls = {...state.pls}
   let newPl = [...newPls[state.plTab]]
 
   switch (by) {
@@ -493,10 +493,10 @@ function _sortBy (state, by) {
     }
   }
 
-  return { pls: newPls, pos: newPos }
+  return {pls: newPls, pos: newPos}
 }
 
-function _getNextScrolledTabs (tabs, tabName, scrolledTabs) {
+function _getNextScrolledTabs(tabs, tabName, scrolledTabs) {
   let currentTabIndex = tabs.indexOf(tabName)
   let nextScrolledTabs = scrolledTabs
   if (nextScrolledTabs > currentTabIndex) nextScrolledTabs = currentTabIndex
@@ -504,14 +504,14 @@ function _getNextScrolledTabs (tabs, tabName, scrolledTabs) {
   return nextScrolledTabs
 }
 
-export default function playerReducer (state = initialState, action) {
+export default function playerReducer(state = initialState, action) {
   switch (action.type) {
     case PLAYER_PLAY:
-      return { ...state, isPlayed: !!state.track.title }
+      return {...state, isPlayed: !!state.track.title}
     case PLAYER_PAUSE:
-      return { ...state, isPlayed: false }
+      return {...state, isPlayed: false}
     case SET_TRACK:
-      return { ...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true, pos: action.payload.pos }
+      return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true, pos: action.payload.pos}
     case SELECT_TAB:
       return {
         ...state,
@@ -521,51 +521,51 @@ export default function playerReducer (state = initialState, action) {
     case UPDATE_PLAYLIST:
       return {
         ...state,
-        pls: { ...state.pls, [action.name]: action.content },
+        pls: {...state.pls, [action.name]: action.content},
         plKeys: ~state.plKeys.indexOf(action.name) ? state.plKeys : [...state.plKeys, action.name]
       }
     case SET_CURRENT_PL:
-      return { ...state, currentPl: action.name }
+      return {...state, currentPl: action.name}
     case PLAYER_NEXT:
-      return { ...state, ...selectNextTrack(state, action.type) }
+      return {...state, ...selectNextTrack(state, action.type)}
     case PLAYER_PREV:
-      return { ...state, ...selectNextTrack(state, action.type) }
+      return {...state, ...selectNextTrack(state, action.type)}
     case PLAYER_END:
-      return { ...state, ...selectNextTrack(state, action.type) }
+      return {...state, ...selectNextTrack(state, action.type)}
     case CREATE_PLAYLIST:
-      return { ...state, ...addPlaylist(action.name, state.plKeys, state.pls) }
+      return {...state, ...addPlaylist(action.name, state.plKeys, state.pls)}
     case CLOSE_OPEN_PLAYLIST:
-      return { ...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls) }
+      return {...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls)}
     case CLOSE_OTHER_PLAYLISTS:
       return {
         ...state,
         plKeys: [state.plTab],
-        pls: { [state.plTab]: state.pls[state.plTab] },
+        pls: {[state.plTab]: state.pls[state.plTab]},
         plTab: state.plTab,
         scrolledTabs: 0
       }
     case STORAGE_LOAD_PLAYLISTS:
-      return { ...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {} }
+      return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
     case STORAGE_SAVE_PLAYLISTS:
-      return { ...state, ..._savePlaylistToStorage(state, action.filename, action.playlist) }
+      return {...state, ..._savePlaylistToStorage(state, action.filename, action.playlist)}
     case STORAGE_OPEN_PLAYLIST:
-      return { ...state, ..._openPlaylistFromStorage(state, action.filename) }
+      return {...state, ..._openPlaylistFromStorage(state, action.filename)}
     case STORAGE_DELETE_PLAYLIST:
-      return { ...state, ..._deletePlaylistFromStorage(state, action.filename) }
+      return {...state, ..._deletePlaylistFromStorage(state, action.filename)}
     case SET_VOLUME:
-      return { ...state, volume: action.val }
+      return {...state, volume: action.val}
     case TOGGLE_MUTE:
-      return { ...state, muted: !state.muted }
+      return {...state, muted: !state.muted}
     case MOVE_TRACK:
-      return { ...state, ..._moveTrack(state, action.track, action.plFrom, action.posFrom, action.plTo, action.posTo) }
+      return {...state, ..._moveTrack(state, action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)}
     case REMOVE_TRACK:
-      return { ...state, ..._removeTrack(state, action.plName, action.pos) }
+      return {...state, ..._removeTrack(state, action.plName, action.pos)}
     case SORT_PLAYLIST:
-      return { ...state, ..._sortBy(state, action.by) }
+      return {...state, ..._sortBy(state, action.by)}
     case SCROLL_LEFT:
-      return { ...state, scrolledTabs: state.scrolledTabs > 0 ? state.scrolledTabs - 1 : state.scrolledTabs }
+      return {...state, scrolledTabs: state.scrolledTabs > 0 ? state.scrolledTabs - 1 : state.scrolledTabs}
     case SCROLL_RIGHT:
-      return { ...state, scrolledTabs: state.scrolledTabs + 1 }
+      return {...state, scrolledTabs: state.scrolledTabs + 1}
   }
   return state
 }

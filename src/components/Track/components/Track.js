@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {PropTypes} from 'react'
+import {Link} from 'react-router'
 
 import './Track.scss'
 
-import { trackLink } from '../../../modules/formatUtils'
+import {trackLink} from '../../../modules/formatUtils'
 
 export class Track extends React.Component {
 
@@ -32,7 +32,7 @@ export class Track extends React.Component {
     removeTrack: PropTypes.func.isRequired
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       isAbove: null
@@ -62,7 +62,7 @@ export class Track extends React.Component {
 
     e.preventDefault()
     e.stopPropagation()
-    this.setState({ isAbove: null })
+    this.setState({isAbove: null})
     let track = JSON.parse(e.dataTransfer.getData('track'))
     if (track.immutable) {
       console.log('immutable')
@@ -77,13 +77,13 @@ export class Track extends React.Component {
   dragOver = (e) => {
     if (this.props.immutable) return
     e.preventDefault()
-    this.setState({ isAbove: true })
+    this.setState({isAbove: true})
   }
 
   dragLeave = (e) => {
     if (this.props.immutable) return
     e.preventDefault()
-    this.setState({ isAbove: null })
+    this.setState({isAbove: null})
   }
 
   openMenu = (e) => {
@@ -98,7 +98,7 @@ export class Track extends React.Component {
     this.props.removeTrack(this.props.pl, this.props.pos)
   }
 
-  render () {
+  render() {
     let trackPID = `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`
 
     return (
@@ -132,17 +132,17 @@ export class Track extends React.Component {
                 <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>
                 {!this.props.immutable ? (
                   <li><a className='fa fa-plus' onClick={this.removeTrack}> Remove from {this.props.pl}</a></li>
-                ) : null}
+              ) : null}
                 {this.props.compilation ? (
                   <li><Link className='fa fa-plus'
                     to={`/music/artists/${this.props.compilation}`}> Go to {this.props.compilation}</Link></li>
-                ) : null}
+              ) : null}
 
                 <li><a className='fa fa-plus' href={this.getFullLink()} download> Download</a></li>
                 <li><a className='fa fa-plus' href={this.getFullLink()} target='_blank'> Open
-                  link in a new tab</a></li>
+                link in a new tab</a></li>
               </ul>
-            ) : null }
+          ) : null }
         </div>
       </div>
     )

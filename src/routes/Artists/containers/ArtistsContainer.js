@@ -1,6 +1,6 @@
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
 
-import { getArtists, changeArtistsFilter } from '../modules/artists'
+import {getArtists, changeArtistsFilter} from '../modules/artists'
 import Artists from '../components/Artists'
 
 const mapDispatchToProps = {

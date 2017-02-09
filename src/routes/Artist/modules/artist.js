@@ -2,9 +2,9 @@ export const GET_ARTIST_REQUEST = 'GET_ARTIST_REQUEST'
 export const GET_ARTIST_SUCCESS = 'GET_ARTIST_SUCCESS'
 export const GET_ARTIST_FAILED = 'GET_ARTIST_FAILED'
 
-import { apiLink } from '../../../modules/formatUtils'
+import {apiLink} from '../../../modules/formatUtils'
 
-export function getArtist (artistName) {
+export function getArtist(artistName) {
   return (dispatch) => {
     dispatch({
       type: GET_ARTIST_REQUEST
@@ -26,7 +26,7 @@ const initialState = {
   songs: []
 }
 
-export default function artistsReducer (state = initialState, action) {
+export default function artistsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ARTIST_REQUEST:
       return {

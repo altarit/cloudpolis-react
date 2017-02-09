@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 
-import { toMMSS, trackLink } from '../../../modules/formatUtils'
+import {toMMSS, trackLink} from '../../../modules/formatUtils'
 
 export class AudioPlayer extends React.Component {
 
@@ -19,7 +19,7 @@ export class AudioPlayer extends React.Component {
     endTrack: PropTypes.func.isRequired
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     console.log('AudioPlayer.constructor')
 
@@ -30,11 +30,11 @@ export class AudioPlayer extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     console.log('AudioPlayer.componentDidMount')
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     // console.log('AudioPlayer.componentWillReceiveProps')
     let audio = this.refs.audio
     if (!audio) return
@@ -48,7 +48,7 @@ export class AudioPlayer extends React.Component {
         ...this.state,
         time: 0,
         progress: 0/*,
-        duration: 0  */
+         duration: 0  */
       })
       audio.play()
     }
@@ -68,7 +68,7 @@ export class AudioPlayer extends React.Component {
     }
   }
 
-  componentDidUpdate () {
+  componentDidUpdate() {
   }
 
   handleTimeUpdate = () => {
@@ -146,14 +146,14 @@ export class AudioPlayer extends React.Component {
     e.dataTransfer.setData('track', JSON.stringify(this.props))
   }
 
-  render () {
+  render() {
     return (
       <div className='progress player__progress' onClick={this.changeTime}
         draggable='true' onDragStart={this.dragStart}>
         <div className='progress-bar progress-bar-info player__progress_played'
-          style={{ width: (this.state.time / this.state.duration * 100) + '%' }} />
+          style={{width: (this.state.time / this.state.duration * 100) + '%'}} />
         <div className='progress-bar progress-bar-striped player__progress_loaded'
-          style={{ width: this.state.progress + '%' }} />
+          style={{width: this.state.progress + '%'}} />
         <div className='player__progress_title'>
           <b>{this.props.title}</b>
         </div>
@@ -178,7 +178,7 @@ export class AudioPlayer extends React.Component {
           onEnded={this.handleEnded}
           onPause={this.handlePause}
           onPlay={this.handlePlay}
-         />
+        />
       </div>
     )
   }
