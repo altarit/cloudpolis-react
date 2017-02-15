@@ -1,30 +1,31 @@
 import React from 'react'
 import {IndexLink, Link} from 'react-router'
 import './Header.scss'
+import Auth from '../Auth'
 
 export const Header = () => (
-  <div className='container'>
-    <h1>React Redux Starter Kit</h1>
-    <IndexLink to='/' activeClassName='route--active'>
-      Home
-    </IndexLink>
-    {' · '}
-    <Link to='/counter' activeClassName='route--active'>
-      Counter
-    </Link>
-    {' · '}
-    <Link to='/third' activeClassName='route--active'>
-      Third
-    </Link>
-    {' · '}
-    <Link to='/music/artists' activeClassName='route--active'>
-      Artists
-    </Link>
-    {' · '}
-    <Link to='/music/search' activeClassName='route--active'>
-      Search
-    </Link>
-  </div>
+  <nav className='container navbar navbar-default'>
+    <div className='navbar-heeader'>
+      <h1>
+        <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>Cloudpolis</IndexLink>
+      </h1>
+    </div>
+    <div>
+      <ul className='nav navbar-nav'>
+        <li>
+          <Link to='/music/artists' activeClassName='route--active'>
+            Artists
+          </Link>
+        </li>
+        <li>
+          <Link to='/music/search' activeClassName='route--active'>
+            Search
+          </Link>
+        </li>
+      </ul>
+      <Auth />
+    </div>
+  </nav>
 )
 
 export default Header

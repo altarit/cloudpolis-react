@@ -1,4 +1,4 @@
-const BASE_URL = __DEV__ ? '' : 'http://localhost'
+const BASE_URL = !__DEV__ ? '' : 'http://localhost'
 // const BASE_URL = ''
 
 export function toMMSS(val) {

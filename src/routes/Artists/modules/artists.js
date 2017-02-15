@@ -12,9 +12,13 @@ export function getArtists() {
       type: GET_ARTISTS_REQUEST
     })
 
-    fetch(apiLink('/music/artists/')).then(res => {
+    fetch(apiLink('/music/artists/'), {
+      mode: 'cors'
+    }).then(res => {
+      console.dir(res)
       return res.json()
     }).then(artists => {
+      console.dir(artists)
       dispatch({
         type: GET_ARTISTS_SUCCESS,
         payload: artists.data

@@ -1,122 +1,122 @@
 import {apiLink} from '../../../modules/formatUtils'
+import {handleResponse} from '../../../modules/apiUtils'
 
 import * as types from './authConstants'
 
-export function authHi() {
+const defaultHeaders = {
+  'Content-Type': 'application/json'
+}
+const defaultPostOptions = {
+  method: 'POST',
+  credentials: 'include',
+  cache: 'no-cache',
+  headers: defaultHeaders
+}
+
+export function resetStatus() {
+  return {
+    type: types.AUTH_RESET_STATUS
+  }
+}
+
+export function hi() {
   return dispatch => {
-    dispatch(authHiRequest())
+    dispatch({
+      type: types.AUTH_HI_REQUEST
+    })
+
     return fetch(apiLink('/hi/'))
       .then(res => res.json())
-      .then(json => dispatch(authHiSuccess(json.data)))
-      .catch(ex => dispatch(authHiFailure(ex)))
+      .then(json => {
+        dispatch({
+          type: types.AUTH_HI_SUCCESS,
+          name: json.data
+        })
+      })
+      .catch(ex => {
+        dispatch({
+          type: types.AUTH_HI_FAILURE
+        })
+      })
   }
 }
 
-function authHiRequest() {
-  return {
-    type: types.AUTH_HI_REQUEST
-  }
-}
-
-function authHiSuccess(username) {
-  return {
-    type: types.AUTH_HI_SUCCESS,
-    name: username
-  }
-}
-
-function authHiFailure() {
-  return {
-    type: types.AUTH_HI_FAILURE
-  }
-}
-
-export function authLogin(username, password) {
+export function login(username, password) {
   return dispatch => {
-    dispatch(authLoginRequest(username, password))
+    dispatch({
+      type: types.AUTH_LOGIN_REQUEST,
+      name: username,
+      pass: password
+    })
+
     return fetch(apiLink('/login/'), {
-      method: 'post',
+      ...defaultPostOptions,
       body: JSON.stringify({username: username, password: password})
-    }).then(res => res.json())
-      .then(json => dispatch(authLoginSuccess(json.data)))
-      .catch(ex => dispatch(authLoginFailure(ex)))
+    })
+      .then(handleResponse)
+      .then(json => {
+        console.log('Successful request')
+        dispatch({
+          type: types.AUTH_LOGIN_SUCCESS,
+          name: json.data
+        })
+      }).catch(ex => {
+        console.warn(`Response ${ex.status}: ${ex.message}`)
+        dispatch({
+          type: types.AUTH_LOGIN_FAILURE,
+          errorText: ex.message
+        })
+      })
   }
 }
 
-function authLoginRequest(username, password) {
-  return {
-    type: types.AUTH_LOGIN_REQUEST,
-    name: username,
-    pass: password
-  }
-}
-
-function authLoginSuccess(username) {
-  return {
-    type: types.AUTH_LOGIN_SUCCESS,
-    name: username
-  }
-}
-
-function authLoginFailure(username, password) {
-  return {
-    type: types.AUTH_LOGIN_FAILURE
-  }
-}
-
-export function authSignup(username, password, email) {
+export function signup(username, password, email) {
   return dispatch => {
-    dispatch(authSignupRequest(username, password, email))
+    dispatch({
+      type: types.AUTH_SIGNUP_REQUEST,
+      name: username,
+      pass: password,
+      mail: email
+    })
+
     return fetch(apiLink('/login/'), {
-      method: 'post',
-      body: JSON.stringify({username: username, password: password, email: email, isReg: true})
-    }).then(res => res.json())
-      .then(json => dispatch(authSignupSuccess(json.data)))
-      .catch(ex => dispatch(authHiFailure(ex)))
+      ...defaultPostOptions,
+      body: JSON.stringify({username: username, password: password, email: email, isreg: true})
+    }).then(handleResponse)
+      .then(json => {
+        dispatch({
+          type: types.AUTH_SIGNUP_SUCCESS,
+          name: json.data
+        })
+      })
+      .catch(ex => {
+        dispatch({
+          type: types.AUTH_LOGIN_FAILURE,
+          errorText: ex.message
+        })
+      })
   }
 }
 
-function authSignupRequest(username, password, email) {
-  return {
-    type: types.AUTH_SIGNUP_REQUEST,
-    name: username,
-    pass: password,
-    mail: email
-  }
-}
-
-export function authSignupSuccess(username) {
-  return {
-    type: types.AUTH_SIGNUP_SUCCESS,
-    name: username
-  }
-}
-
-export function authLogout() {
+export function logout() {
   return dispatch => {
-    dispatch(authLogoutRequest())
+    dispatch({
+      type: types.AUTH_LOGOUT_REQUEST
+    })
+
     return fetch(apiLink('/logout/'), {
-      method: 'post'
-    }).then(res => res.json())
-      .then(json => dispatch(authLogoutSuccess()))
-      .catch(ex => dispatch(authLogoutFailure(ex)))
-  }
-}
-
-export function authLogoutRequest() {
-  return {
-    type: types.AUTH_LOGOUT_REQUEST
-  }
-}
-
-export function authLogoutSuccess() {
-  return {
-    type: types.AUTH_LOGOUT_SUCCESS
-  }
-}
-
-export function authLogoutFailure() {
-  return {
-    type: types.AUTH_LOGOUT_FAILURE
+      ...defaultPostOptions
+    }).then(handleResponse)
+      .then(json => {
+        dispatch({
+          type: types.AUTH_LOGOUT_SUCCESS
+        })
+      })
+      .catch(ex => {
+        dispatch({
+          type: types.AUTH_LOGOUT_FAILURE,
+          errorText: ex.message
+        })
+      })
   }
 }

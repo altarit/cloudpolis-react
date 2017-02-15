@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React, {PropTypes} from 'react'
 import cn from 'classnames'
 
 import './Sidebar.scss'
@@ -81,7 +81,7 @@ export class Sidebar extends React.Component {
     this.props.createPlaylist(this.refs.menuPlCreationInput.value)
   }
 
-  render () {
+  render() {
     let classes = cn({
       'sidebar': true,
       'sidebar_open': this.props.isOpen
@@ -112,7 +112,7 @@ export class Sidebar extends React.Component {
               </div>
 
               <div className='playmenu__tabs-center'>
-                <ul className='nav nav-tabs playmenu__tabs-list' style={{ marginLeft: -this.props.scrolledTabs * 72 }}>
+                <ul className='nav nav-tabs playmenu__tabs-list' style={{marginLeft: -this.props.scrolledTabs * 72}}>
                   {this.getTabs()}
                 </ul>
               </div>
@@ -156,7 +156,7 @@ export class Sidebar extends React.Component {
 
               {this.props.popups.bottomAdd ? (
                 <ul className='dropdown-menu dropdown_fixed'
-                  style={{ bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 125 }}>
+                  style={{bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 125}}>
                   <li><a className='fa fa-plus'> From current page to "{this.props.plTab}"</a></li>
                   <li><a className='fa fa-plus'> From another playlist</a></li>
                   <li><a className='fa fa-plus'> Close other</a></li>
@@ -175,7 +175,7 @@ export class Sidebar extends React.Component {
 
               {this.props.popups.bottomSort ? (
                 <ul className='dropdown-menu dropdown_fixed'
-                  style={{ bottom: this.props.popups.bottomSort.ry + 20, left: this.props.popups.bottomSort.x - 175 }}>
+                  style={{bottom: this.props.popups.bottomSort.ry + 20, left: this.props.popups.bottomSort.x - 175}}>
                   <li><a className='fa fa-sort' onClick={this.props.sortByTitle}> Sort by title</a></li>
                   <li><a className='fa fa-sort' onClick={this.props.sortByArtist}> Sort by artist</a></li>
                   <li><a className='fa fa-sort' onClick={this.props.sortByDuration}> Sort by duration</a></li>
@@ -186,7 +186,7 @@ export class Sidebar extends React.Component {
 
               {this.props.popups.bottomPls ? (
                 <ul className='dropdown-menu dropdown_fixed'
-                  style={{ bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 175 }}>
+                  style={{bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 175}}>
                   <li>
                     <a className='fa fa-file-o' data-click='dropdown' data-for='playlistCreation'> New playlist</a>
                   </li>

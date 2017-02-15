@@ -1,4 +1,5 @@
 import {combineReducers} from 'redux'
+import {reducer as formReducer} from 'redux-form'
 import locationReducer from './location'
 
 import sidebarReducer from '../components/Sidebar/modules/sidebar'
@@ -10,6 +11,7 @@ import authReducer from '../components/Auth/modules/authReducer'
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
+    form: formReducer,
     ...asyncReducers,
     sidebar: sidebarReducer,
     player: playerReducer,
