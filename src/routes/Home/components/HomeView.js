@@ -3,7 +3,7 @@ import React, {PropTypes} from 'react'
 import LogoImage from '../assets/logo.png'
 import './HomeView.scss'
 import TrackList from '../../../components/TrackList'
-import {DEFAULT_PL} from '../../../modules/player'
+import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 
 export class HomeView extends React.Component {
 

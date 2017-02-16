@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 
 import Track from '../components/Track'
-import {setTrack, pause, moveTrack, removeTrack} from '../../../modules/player'
+import {setTrack, pause, moveTrack, removeTrack} from '../../../modules/player/playerActions'
 import {openPopup} from '../../../modules/popups'
 
 const mapDispatchToProps = {

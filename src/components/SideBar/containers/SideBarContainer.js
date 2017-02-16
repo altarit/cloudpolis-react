@@ -16,7 +16,7 @@ import {selectTab,
   reverse,
   scrollLeft,
   scrollRight
-} from '../../../modules/player'
+} from '../../../modules/player/playerActions'
 
 const mapDispatchToProps = {
   selectTab,

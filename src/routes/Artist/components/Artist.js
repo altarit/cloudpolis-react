@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 
 import TrackList from '../../../components/TrackList'
-import {DEFAULT_PL} from '../../../modules/player'
+import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 
 export class Artist extends React.Component {
 

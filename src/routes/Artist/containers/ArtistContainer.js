@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 
 import {getArtist} from '../modules/artist'
 import Artist from '../components/Artist'
-import {updatePlaylist} from '../../../modules/player'
+import {updatePlaylist} from '../../../modules/player/playerReducer'
 
 const mapDispatchToProps = {
   getArtist,

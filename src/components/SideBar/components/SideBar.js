@@ -43,6 +43,83 @@ export class Sidebar extends React.Component {
     ))
   }
 
+  renderBottomAddPopup = () => {
+    return this.props.popups.bottomAdd ? (
+      <ul className='dropdown-menu dropdown_fixed'
+        style={{bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 125}}>
+        <li><a className='fa fa-plus'> From current page to "{this.props.plTab}"</a></li>
+        <li><a className='fa fa-plus'> From another playlist</a></li>
+        <li><a className='fa fa-plus'> Close other</a></li>
+      </ul>) : null
+  }
+
+  renderBottomRemovePopup = () => {
+    console.dir(this.props.popups.bottomRemove)
+    return this.props.popups.bottomRemove ? (
+      <ul className='dropdown-menu dropdown_fixed'
+        style={{
+          bottom: this.props.popups.bottomRemove.ry + 20,
+          left: this.props.popups.bottomRemove.x - 175
+        }}>
+        <li><a className='fa fa-minus'> Remove current track from playlist</a></li>
+        <li><a className='fa fa-minus'> Remove all in "{this.props.plTab}"</a></li>
+        <li><a className='fa fa-minus'> Remove selected tracks</a></li>
+      </ul>) : null
+  }
+
+  renderBottomSortPopup = () => {
+    return this.props.popups.bottomSort ? (
+      <ul className='dropdown-menu dropdown_fixed'
+        style={{bottom: this.props.popups.bottomSort.ry + 20, left: this.props.popups.bottomSort.x - 175}}>
+        <li><a className='fa fa-sort' onClick={this.props.sortByTitle}> Sort by title</a></li>
+        <li><a className='fa fa-sort' onClick={this.props.sortByArtist}> Sort by artist</a></li>
+        <li><a className='fa fa-sort' onClick={this.props.sortByDuration}> Sort by duration</a></li>
+        <li><a className='fa fa-sort' onClick={this.props.sortByPath}> Sort by path</a></li>
+        <li><a className='fa fa-sort' onClick={this.props.shuffle}> Shuffle</a></li>
+        <li><a className='fa fa-sort' onClick={this.props.reverse}> Reverse</a></li>
+      </ul>) : null
+  }
+
+  renderBottomPlaylistPopup = () => {
+    return this.props.popups.bottomPls ? (
+      <ul className='dropdown-menu dropdown_fixed'
+        style={{bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 175}}>
+        <li>
+          <a className='fa fa-file-o' data-click='dropdown' data-for='playlistCreation'> New playlist</a>
+        </li>
+        <li><a className='fa fa-times' onClick={this.props.closeOpenPlaylist}> Close playlist</a></li>
+        <li><a className='fa fa-angle-double-down' onClick={this.props.closeOtherPlaylists}> Close others</a>
+        </li>
+        <li>
+          <a className='fa fa-folder-open-o' data-click='dropdown' data-for='openPlaylistDialog'> Open
+            playlist</a>
+        </li>
+        <li>
+          <a className='fa fa-floppy-o' data-click='dropdown' data-for='savePlaylistDialog'> Save playlist</a>
+        </li>
+      </ul>) : null
+  }
+
+  renderPlaylistCreationPopup = () => {
+    return this.props.popups.playlistCreation ? (
+      <div className='dropdown-menu' data-click='none'>
+        <form
+          onSubmit={this.createPlaylist}>
+          <div className='form-group'>
+            <label htmlFor='artists-filter'>Playlist name</label>
+            <input type='text' className='form-control' ref='menuPlCreationInput' />
+            <span>{this.props.errors.createPlaylist}</span>
+          </div>
+          <div className='btn-group'>
+            <button type='submit' className='btn btn-primary'>Create</button>
+          </div>
+          <div className='btn-group'>
+            <button type='button' className='btn btn-primary' data-click='closeall'>Cancel</button>
+          </div>
+        </form>
+      </div>) : null
+  }
+
   scrollRight = () => {
     if (this.props.plKeys.length - this.props.scrolledTabs >= 2) {
       this.props.scrollRight()
@@ -154,72 +231,12 @@ export class Sidebar extends React.Component {
                 data-click='dropdown' data-for='bottomPls'> Playlist
               </button>
 
-              {this.props.popups.bottomAdd ? (
-                <ul className='dropdown-menu dropdown_fixed'
-                  style={{bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 125}}>
-                  <li><a className='fa fa-plus'> From current page to "{this.props.plTab}"</a></li>
-                  <li><a className='fa fa-plus'> From another playlist</a></li>
-                  <li><a className='fa fa-plus'> Close other</a></li>
-                </ul>) : ''}
+              {this.renderBottomAddPopup()}
+              {this.renderBottomRemovePopup()}
+              {this.renderBottomSortPopup()}
+              {this.renderBottomPlaylistPopup()}
 
-              {this.props.popups.bottomRemove ? (
-                <ul className='dropdown-menu dropdown_fixed'
-                  style={{
-                    bottom: this.props.popups.bottomRemove.ry + 20,
-                    left: this.props.popups.bottomRemove.x - 175
-                  }}>
-                  <li><a className='fa fa-minus'> Remove current track from playlist</a></li>
-                  <li><a className='fa fa-minus'> Remove all in "{this.props.plTab}"</a></li>
-                  <li><a className='fa fa-minus'> Remove selected tracks</a></li>
-                </ul>) : ''}
-
-              {this.props.popups.bottomSort ? (
-                <ul className='dropdown-menu dropdown_fixed'
-                  style={{bottom: this.props.popups.bottomSort.ry + 20, left: this.props.popups.bottomSort.x - 175}}>
-                  <li><a className='fa fa-sort' onClick={this.props.sortByTitle}> Sort by title</a></li>
-                  <li><a className='fa fa-sort' onClick={this.props.sortByArtist}> Sort by artist</a></li>
-                  <li><a className='fa fa-sort' onClick={this.props.sortByDuration}> Sort by duration</a></li>
-                  <li><a className='fa fa-sort' onClick={this.props.sortByPath}> Sort by path</a></li>
-                  <li><a className='fa fa-sort' onClick={this.props.shuffle}> Shuffle</a></li>
-                  <li><a className='fa fa-sort' onClick={this.props.reverse}> Reverse</a></li>
-                </ul>) : ''}
-
-              {this.props.popups.bottomPls ? (
-                <ul className='dropdown-menu dropdown_fixed'
-                  style={{bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 175}}>
-                  <li>
-                    <a className='fa fa-file-o' data-click='dropdown' data-for='playlistCreation'> New playlist</a>
-                  </li>
-                  <li><a className='fa fa-times' onClick={this.props.closeOpenPlaylist}> Close playlist</a></li>
-                  <li><a className='fa fa-angle-double-down' onClick={this.props.closeOtherPlaylists}> Close others</a>
-                  </li>
-                  <li>
-                    <a className='fa fa-folder-open-o' data-click='dropdown' data-for='openPlaylistDialog'> Open
-                      playlist</a>
-                  </li>
-                  <li>
-                    <a className='fa fa-floppy-o' data-click='dropdown' data-for='savePlaylistDialog'> Save playlist</a>
-                  </li>
-                </ul>) : ''}
-
-              {this.props.popups.playlistCreation ? (
-                <div className='dropdown-menu' data-click='none'>
-                  <form
-                    onSubmit={this.createPlaylist}>
-                    <div className='form-group'>
-                      <label htmlFor='artists-filter'>Playlist name</label>
-                      <input type='text' className='form-control' ref='menuPlCreationInput' />
-                      <span>{this.props.errors.createPlaylist}</span>
-                    </div>
-                    <div className='btn-group'>
-                      <button type='submit' className='btn btn-primary'>Create</button>
-                    </div>
-                    <div className='btn-group'>
-                      <button type='button' className='btn btn-primary' data-click='closeall'>Cancel</button>
-                    </div>
-                  </form>
-                </div>) : null
-              }
+              {this.renderPlaylistCreationPopup()}
 
               {this.props.popups.openPlaylistDialog ? (
                 <OpenPlaylistDialog playlist={this.props.pls[this.props.plTab]} />

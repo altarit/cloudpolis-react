@@ -2,7 +2,7 @@ import {connect} from 'react-redux'
 
 import {getTracksByQuery} from '../modules/search'
 import Search from '../components/Search'
-import {setCurrentPlaylist} from '../../../modules/player'
+import {setCurrentPlaylist} from '../../../modules/player/playerActions'
 
 const mapDispatchToProps = {
   getTracksByQuery,

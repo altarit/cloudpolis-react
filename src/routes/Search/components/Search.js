@@ -1,7 +1,7 @@
 import React, {PropTypes} from 'react'
 
 import TrackList from '../../../components/TrackList'
-import {SEARCH_PL} from '../../../modules/player'
+import {SEARCH_PL} from '../../../modules/player/playerConstants'
 
 export class Search extends React.Component {
 
