@@ -16,88 +16,76 @@ function selectNextTrack(player, type) {
   if (!pl) return null
 
   let currentIndex = player.pos
-  // let currentIndex = getCurrentTrackIndex(player)
-  if (currentIndex < 0) return {isPlayed: type !== types.PLAYER_END}
+  if (currentIndex < 0) return {isPlaying: type !== types.PLAYER_END}
 
   let nextIndex = getNextIndexByType(currentIndex, type)
   let track = pl[nextIndex]
-  // let track = getTrackByActionType(player, currentIndex, type)
-  if (!track) return {isPlayed: type !== types.PLAYER_END}
+  if (!track) return {isPlaying: type !== types.PLAYER_END}
 
   return {
     track: track,
-    isPlayed: true,
+    isPlaying: true,
     pos: nextIndex
   }
 }
 
-function addPlaylist(name, plKeys, pls) {
+function addPlaylist(name, tabs, pls) {
   if (!name) {
-    return {
-      errors: {createPlaylist: 'Type something'}
-    }
+    return {error: 'Type something'}
   }
   if (name.length > 32) {
-    return {
-      errors: {createPlaylist: 'Too long'}
-    }
+    return {error: 'Too long'}
   }
-  if (~plKeys.indexOf(name)) {
-    return {
-      errors: {createPlaylist: `Playlist ${name} already exists`}
-    }
+  if (~tabs.indexOf(name)) {
+    return {error: `Playlist ${name} already exists`}
   }
-  console.log('Too many playlists: ' + plKeys.length)
-  if (plKeys.length >= 20) {
-    return {
-      errors: {createPlaylist: `Too many playlists`}
-    }
+  if (tabs.length >= 20) {
+    return {error: `Too many playlists`}
   }
 
   return {
-    plKeys: [...plKeys, name],
+    tabs: [...tabs, name],
     pls: {...pls, [name]: []},
-    plTab: name,
-    errors: {}
+    openTab: name
   }
 }
 
-function excludeOpenPlaylust(plTab, plKeys, pls) {
-  let index = plKeys.indexOf(plTab)
+function excludeOpenPlaylust(openTab, tabs, pls) {
+  let index = tabs.indexOf(openTab)
   if (!~index) return
 
-  let nextPlKeys = [...plKeys]
-  nextPlKeys.splice(index, 1)
+  let nextTabs = [...tabs]
+  nextTabs.splice(index, 1)
   let nextPls = {...pls}
-  delete nextPls[plTab]
-  if (!nextPlKeys.length) {
-    nextPlKeys.push(types.DEFAULT_PL)
+  delete nextPls[openTab]
+  if (!nextTabs.length) {
+    nextTabs.push(types.DEFAULT_PL)
     nextPls[types.DEFAULT_PL] = []
   }
-  let nextPlTab = index < nextPlKeys.length ? nextPlKeys[index] : nextPlKeys[index - 1]
+  let nextOpenTab = index < nextTabs.length ? nextTabs[index] : nextTabs[index - 1]
   return {
-    plKeys: nextPlKeys,
+    tabs: nextTabs,
     pls: nextPls,
-    plTab: nextPlTab
+    openTab: nextOpenTab
   }
 }
 
-function _savePlaylistToStorage(state, filename, playlist) {
+function savePlaylistToStorage(state, filename, playlist) {
   let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  let nextPlaylists = {...safe, [filename]: playlist.map(_cloneTrack)}
+  let nextPlaylists = {...safe, [filename]: playlist.map(cloneTrack)}
   localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
   return {...state, safePlaylists: nextPlaylists}
 }
 
-function _openPlaylistFromStorage(state, filename) {
+function openPlaylistFromStorage(state, filename) {
   let safeForOpen = JSON.parse(localStorage.getItem('safePlaylists')) || {}
   let newPl = safeForOpen[filename]
   if (newPl) {
     return {
       ...state,
       pls: {...state.pls, [filename]: newPl},
-      plKeys: ~state.plKeys.indexOf(filename) ? state.plKeys : [...state.plKeys, filename],
-      plTab: filename
+      tabs: ~state.tabs.indexOf(filename) ? state.tabs : [...state.tabs, filename],
+      openTab: filename
     }
   } else {
     console.log(filename + ' not found')
@@ -105,36 +93,14 @@ function _openPlaylistFromStorage(state, filename) {
   }
 }
 
-function _deletePlaylistFromStorage(state, filename) {
+function deletePlaylistFromStorage(state, filename) {
   let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
   delete safe[filename]
   localStorage.setItem('safePlaylists', JSON.stringify(safe))
   return {...state, safePlaylists: safe}
 }
 
-const initialState = {
-  isPlayed: false,
-  volume: 0.25,
-  muted: false,
-  track: {
-    title: '',
-    artist: '',
-    src: '',
-    duration: ''
-  },
-  pos: 0,
-  plTab: types.DEFAULT_PL,
-  scrolledTabs: 0,
-  currentPl: types.DEFAULT_PL,
-  plKeys: [types.DEFAULT_PL],
-  pls: {
-    [types.DEFAULT_PL]: []
-  },
-  safePlaylists: {},
-  errors: {}
-}
-
-function _cloneTrack(track) {
+function cloneTrack(track) {
   return {
     title: track.title,
     artist: track.artist,
@@ -144,58 +110,67 @@ function _cloneTrack(track) {
   }
 }
 
-function _moveTrack(state, oldTrack, plFromName, posFrom, plToName, posTo) {
-  console.log(`_moveTrack: ${plFromName}:${posFrom} -> ${plToName}:${posTo}`)
-  let track = _cloneTrack(oldTrack)
+function moveTrack(statePls, stateCurrentPl, statePos, oldTrack, plFromName, posFrom, plToName, posTo) {
+  console.log(`moveTrack: ${plFromName}:${posFrom} -> ${plToName}:${posTo}`)
+  let track = cloneTrack(oldTrack)
   console.log(`${track.title}`)
-  let pls = {...state.pls}
+  let nextPls = {...statePls}
   if (plFromName) {
-    let plFrom = [...pls[plFromName]]
+    let plFrom = [...nextPls[plFromName]]
     if (plFrom) {
       plFrom.splice(posFrom, 1)
-      pls[plFromName] = plFrom
+      nextPls[plFromName] = plFrom
     }
   }
   // let track = plFrom.splice(posFrom, 1)
-  let plTo = [...pls[plToName]]
-  pls[plToName] = plTo
+  let plTo = [...nextPls[plToName]]
+  nextPls[plToName] = plTo
   let offset = (plFromName === plToName && posFrom < posTo) ? -1 : 0
   plTo.splice(posTo + offset, 0, track)
 
   // move current track marker
-  let currentIndex = state.pos
+  let currentIndex = statePos
   let offsetPos = 0
-  if (state.currentPl === plFromName && state.pos >= posFrom) {
+  if (stateCurrentPl === plFromName && statePos >= posFrom) {
     offsetPos--
   }
-  if (state.currentPl === plToName && state.pos >= posTo) {
+  if (stateCurrentPl === plToName && statePos >= posTo) {
     offsetPos++
   }
   let nextIndex = currentIndex + offsetPos
-  if (state.currentPl === plFromName && state.pos === posFrom) {
+  if (stateCurrentPl === plFromName && statePos === posFrom) {
     nextIndex = posTo + offsetPos
   }
 
-  return {pls, pos: nextIndex}
+  return {pls: nextPls, pos: nextIndex}
 }
 
-function _removeTrack(state, plName, pos) {
-  console.log(`_removeTrack: ${plName}:${pos}`)
-  let pls = {...state.pls}
-  let plNext = pls[plName]
-  plNext.splice(pos, 1)
-  if (pos < state.pos) {
-    return {pls, pos: state.pos - 1}
-  } else if (pos === state.pos && plNext.length > 0) {
-    let nextPos = plNext.length === state.pos ? state.pos - 1 : state.pos
-    return {pls, pos: nextPos, track: plNext[nextPos]}
+function removeTrack(statePls, currentPl, statePos, remPl, remPos) {
+  console.log(`removeTrack: ${remPl}:${remPos}`)
+  let nextPls = {...statePls}
+  let nextPl = [...nextPls[remPl]]
+  nextPls[remPl] = nextPl
+
+  nextPl.splice(remPos, 1)
+  if (currentPl === remPl) {
+    if (remPos < statePos) {
+      return {pls: nextPls, pos: statePos - 1, track: nextPl[statePos - 1]}
+    } else if (remPos === statePos && nextPl.length > 0) {
+      let nextPos = nextPl.length === statePos ? statePos - 1 : statePos
+      return {pls: nextPls, pos: nextPos, track: nextPl[nextPos]}
+    }
   }
-  return {pls}
+  return {pls: nextPls, pos: statePos, track: nextPls[statePos]}
 }
 
-function _sortBy(state, by) {
-  let newPls = {...state.pls}
-  let newPl = [...newPls[state.plTab]]
+function sortBy(by, pls, openTab, currentPl, pos) {
+  let newPls = {...pls}
+  let newPl = [...newPls[openTab]]
+
+  let currentTrack
+  if (currentPl === openTab) {
+    currentTrack = newPl[pos]
+  }
 
   switch (by) {
     case types.BY_TITLE:
@@ -223,23 +198,25 @@ function _sortBy(state, by) {
       newPl.reverse()
       break
   }
-  newPls[state.plTab] = newPl
+  newPls[openTab] = newPl
 
   // change current pos
-  let newPos = state.pos
-  if (state.currentPl === state.plTab) {
+  let newPos
+  if (currentPl === openTab) {
     for (let i = 0; i < newPl.length; i++) {
-      let track = newPl[i]
-      if ((track.href || track.src) === (state.track.href || state.track.src) && track.title === state.track.title) {
+      if (currentTrack === newPl[i]) {
         newPos = i
       }
+    }
+    if (newPos === undefined) {
+      console.warn(`Can't calculate new current pos number`)
     }
   }
 
   return {pls: newPls, pos: newPos}
 }
 
-function _getNextScrolledTabs(tabs, tabName, scrolledTabs) {
+function getNextScrolledTabs(tabs, tabName, scrolledTabs) {
   let currentTabIndex = tabs.indexOf(tabName)
   let nextScrolledTabs = scrolledTabs
   if (nextScrolledTabs > currentTabIndex) nextScrolledTabs = currentTabIndex
@@ -247,64 +224,108 @@ function _getNextScrolledTabs(tabs, tabName, scrolledTabs) {
   return nextScrolledTabs
 }
 
+const initialState = {
+  isPlaying: false,
+  volume: 0.25,
+  muted: false,
+  track: {
+    title: '',
+    artist: '',
+    src: '',
+    duration: ''
+  },
+  pos: -1,
+
+  tabs: [types.DEFAULT_PL],
+  pls: {
+    [types.DEFAULT_PL]: []
+  },
+  currentPl: types.DEFAULT_PL,
+  openTab: types.DEFAULT_PL,
+  scrolledTabs: 0,
+
+  safePlaylists: {},
+  errors: {}
+}
+
 export default function playerReducer(state = initialState, action) {
   switch (action.type) {
+    // general
     case types.PLAYER_PLAY:
-      return {...state, isPlayed: !!state.track.title}
+      return {...state, isPlaying: state.pos !== -1}
     case types.PLAYER_PAUSE:
-      return {...state, isPlayed: false}
+      return {...state, isPlaying: false}
     case types.SET_TRACK:
-      return {...state, track: action.payload, currentPl: action.payload.pl, isPlayed: true, pos: action.payload.pos}
-    case types.SELECT_TAB:
-      return {
-        ...state,
-        plTab: action.payload,
-        scrolledTabs: _getNextScrolledTabs(state.plKeys, action.payload, state.scrolledTabs)
-      }
-    case types.UPDATE_PLAYLIST:
-      return {
-        ...state,
-        pls: {...state.pls, [action.name]: action.content},
-        plKeys: ~state.plKeys.indexOf(action.name) ? state.plKeys : [...state.plKeys, action.name]
-      }
-    case types.SET_CURRENT_PL:
-      return {...state, currentPl: action.name}
+      return {...state, track: action.track, currentPl: action.track.pl, isPlaying: true, pos: action.track.pos}
     case types.PLAYER_NEXT:
       return {...state, ...selectNextTrack(state, action.type)}
     case types.PLAYER_PREV:
       return {...state, ...selectNextTrack(state, action.type)}
-    case types.PLAYER_END:
+    case types.TRACK_ENDS:
       return {...state, ...selectNextTrack(state, action.type)}
+    // options
+    case types.SET_VOLUME:
+      return {...state, volume: action.val, muted: false}
+    case types.TOGGLE_MUTE:
+      return {...state, muted: !state.muted}
+    // management of lists
+    case types.UPDATE_PLAYLIST:
+      return {
+        ...state,
+        pls: {...state.pls, [action.name]: action.content},
+        tabs: ~state.tabs.indexOf(action.name) ? state.tabs : [...state.tabs, action.name]
+      }
     case types.CREATE_PLAYLIST:
-      return {...state, ...addPlaylist(action.name, state.plKeys, state.pls)}
+      let createPlUpdates = addPlaylist(action.name, state.tabs, state.pls)
+      if (createPlUpdates.error) {
+        return {...state, errors: {createPlaylist: createPlUpdates.error}}
+      }
+      return {...state,
+        tabs: createPlUpdates.tabs,
+        pls: createPlUpdates.pls,
+        openTab: createPlUpdates.openTab,
+        errors: {}
+      }
     case types.CLOSE_OPEN_PLAYLIST:
-      return {...state, ...excludeOpenPlaylust(state.plTab, state.plKeys, state.pls)}
+      let closePlUpdates = excludeOpenPlaylust(state.openTab, state.tabs, state.pls)
+      return {...state, tabs: closePlUpdates.tabs, pls: closePlUpdates.pls, openTab: closePlUpdates.openTab}
     case types.CLOSE_OTHER_PLAYLISTS:
       return {
         ...state,
-        plKeys: [state.plTab],
-        pls: {[state.plTab]: state.pls[state.plTab]},
-        plTab: state.plTab,
+        tabs: [state.openTab],
+        pls: {[state.openTab]: state.pls[state.openTab]},
+        openTab: state.openTab,
         scrolledTabs: 0
       }
+    // storage
     case types.STORAGE_LOAD_PLAYLISTS:
       return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
-    case types.STORAGE_SAVE_PLAYLISTS:
-      return {...state, ..._savePlaylistToStorage(state, action.filename, action.playlist)}
+    case types.STORAGE_SAVE_PLAYLIST:
+      return {...state, ...savePlaylistToStorage(state, action.filename, action.playlist)}
     case types.STORAGE_OPEN_PLAYLIST:
-      return {...state, ..._openPlaylistFromStorage(state, action.filename)}
+      return {...state, ...openPlaylistFromStorage(state, action.filename)}
     case types.STORAGE_DELETE_PLAYLIST:
-      return {...state, ..._deletePlaylistFromStorage(state, action.filename)}
-    case types.SET_VOLUME:
-      return {...state, volume: action.val}
-    case types.TOGGLE_MUTE:
-      return {...state, muted: !state.muted}
+      return {...state, ...deletePlaylistFromStorage(state, action.filename)}
+    // editing a playlist
     case types.MOVE_TRACK:
-      return {...state, ..._moveTrack(state, action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)}
+      let moveUpdates = moveTrack(state.pls, state.currentPl, state.pos,
+        action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)
+      return {...state, pls: moveUpdates.pls, pos: moveUpdates.pos}
     case types.REMOVE_TRACK:
-      return {...state, ..._removeTrack(state, action.plName, action.pos)}
+      let removeUpdates = removeTrack(state.pls, state.currentPl, state.pos, action.plName, action.pos)
+      return {...state, pls: removeUpdates.pls, pos: removeUpdates.pos, track: removeUpdates.track
+      }
+    // sort
     case types.SORT_PLAYLIST:
-      return {...state, ..._sortBy(state, action.by)}
+      let sortUpdates = sortBy(action.by, state.pls, state.openTab, state.currentPl, state.pos)
+      return {...state, pls: sortUpdates.pls, pos: sortUpdates.pos}
+    // tabs
+    case types.SELECT_TAB:
+      return {
+        ...state,
+        openTab: action.tabName,
+        scrolledTabs: getNextScrolledTabs(state.tabs, action.tabName, state.scrolledTabs)
+      }
     case types.SCROLL_LEFT:
       return {...state, scrolledTabs: state.scrolledTabs > 0 ? state.scrolledTabs - 1 : state.scrolledTabs}
     case types.SCROLL_RIGHT:

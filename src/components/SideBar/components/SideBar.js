@@ -10,19 +10,20 @@ export class Sidebar extends React.Component {
   static propTypes = {
     isOpen: PropTypes.bool,
     popups: PropTypes.object.isRequired,
-    plKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
     pls: PropTypes.object.isRequired,
-    plTab: PropTypes.string.isRequired,
+    openTab: PropTypes.string.isRequired,
     currentPl: PropTypes.string.isRequired,
     scrolledTabs: PropTypes.number.isRequired,
     errors: PropTypes.object.isRequired,
+    muted: PropTypes.bool.isRequired,
 
     scrollLeft: PropTypes.func.isRequired,
     scrollRight: PropTypes.func.isRequired,
     selectTab: PropTypes.func.isRequired,
     setVolume: PropTypes.func.isRequired,
     moveTrack: PropTypes.func.isRequired,
-    mute: PropTypes.func.isRequired,
+    toggleMute: PropTypes.func.isRequired,
     sortByTitle: PropTypes.func.isRequired,
     sortByArtist: PropTypes.func.isRequired,
     sortByDuration: PropTypes.func.isRequired,
@@ -35,9 +36,9 @@ export class Sidebar extends React.Component {
   }
 
   getTabs = () => {
-    return this.props.plKeys.map(plName => (
+    return this.props.tabs.map(plName => (
       <li key={plName}
-        className={this.props.plTab === plName ? 'active' : ''}
+        className={this.props.openTab === plName ? 'active' : ''}
         onClick={e => { this.props.selectTab(plName) }}
       ><a draggable='true'>{plName}</a></li>
     ))
@@ -47,14 +48,13 @@ export class Sidebar extends React.Component {
     return this.props.popups.bottomAdd ? (
       <ul className='dropdown-menu dropdown_fixed'
         style={{bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 125}}>
-        <li><a className='fa fa-plus'> From current page to "{this.props.plTab}"</a></li>
+        <li><a className='fa fa-plus'> From current page to "{this.props.openTab}"</a></li>
         <li><a className='fa fa-plus'> From another playlist</a></li>
         <li><a className='fa fa-plus'> Close other</a></li>
       </ul>) : null
   }
 
   renderBottomRemovePopup = () => {
-    console.dir(this.props.popups.bottomRemove)
     return this.props.popups.bottomRemove ? (
       <ul className='dropdown-menu dropdown_fixed'
         style={{
@@ -62,7 +62,7 @@ export class Sidebar extends React.Component {
           left: this.props.popups.bottomRemove.x - 175
         }}>
         <li><a className='fa fa-minus'> Remove current track from playlist</a></li>
-        <li><a className='fa fa-minus'> Remove all in "{this.props.plTab}"</a></li>
+        <li><a className='fa fa-minus'> Remove all in "{this.props.openTab}"</a></li>
         <li><a className='fa fa-minus'> Remove selected tracks</a></li>
       </ul>) : null
   }
@@ -121,7 +121,7 @@ export class Sidebar extends React.Component {
   }
 
   scrollRight = () => {
-    if (this.props.plKeys.length - this.props.scrolledTabs >= 2) {
+    if (this.props.tabs.length - this.props.scrolledTabs >= 2) {
       this.props.scrollRight()
     }
   }
@@ -133,19 +133,19 @@ export class Sidebar extends React.Component {
   }
 
   volumeChanged = (e) => {
-    this.props.setVolume(e.target.value / 20)
+    this.props.setVolume((e.target.value / 20) * (e.target.value / 20))
   }
 
   drop = (e) => {
     e.preventDefault()
     let track = JSON.parse(e.dataTransfer.getData('track'))
-    let playlistLength = this.props.pls[this.props.plTab].length
+    let playlistLength = this.props.pls[this.props.openTab].length
     if (track.immutable) {
-      this.props.moveTrack(track, null, null, this.props.plTab, playlistLength)
+      this.props.moveTrack(track, null, null, this.props.openTab, playlistLength)
     } else {
       let transferPlName = e.dataTransfer.getData('pl')
-      let transferTrackPos = e.dataTransfer.getData('pos')
-      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.plTab, playlistLength)
+      let transferTrackPos = +e.dataTransfer.getData('pos')
+      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.openTab, playlistLength)
     }
   }
 
@@ -163,7 +163,7 @@ export class Sidebar extends React.Component {
       'sidebar': true,
       'sidebar_open': this.props.isOpen
     })
-    let songs = this.props.pls[this.props.plTab]
+    let songs = this.props.pls[this.props.openTab]
 
     return (
       <div className={classes}>
@@ -171,14 +171,20 @@ export class Sidebar extends React.Component {
           <div className='playmenu'>
 
             <div className='playmenu__top'>
-              <button type='button' className='btn btn-info fa fa-fast-backward' />
-              <button type='button' className='btn btn-info fa fa-fast-forward' />
-              <button type='button' className='btn btn-info fa fa-retweet' />
-              <button type='button' className='btn btn-info fa fa-random' />
+              <button type='button' className='btn btn-primary fa fa-fast-backward' />
+              <button type='button' className='btn btn-primary fa fa-fast-forward' />
+              <button type='button' className='btn btn-primary fa fa-retweet' />
+              <button type='button' className='btn btn-primary fa fa-random' />
               <div className='playmenu__volume'>
-                <button type='button' className='btn btn-info fa fa-volume-up' onClick={this.props.mute} />
+                {this.props.muted ? (
+                  <button type='button' className='btn btn-danger fa fa-volume-off' style={{width: 40}}
+                    onClick={this.props.toggleMute} />
+                ) : (
+                  <button type='button' className='btn btn-primary fa fa-volume-up'
+                    onClick={this.props.toggleMute} />
+                )}
                 <input type='range' className='playmenu__volume-slider'
-                  min='1' max='20' defaultValue='20' onChange={this.volumeChanged} />
+                  min='1' max='20' defaultValue='10' onChange={this.volumeChanged} />
               </div>
             </div>
 
@@ -207,11 +213,11 @@ export class Sidebar extends React.Component {
             </div>
 
             <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-              <TrackList songs={songs} pl={this.props.plTab} immutable={false} className='tracklist_mini' />
+              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
             </div>
 
             <div className='playmenu__status'>
-              Open: <b>{this.props.plTab}</b><br />
+              Open: <b>{this.props.openTab}</b><br />
               Playing: <b>{this.props.currentPl}</b>
             </div>
 
@@ -239,15 +245,14 @@ export class Sidebar extends React.Component {
               {this.renderPlaylistCreationPopup()}
 
               {this.props.popups.openPlaylistDialog ? (
-                <OpenPlaylistDialog playlist={this.props.pls[this.props.plTab]} />
+                <OpenPlaylistDialog playlist={this.props.pls[this.props.openTab]} />
               ) : null }
 
               {this.props.popups.savePlaylistDialog ? (
-                <OpenPlaylistDialog playlist={this.props.pls[this.props.plTab]} forSave='true'
-                  filename={this.props.plTab} />
+                <OpenPlaylistDialog playlist={this.props.pls[this.props.openTab]} forSave='true'
+                  filename={this.props.openTab} />
               ) : null }
             </div>
-
           </div>
         </div>
       </div>

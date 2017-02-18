@@ -15,20 +15,20 @@ export class Track extends React.Component {
     href: PropTypes.string,
     duration: PropTypes.string.isRequired,
 
-    isPlayed: PropTypes.bool.isRequired,
-    playing: PropTypes.bool.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    isCurrent: PropTypes.bool.isRequired,
     pos: PropTypes.number.isRequired,
     immutable: PropTypes.bool.isRequired,
-
     currentPl: PropTypes.string.isRequired,
-    pl: PropTypes.arrayOf(PropTypes.object),
+    pl: PropTypes.string,
+
+    trackAdd: PropTypes.object,
 
     pause: PropTypes.func.isRequired,
     playSong: PropTypes.func.isRequired,
-    updatePlaylist: PropTypes.func.isRequired,
+    updatePlaylist: PropTypes.func,
     moveTrack: PropTypes.func.isRequired,
     openPopup: PropTypes.func.isRequired,
-    trackAdd: PropTypes.func.isRequired,
     removeTrack: PropTypes.func.isRequired
   }
 
@@ -40,7 +40,7 @@ export class Track extends React.Component {
   }
 
   handlePlayButton = () => {
-    if (this.props.playing && this.props.isPlayed) {
+    if (this.props.isCurrent && this.props.isPlaying) {
       this.props.pause()
     } else {
       this.props.playSong(this.props)
@@ -69,7 +69,7 @@ export class Track extends React.Component {
       this.props.moveTrack(track, null, null, this.props.pl, this.props.pos)
     } else {
       let transferPlName = e.dataTransfer.getData('pl')
-      let transferTrackPos = e.dataTransfer.getData('pos')
+      let transferTrackPos = +e.dataTransfer.getData('pos')
       this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.pl, this.props.pos)
     }
   }
@@ -103,14 +103,14 @@ export class Track extends React.Component {
 
     return (
       <div>
-        <div className={'track' + (this.props.playing && ' playing' || '')}
+        <div className={'track' + (this.props.isCurrent ? ' playing' : '')}
           style={{
             borderTopStyle: this.state.isAbove ? 'solid' : null
           }}
           draggable='true' onDragStart={this.dragStart}
           onDrop={this.drop} onDragOver={this.dragOver} onDragLeave={this.dragLeave}>
           <div className='track__cover' onClick={this.handlePlayButton}>
-            <span className={this.props.playing && this.props.isPlayed ? 'fa fa-pause' : 'fa fa-play'} />
+            <span className={this.props.isCurrent && this.props.isPlaying ? 'fa fa-pause' : 'fa fa-play'} />
           </div>
           <div className='track__info' onDoubleClick={this.handlePlayButton}>
             <div className='track__title'>{this.props.title}</div>

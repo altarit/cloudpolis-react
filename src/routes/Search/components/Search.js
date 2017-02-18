@@ -9,8 +9,7 @@ export class Search extends React.Component {
     songs: PropTypes.arrayOf(PropTypes.object),
     fetching: PropTypes.bool,
 
-    getTracksByQuery: PropTypes.func.isRequired,
-    setCurrentPlaylist: PropTypes.func.isRequired
+    getTracksByQuery: PropTypes.func.isRequired
   }
 
   componentDidMount() {

@@ -1,7 +1,7 @@
 import * as types from './playerConstants'
 
 // --------------------------------
-// General controls
+// General
 // --------------------------------
 
 export function play() {
@@ -19,7 +19,7 @@ export function pause() {
 export function setTrack(track) {
   return {
     type: types.SET_TRACK,
-    payload: track
+    track: track
   }
 }
 
@@ -37,9 +37,13 @@ export function prevTrack() {
 
 export function endTrack() {
   return {
-    type: types.PLAYER_END
+    type: types.TRACK_ENDS
   }
 }
+
+// --------------------------------
+// Options
+// --------------------------------
 
 export function setVolume(val) {
   return {
@@ -55,7 +59,7 @@ export function toggleMute() {
 }
 
 // --------------------------------
-// Playlists control
+// Management of lists
 // --------------------------------
 
 export function updatePlaylist(name, content) {
@@ -63,13 +67,6 @@ export function updatePlaylist(name, content) {
     type: types.UPDATE_PLAYLIST,
     name: name || types.DEFAULT_PL,
     content: [...content]
-  }
-}
-
-export function setCurrentPlaylist(name) {
-  return {
-    type: types.SET_CURRENT_PL,
-    name: name || types.DEFAULT_PL
   }
 }
 
@@ -93,6 +90,38 @@ export function closeOtherPlaylists() {
 }
 
 // --------------------------------
+// Local storage
+// --------------------------------
+
+export function loadPlaylistsFromStorage() {
+  return {
+    type: types.STORAGE_LOAD_PLAYLISTS
+  }
+}
+
+export function savePlaylistToStorage(filename, playlist) {
+  return {
+    type: types.STORAGE_SAVE_PLAYLIST,
+    filename,
+    playlist
+  }
+}
+
+export function openPlaylistFromStorage(filename) {
+  return {
+    type: types.STORAGE_OPEN_PLAYLIST,
+    filename
+  }
+}
+
+export function deletePlaylistFromStorage(filename) {
+  return {
+    type: types.STORAGE_DELETE_PLAYLIST,
+    filename
+  }
+}
+
+// --------------------------------
 // Playlist changes
 // --------------------------------
 
@@ -112,38 +141,6 @@ export function removeTrack(plName, pos) {
     type: types.REMOVE_TRACK,
     plName,
     pos
-  }
-}
-
-// --------------------------------
-// Local storage
-// --------------------------------
-
-export function loadPlaylistsFromStorage() {
-  return {
-    type: types.STORAGE_LOAD_PLAYLISTS
-  }
-}
-
-export function savePlaylistsToStorage(filename, playlist) {
-  return {
-    type: types.STORAGE_SAVE_PLAYLISTS,
-    filename,
-    playlist
-  }
-}
-
-export function openPlaylistFromStorage(filename) {
-  return {
-    type: types.STORAGE_OPEN_PLAYLIST,
-    filename
-  }
-}
-
-export function deletePlaylistFromStorage(filename) {
-  return {
-    type: types.STORAGE_DELETE_PLAYLIST,
-    filename
   }
 }
 
@@ -195,7 +192,7 @@ export function reverse() {
 export function selectTab(playlistName) {
   return {
     type: types.SELECT_TAB,
-    payload: playlistName
+    tabName: playlistName
   }
 }
 

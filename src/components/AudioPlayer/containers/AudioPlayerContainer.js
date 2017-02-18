@@ -16,7 +16,7 @@ const mapStateProps = (state) => ({
   duration: state.player.track.duration,
   compilation: state.player.track.compiltaion,
 
-  isPlayed: state.player.isPlayed,
+  isPlaying: state.player.isPlaying,
   volume: state.player.volume,
   muted: state.player.muted
 })

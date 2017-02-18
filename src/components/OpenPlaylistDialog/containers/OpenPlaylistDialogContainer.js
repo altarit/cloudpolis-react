@@ -3,14 +3,14 @@ import {connect} from 'react-redux'
 import OpenPlaylistDialog from '../components/OpenPlaylistDialog'
 import {
   loadPlaylistsFromStorage,
-  savePlaylistsToStorage,
+  savePlaylistToStorage,
   openPlaylistFromStorage,
   deletePlaylistFromStorage
 } from '../../../modules/player/playerActions'
 
 const mapDispatchToProps = {
   loadPlaylistsFromStorage,
-  savePlaylistsToStorage,
+  savePlaylistToStorage,
   openPlaylistFromStorage,
   deletePlaylistFromStorage
 }

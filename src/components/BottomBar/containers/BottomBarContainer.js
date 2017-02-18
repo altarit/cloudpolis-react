@@ -14,7 +14,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  isPlayed: state.player.isPlayed
+  isPlaying: state.player.isPlaying
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BottomBar)

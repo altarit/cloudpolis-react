@@ -39,14 +39,15 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   isOpen: !state.sidebar.isOpen,
   scrolledTabs: state.player.scrolledTabs,
-  plKeys: state.player.plKeys,
-  plTab: state.player.plTab,
+  tabs: state.player.tabs,
+  openTab: state.player.openTab,
   pls: state.player.pls,
   currentPl: state.player.currentPl,
   track: state.player.track,
   popups: state.popups,
   errors: state.player.errors,
-  pos: state.player.pos
+  pos: state.player.pos,
+  muted: state.player.muted
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

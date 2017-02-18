@@ -4,7 +4,7 @@ import {Link} from 'react-router'
 export class Artists extends React.Component {
 
   static propTypes = {
-    artists: PropTypes.arrayOf(PropTypes.string).isRequired,
+    artists: PropTypes.arrayOf(PropTypes.object).isRequired,
     artistsMask: PropTypes.string,
     fetching: PropTypes.bool,
 

@@ -24,7 +24,7 @@ export class TrackList extends React.Component {
       let isCurrentPl = this.props.currentPl === this.props.pl
       return current.map(track => (
         <Track key={i} {...track}
-          playing={currentSrc && this.props.pos === i && (track.src || track.href) === currentSrc && isCurrentPl}
+          isCurrent={isCurrentPl && !!currentSrc && this.props.pos === i && (track.src || track.href) === currentSrc}
           pl={this.props.pl}
           pos={i++}
           immutable={this.props.immutable}

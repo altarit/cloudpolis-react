@@ -12,7 +12,7 @@ export class AudioPlayer extends React.Component {
 
     volume: PropTypes.number.isRequired,
     muted: PropTypes.bool.isRequired,
-    isPlayed: PropTypes.bool.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
 
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
@@ -53,7 +53,7 @@ export class AudioPlayer extends React.Component {
       audio.play()
     }
 
-    if (!this.props.isPlayed && nextProps.isPlayed) {
+    if (!this.props.isPlaying && nextProps.isPlaying) {
       console.log('changed to played')
       if (audio.ended) {
         audio.currentTime = 0
@@ -62,7 +62,7 @@ export class AudioPlayer extends React.Component {
         audio.play()
       }
     }
-    if (this.props.isPlayed && !nextProps.isPlayed) {
+    if (this.props.isPlaying && !nextProps.isPlaying) {
       console.log('changed to paused')
       audio.pause()
     }
@@ -170,6 +170,7 @@ export class AudioPlayer extends React.Component {
         <audio autoPlay='autoplay'
           ref='audio'
           src={trackLink(this.props.src)}
+          muted={this.props.muted}
           onTimeUpdate={this.handleTimeUpdate}
           onProgress={this.handleProgress}
           onDurationChange={this.handleDurationChange}

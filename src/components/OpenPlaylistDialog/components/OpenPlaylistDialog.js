@@ -11,7 +11,7 @@ export class OpenPlaylistDialog extends React.Component {
     filename: PropTypes.string,
 
     loadPlaylistsFromStorage: PropTypes.func.isRequired,
-    savePlaylistsToStorage: PropTypes.func.isRequired,
+    savePlaylistToStorage: PropTypes.func.isRequired,
     openPlaylistFromStorage: PropTypes.func.isRequired,
     deletePlaylistFromStorage: PropTypes.func.isRequired
   }
@@ -27,7 +27,7 @@ export class OpenPlaylistDialog extends React.Component {
     let filename = this.refs.filename.value
     let playlist = this.props.playlist
     if (this.props.forSave) {
-      this.props.savePlaylistsToStorage(filename, playlist)
+      this.props.savePlaylistToStorage(filename, playlist)
     } else {
       this.props.openPlaylistFromStorage(filename)
     }
