@@ -1,10 +1,10 @@
+import {fetchGet} from '../../../modules/apiUtils'
+
 export const GET_ARTISTS_REQUEST = 'GET_ARTISTS_REQUEST'
 export const GET_ARTISTS_SUCCESS = 'GET_ARTISTS_SUCCESS'
 export const GET_ARTISTS_FAILED = 'GET_ARTISTS_FAILED'
 
 export const CHANGE_ARTISTS_FILTER = 'CHANGE_ARTISTS_FILTER'
-
-import {apiLink} from '../../../modules/formatUtils'
 
 export function getArtists() {
   return (dispatch) => {
@@ -12,18 +12,14 @@ export function getArtists() {
       type: GET_ARTISTS_REQUEST
     })
 
-    fetch(apiLink('/music/artists/'), {
-      mode: 'cors'
-    }).then(res => {
-      console.dir(res)
-      return res.json()
-    }).then(artists => {
-      console.dir(artists)
-      dispatch({
-        type: GET_ARTISTS_SUCCESS,
-        payload: artists.data
+    return fetchGet('/music/artists/')
+      .then(artists => {
+        console.dir(artists)
+        dispatch({
+          type: GET_ARTISTS_SUCCESS,
+          payload: artists.data
+        })
       })
-    })
   }
 }
 

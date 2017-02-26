@@ -1,4 +1,5 @@
 import * as types from './playerConstants'
+import {cloneTrack} from './playerUtils'
 
 // --------------------------------
 // General
@@ -94,30 +95,78 @@ export function closeOtherPlaylists() {
 // --------------------------------
 
 export function loadPlaylistsFromStorage() {
-  return {
-    type: types.STORAGE_LOAD_PLAYLISTS
+  return dispatch => {
+    let safePlaylists = {}
+    try {
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+    } catch (e) {
+      console.warn(`Local storage 'safePlaylists' cannot be read`)
+      safePlaylists = {}
+    }
+    dispatch({
+      type: types.STORAGE_LOAD_PLAYLISTS_SUCCESS,
+      safePlaylists
+    })
   }
 }
 
 export function savePlaylistToStorage(filename, playlist) {
-  return {
-    type: types.STORAGE_SAVE_PLAYLIST,
-    filename,
-    playlist
+  return dispatch => {
+    let safePlaylists = {}
+    try {
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+    } catch (e) {
+      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+    }
+    let nextPlaylists = {...safePlaylists, [filename]: playlist.map(cloneTrack)}
+    localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
+    dispatch({
+      type: types.STORAGE_SAVE_PLAYLIST_SUCCESS,
+      safePlaylists: nextPlaylists
+    })
   }
 }
 
 export function openPlaylistFromStorage(filename) {
-  return {
-    type: types.STORAGE_OPEN_PLAYLIST,
-    filename
+  return dispatch => {
+    let safePlaylists = {}
+    try {
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+    } catch (e) {
+      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+    }
+    let playlist = safePlaylists[filename]
+    if (playlist) {
+      dispatch({
+        type: types.STORAGE_OPEN_PLAYLIST_SUCCESS,
+        filename,
+        playlist
+      })
+    } else {
+      console.error(`Playlist '${filename}' not found`)
+    }
   }
 }
 
 export function deletePlaylistFromStorage(filename) {
-  return {
-    type: types.STORAGE_DELETE_PLAYLIST,
-    filename
+  return dispatch => {
+    let safePlaylists = {}
+    try {
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+    } catch (e) {
+      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+    }
+    let playlist = safePlaylists[filename]
+    if (playlist) {
+      delete safePlaylists[filename]
+      localStorage.setItem('safePlaylists', JSON.stringify(safePlaylists))
+      dispatch({
+        type: types.STORAGE_DELETE_PLAYLIST_SUCCESS,
+        safePlaylists
+      })
+    } else {
+      console.error(`Playlist '${filename}' not found`)
+    }
   }
 }
 

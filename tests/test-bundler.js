@@ -12,6 +12,7 @@ import 'whatwg-fetch'
 import fmock from 'fetch-mock'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import 'mock-local-storage'
 
 chai.use(sinonChai)
 chai.use(chaiAsPromised)

@@ -1,26 +1,25 @@
 import * as types from './playerConstants'
+import {cloneTrack, setTitle} from './playerUtils'
 
 function getNextIndexByType(currentIndex, type) {
   switch (type) {
     case types.PLAYER_NEXT:
-    case types.PLAYER_END:
+    case types.TRACK_ENDS:
       return currentIndex + 1
     case types.PLAYER_PREV:
       return currentIndex - 1
   }
-  return null
 }
 
-function selectNextTrack(player, type) {
-  let pl = player.pls[player.currentPl]
-  if (!pl) return null
+function selectNextTrack(pl, pos, type) {
+  if (!pl) return {}
 
-  let currentIndex = player.pos
-  if (currentIndex < 0) return {isPlaying: type !== types.PLAYER_END}
+  let currentIndex = pos
+  if (currentIndex < 0) return {isPlaying: type !== types.TRACK_ENDS}
 
   let nextIndex = getNextIndexByType(currentIndex, type)
   let track = pl[nextIndex]
-  if (!track) return {isPlaying: type !== types.PLAYER_END}
+  if (!track) return {isPlaying: type !== types.TRACK_ENDS}
 
   return {
     track: track,
@@ -67,46 +66,6 @@ function excludeOpenPlaylust(openTab, tabs, pls) {
     tabs: nextTabs,
     pls: nextPls,
     openTab: nextOpenTab
-  }
-}
-
-function savePlaylistToStorage(state, filename, playlist) {
-  let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  let nextPlaylists = {...safe, [filename]: playlist.map(cloneTrack)}
-  localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
-  return {...state, safePlaylists: nextPlaylists}
-}
-
-function openPlaylistFromStorage(state, filename) {
-  let safeForOpen = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  let newPl = safeForOpen[filename]
-  if (newPl) {
-    return {
-      ...state,
-      pls: {...state.pls, [filename]: newPl},
-      tabs: ~state.tabs.indexOf(filename) ? state.tabs : [...state.tabs, filename],
-      openTab: filename
-    }
-  } else {
-    console.log(filename + ' not found')
-    return state
-  }
-}
-
-function deletePlaylistFromStorage(state, filename) {
-  let safe = JSON.parse(localStorage.getItem('safePlaylists')) || {}
-  delete safe[filename]
-  localStorage.setItem('safePlaylists', JSON.stringify(safe))
-  return {...state, safePlaylists: safe}
-}
-
-function cloneTrack(track) {
-  return {
-    title: track.title,
-    artist: track.artist,
-    src: (track.src || track.href),
-    duration: track.duration,
-    compilation: track.compilation
   }
 }
 
@@ -160,7 +119,7 @@ function removeTrack(statePls, currentPl, statePos, remPl, remPos) {
       return {pls: nextPls, pos: nextPos, track: nextPl[nextPos]}
     }
   }
-  return {pls: nextPls, pos: statePos, track: nextPls[statePos]}
+  return {pls: nextPls, pos: statePos, track: nextPls[currentPl][statePos]}
 }
 
 function sortBy(by, pls, openTab, currentPl, pos) {
@@ -252,17 +211,20 @@ export default function playerReducer(state = initialState, action) {
   switch (action.type) {
     // general
     case types.PLAYER_PLAY:
+      setTitle(action.track)
       return {...state, isPlaying: state.pos !== -1}
     case types.PLAYER_PAUSE:
       return {...state, isPlaying: false}
     case types.SET_TRACK:
+      setTitle(action.track)
       return {...state, track: action.track, currentPl: action.track.pl, isPlaying: true, pos: action.track.pos}
     case types.PLAYER_NEXT:
-      return {...state, ...selectNextTrack(state, action.type)}
     case types.PLAYER_PREV:
-      return {...state, ...selectNextTrack(state, action.type)}
     case types.TRACK_ENDS:
-      return {...state, ...selectNextTrack(state, action.type)}
+      let nextUpdates = selectNextTrack(state.pls[state.currentPl], state.pos, action.type)
+      // return {...state, track: nextUpdates.track, pos: nextUpdates.pos, isPlaying: nextUpdates.isPlaying}
+      setTitle(nextUpdates.track)
+      return {...state, ...nextUpdates}
     // options
     case types.SET_VOLUME:
       return {...state, volume: action.val, muted: false}
@@ -298,14 +260,16 @@ export default function playerReducer(state = initialState, action) {
         scrolledTabs: 0
       }
     // storage
-    case types.STORAGE_LOAD_PLAYLISTS:
-      return {...state, safePlaylists: JSON.parse(localStorage.getItem('safePlaylists')) || {}}
-    case types.STORAGE_SAVE_PLAYLIST:
-      return {...state, ...savePlaylistToStorage(state, action.filename, action.playlist)}
-    case types.STORAGE_OPEN_PLAYLIST:
-      return {...state, ...openPlaylistFromStorage(state, action.filename)}
-    case types.STORAGE_DELETE_PLAYLIST:
-      return {...state, ...deletePlaylistFromStorage(state, action.filename)}
+    case types.STORAGE_LOAD_PLAYLISTS_SUCCESS:
+      return {...state, safePlaylists: action.safePlaylists}
+    case types.STORAGE_SAVE_PLAYLIST_SUCCESS:
+      return {...state, safePlaylists: action.safePlaylists}
+    case types.STORAGE_OPEN_PLAYLIST_SUCCESS:
+      let nextPls = {...state.pls, [action.filename]: action.playlist}
+      let nextTabs = ~state.tabs.indexOf(action.filename) ? state.tabs : [...state.tabs, action.filename]
+      return {...state, pls: nextPls, tabs: nextTabs, openTab: action.filename}
+    case types.STORAGE_DELETE_PLAYLIST_SUCCESS:
+      return {...state, safePlaylists: action.safePlaylists}
     // editing a playlist
     case types.MOVE_TRACK:
       let moveUpdates = moveTrack(state.pls, state.currentPl, state.pos,
@@ -313,8 +277,8 @@ export default function playerReducer(state = initialState, action) {
       return {...state, pls: moveUpdates.pls, pos: moveUpdates.pos}
     case types.REMOVE_TRACK:
       let removeUpdates = removeTrack(state.pls, state.currentPl, state.pos, action.plName, action.pos)
-      return {...state, pls: removeUpdates.pls, pos: removeUpdates.pos, track: removeUpdates.track
-      }
+      setTitle(removeUpdates.track)
+      return {...state, pls: removeUpdates.pls, pos: removeUpdates.pos, track: removeUpdates.track}
     // sort
     case types.SORT_PLAYLIST:
       let sortUpdates = sortBy(action.by, state.pls, state.openTab, state.currentPl, state.pos)

@@ -22,6 +22,16 @@ export const Header = () => (
             Search
           </Link>
         </li>
+        <li>
+          <Link to='/users' activeClassName='route--active'>
+            Users
+          </Link>
+        </li>
+        <li>
+          <Link to='/admin' activeClassName='route--active'>
+            Admin
+          </Link>
+        </li>
       </ul>
       <Auth />
     </div>

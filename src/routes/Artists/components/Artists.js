@@ -1,6 +1,8 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
+import './Artist.scss'
+
 export class Artists extends React.Component {
 
   static propTypes = {
@@ -24,9 +26,10 @@ export class Artists extends React.Component {
     this.props.artists.forEach(artist => {
       if (rx.test(artist.name)) {
         result.push(
-          <div key={artist.name}>
+          <li key={artist.name} className='list-group-item artist_el'>
+            <span className='badge'>{artist.count}</span>
             <Link to={`/music/artists/${artist.name}`}>{artist.name}</Link>
-          </div>
+          </li>
         )
       }
     })
@@ -56,11 +59,9 @@ export class Artists extends React.Component {
         {this.props.fetching ? (
           <div>Loading...</div>
         ) : (
-          <div>
-            {
-              this.getArtists()
-            }
-          </div>
+          <ul className='list-group artists_list'>
+            { this.getArtists() }
+          </ul>
         )}
       </div>
     )

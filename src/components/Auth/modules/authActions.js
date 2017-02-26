@@ -1,17 +1,6 @@
-import {apiLink} from '../../../modules/formatUtils'
-import {handleResponse} from '../../../modules/apiUtils'
+import {fetchGet, fetchPost} from '../../../modules/apiUtils'
 
 import * as types from './authConstants'
-
-const defaultHeaders = {
-  'Content-Type': 'application/json'
-}
-const defaultPostOptions = {
-  method: 'POST',
-  credentials: 'include',
-  cache: 'no-cache',
-  headers: defaultHeaders
-}
 
 export function resetStatus() {
   return {
@@ -25,8 +14,7 @@ export function hi() {
       type: types.AUTH_HI_REQUEST
     })
 
-    return fetch(apiLink('/hi/'))
-      .then(res => res.json())
+    return fetchGet('/hi/')
       .then(json => {
         dispatch({
           type: types.AUTH_HI_SUCCESS,
@@ -49,18 +37,16 @@ export function login(username, password) {
       pass: password
     })
 
-    return fetch(apiLink('/login/'), {
-      ...defaultPostOptions,
+    return fetchPost('/login/', {
       body: JSON.stringify({username: username, password: password})
+    }).then(json => {
+      console.log('Successful request')
+      dispatch({
+        type: types.AUTH_LOGIN_SUCCESS,
+        name: json.data
+      })
     })
-      .then(handleResponse)
-      .then(json => {
-        console.log('Successful request')
-        dispatch({
-          type: types.AUTH_LOGIN_SUCCESS,
-          name: json.data
-        })
-      }).catch(ex => {
+      .catch(ex => {
         console.warn(`Response ${ex.status}: ${ex.message}`)
         dispatch({
           type: types.AUTH_LOGIN_FAILURE,
@@ -79,19 +65,17 @@ export function signup(username, password, email) {
       mail: email
     })
 
-    return fetch(apiLink('/login/'), {
-      ...defaultPostOptions,
+    return fetchPost('/login/', {
       body: JSON.stringify({username: username, password: password, email: email, isreg: true})
-    }).then(handleResponse)
-      .then(json => {
-        dispatch({
-          type: types.AUTH_SIGNUP_SUCCESS,
-          name: json.data
-        })
+    }).then(json => {
+      dispatch({
+        type: types.AUTH_SIGNUP_SUCCESS,
+        name: json.data
       })
+    })
       .catch(ex => {
         dispatch({
-          type: types.AUTH_LOGIN_FAILURE,
+          type: types.AUTH_SIGNUP_FAILURE,
           errorText: ex.message
         })
       })
@@ -104,9 +88,7 @@ export function logout() {
       type: types.AUTH_LOGOUT_REQUEST
     })
 
-    return fetch(apiLink('/logout/'), {
-      ...defaultPostOptions
-    }).then(handleResponse)
+    return fetchPost('/logout/')
       .then(json => {
         dispatch({
           type: types.AUTH_LOGOUT_SUCCESS

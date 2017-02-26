@@ -32,6 +32,8 @@ export class AudioPlayer extends React.Component {
 
   componentDidMount() {
     console.log('AudioPlayer.componentDidMount')
+    let audio = this.refs.audio
+    audio.volume = 0.25
   }
 
   componentWillReceiveProps(nextProps) {

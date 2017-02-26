@@ -22,6 +22,10 @@ export class Auth extends React.Component {
     logout: PropTypes.func.isRequired
   }
 
+  componentDidMount() {
+    this.props.hi()
+  }
+
   login = (values) => {
     this.props.login(values.username, values.password)
   }

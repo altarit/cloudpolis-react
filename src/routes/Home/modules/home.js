@@ -1,4 +1,4 @@
-import {apiLink} from '../../../modules/formatUtils'
+import {fetchGet} from '../../../modules/apiUtils'
 
 export const GET_FEATURED_TRACKS_REQUEST = 'GET_FEATURED_TRACKS_REQUEST'
 export const GET_FEATURED_TRACKS_SUCCESS = 'GET_FEATURED_TRACKS_SUCCESS'
@@ -10,14 +10,13 @@ export function getFeaturedTracks() {
       type: GET_FEATURED_TRACKS_REQUEST
     })
 
-    fetch(apiLink('/music/random')).then(res => {
-      return res.json()
-    }).then(tracks => {
-      dispatch({
-        type: GET_FEATURED_TRACKS_SUCCESS,
-        tracks: tracks.data
+    return fetchGet('/music/random')
+      .then(tracks => {
+        dispatch({
+          type: GET_FEATURED_TRACKS_SUCCESS,
+          tracks: tracks.data
+        })
       })
-    })
   }
 }
 

@@ -1,8 +1,8 @@
+import {fetchGet} from '../../../modules/apiUtils'
+
 export const GET_TRACKS_BY_QUERY_REQUEST = 'GET_TRACKS_BY_QUERY_REQUEST'
 export const GET_TRACKS_BY_QUERY_SUCCESS = 'GET_TRACKS_BY_QUERY_SUCCESS'
 export const GET_TRACKS_BY_QUERY_FAILED = 'GET_TRACKS_BY_QUERY_FAILED'
-
-import {apiLink} from '../../../modules/formatUtils'
 
 export function getTracksByQuery(query) {
   return (dispatch) => {
@@ -10,14 +10,13 @@ export function getTracksByQuery(query) {
       type: GET_TRACKS_BY_QUERY_REQUEST
     })
 
-    fetch(apiLink('/music/search?query=' + query)).then(res => {
-      return res.json()
-    }).then(result => {
-      dispatch({
-        type: GET_TRACKS_BY_QUERY_SUCCESS,
-        payload: result.data
+    return fetchGet('/music/search?query=' + query)
+      .then(result => {
+        dispatch({
+          type: GET_TRACKS_BY_QUERY_SUCCESS,
+          payload: result.data
+        })
       })
-    })
   }
 }
 

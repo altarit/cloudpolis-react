@@ -10,11 +10,6 @@ export function toMMSS(val) {
     : minutes + ':' + seconds
 }
 
-export function randomString() {
-  return Math.random().toString(36).substring(7)
-}
-
-// http://localhost
 export function apiLink(link) {
   return BASE_URL + '/api' + link
 }

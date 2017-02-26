@@ -1,3 +1,35 @@
+import {apiLink} from './formatUtils'
+
+const defaultHeaders = {
+  'Content-Type': 'application/json'
+}
+
+const defaultGetOptions = {
+  credentials: 'include',
+  cache: 'no-cache'
+}
+
+const defaultPostOptions = {
+  method: 'POST',
+  credentials: 'include',
+  cache: 'no-cache',
+  headers: defaultHeaders
+}
+
+export function fetchGet(url, options = {}) {
+  return fetch(apiLink(url), {
+    ...defaultGetOptions,
+    ...options
+  }).then(handleResponse)
+}
+
+export function fetchPost(url, options = {}) {
+  return fetch(apiLink(url), {
+    ...defaultPostOptions,
+    ...options
+  }).then(handleResponse)
+}
+
 export function handleResponse(response) {
   return new Promise((resolve, reject) => {
     // console.log('handle response')
@@ -28,7 +60,14 @@ export function handleResponse(response) {
     return new Promise((resolve, reject) => {
       if (parsedResponse.ok) { resolve(parsedResponse.json) } else {
         console.warn(`Response status is not ok: ${parsedResponse.status}`)
-        reject(parsedResponse.json)
+        if (parsedResponse.status === 500) {
+          reject({
+            message: 'Server Error',
+            status: parsedResponse.status
+          })
+        } else {
+          reject(parsedResponse.json)
+        }
       }
     })
   })

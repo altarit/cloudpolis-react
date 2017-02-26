@@ -46,7 +46,7 @@ describe('modules/player - Reducer', () => {
     it('SET_TRACK', () => {
       const nextState = reducer({
         isPlaying: true,
-        track: { },
+        track: {},
         pos: 4
       }, {
         type: types.SET_TRACK,
@@ -67,6 +67,86 @@ describe('modules/player - Reducer', () => {
         pl: 'Romance',
         pos: 7
       })
+    })
+  })
+
+  describe('[tracks]', () => {
+    const previousState = {
+      tabs: ['Concerts'],
+      pls: {
+        'Concerts': [
+          {title: 'Morning from Peer Gynt'},
+          {title: 'Eine kleine Nachtmusik'},
+          {title: 'Minuet'}
+        ]
+      },
+      currentPl: 'Concerts',
+      pos: 1,
+      isPlaying: true,
+      track: {title: 'Eine kleine Nachtmusik'}
+    }
+
+    it('PLAYER_NEXT', () => {
+      const nextState = reducer(previousState, {
+        type: types.PLAYER_NEXT
+      })
+      expect(nextState.isPlaying).to.be.true
+      expect(nextState.pos).to.equal(2)
+      expect(nextState.track.title).to.equal('Minuet')
+    })
+
+    it('PLAYER_NEXT try to play max+1 track', () => {
+      const nextState = reducer(previousState, {
+        type: types.PLAYER_NEXT
+      })
+      const nextNextState = reducer(nextState, {
+        type: types.PLAYER_NEXT
+      })
+      expect(nextNextState.isPlaying).to.be.true
+      expect(nextNextState.pos).to.equal(2)
+      expect(nextNextState.track.title).to.equal('Minuet')
+    })
+
+    it('TRACK_ENDS', () => {
+      const nextState = reducer(previousState, {
+        type: types.TRACK_ENDS
+      })
+      expect(nextState.isPlaying).to.be.true
+      expect(nextState.pos).to.equal(2)
+      expect(nextState.track.title).to.equal('Minuet')
+    })
+
+    it('TRACK_ENDS stops playing when no more tracks to play', () => {
+      const nextState = reducer(previousState, {
+        type: types.TRACK_ENDS
+      })
+      const nextNextState = reducer(nextState, {
+        type: types.TRACK_ENDS
+      })
+      expect(nextNextState.isPlaying).to.be.false
+      expect(nextNextState.pos).to.equal(2)
+      expect(nextNextState.track.title).to.equal('Minuet')
+    })
+
+    it('PLAYER_PREV', () => {
+      const nextState = reducer(previousState, {
+        type: types.PLAYER_PREV
+      })
+      expect(nextState.isPlaying).to.be.true
+      expect(nextState.pos).to.equal(0)
+      expect(nextState.track.title).to.equal('Morning from Peer Gynt')
+    })
+
+    it('PLAYER_PREV tried to get -1 track', () => {
+      const nextState = reducer(previousState, {
+        type: types.PLAYER_PREV
+      })
+      const nextNextState = reducer(nextState, {
+        type: types.PLAYER_PREV
+      })
+      expect(nextNextState.isPlaying).to.be.true
+      expect(nextNextState.pos).to.equal(0)
+      expect(nextNextState.track.title).to.equal('Morning from Peer Gynt')
     })
   })
 
@@ -174,7 +254,83 @@ describe('modules/player - Reducer', () => {
   })
 
   describe('[storage]', () => {
+    it('STORAGE_LOAD_PLAYLISTS_SUCCESS', () => {
+      const nextState = reducer({}, {
+        type: types.STORAGE_LOAD_PLAYLISTS_SUCCESS,
+        safePlaylists: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        }
+      })
 
+      expect(nextState).to.deep.equal({
+        safePlaylists: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        }
+      })
+    })
+
+    it('STORAGE_SAVE_PLAYLIST_SUCCESS', () => {
+      const nextState = reducer({}, {
+        type: types.STORAGE_SAVE_PLAYLIST_SUCCESS,
+        safePlaylists: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        }
+      })
+
+      expect(nextState).to.deep.equal({
+        safePlaylists: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        }
+      })
+    })
+
+    it('STORAGE_OPEN_PLAYLIST_SUCCESS', () => {
+      const nextState = reducer({
+        tabs: [],
+        pls: {}
+      }, {
+        type: types.STORAGE_OPEN_PLAYLIST_SUCCESS,
+        filename: 'Johann Strauss',
+        playlist: [{
+          title: 'Emperor Waltz'
+        }]
+      })
+
+      expect(nextState).to.deep.equal({
+        tabs: ['Johann Strauss'],
+        pls: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        },
+        openTab: 'Johann Strauss'
+      })
+    })
+
+    it('STORAGE_DELETE_PLAYLIST_SUCCESS', () => {
+      const nextState = reducer({
+        safePlaylists: {
+          'Johann Strauss': [{
+            title: 'Emperor Waltz'
+          }]
+        }
+      }, {
+        type: types.STORAGE_DELETE_PLAYLIST_SUCCESS,
+        safePlaylists: {}
+      })
+
+      expect(nextState).to.deep.equal({
+        safePlaylists: {}
+      })
+    })
   })
 
   describe('[editing a playlist]', () => {
@@ -230,6 +386,22 @@ describe('modules/player - Reducer', () => {
 
     it('REMOVE_TRACK remove current', () => {
       const nextState = reducer(previousState, {
+        type: types.REMOVE_TRACK,
+        plName: 'Music',
+        pos: 2
+      })
+      expect(nextState.pls['Music'].length).to.equal(2)
+      expect(nextState.pls['Music'][1].title).to.equal('Symphony N9')
+      expect(nextState.pos).to.equal(1)
+      expect(nextState.track.title).to.equal('Symphony N9')
+    })
+
+    it('REMOVE_TRACK remove after', () => {
+      const nextState = reducer({
+        ...previousState,
+        pos: 1,
+        track: {title: 'Symphony N9'}
+      }, {
         type: types.REMOVE_TRACK,
         plName: 'Music',
         pos: 2

@@ -6,6 +6,10 @@ import ThirdRoute from './Third'
 import Artists from './Artists'
 import Artist from './Artist'
 import Search from './Search'
+import Admin from './Admin'
+import Users from './Users'
+import UserDetails from './UserDetails'
+import AccessLog from './AccessLog'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -19,7 +23,11 @@ export const createRoutes = (store) => ({
     ThirdRoute,
     Artists(store),
     Artist(store),
-    Search(store)
+    Search(store),
+    Admin(store),
+    Users(store),
+    UserDetails(store),
+    AccessLog(store)
   ]
 })
 
