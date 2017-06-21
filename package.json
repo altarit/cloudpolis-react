@@ -31,7 +31,7 @@
       }
     },
     "deploy": {
-      "command": "npm run tests && npm run clean && npm run compile",
+      "command": "npm run test && npm run clean && npm run compile",
       "env": {
         "DEBUG": "app:*"
       }

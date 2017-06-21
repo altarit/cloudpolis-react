@@ -10,6 +10,8 @@ import Admin from './Admin'
 import Users from './Users'
 import UserDetails from './UserDetails'
 import AccessLog from './AccessLog'
+import Collections from './Collections'
+import CollectionsManager from './CollectionsManager'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -27,7 +29,9 @@ export const createRoutes = (store) => ({
     Admin(store),
     Users(store),
     UserDetails(store),
-    AccessLog(store)
+    AccessLog(store),
+    Collections(store),
+    CollectionsManager(store)
   ]
 })
 

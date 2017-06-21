@@ -12,7 +12,7 @@ const __TEST__ = project.globals.__TEST__
 const webpackConfig = {
   name: 'client',
   target: 'web',
-  devtool: project.compiler_devtool,
+  devtool: (__DEV__) ? project.compiler_devtool : null,
   resolve: {
     root: project.paths.client(),
     extensions: ['', '.js', '.jsx', '.json']

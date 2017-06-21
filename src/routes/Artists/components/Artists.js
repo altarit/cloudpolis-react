@@ -51,6 +51,9 @@ export class Artists extends React.Component {
     return (
       <div className='container'>
         <h2>Artists:</h2>
+        <div>
+          <Link to={`/music/collections/`}>Collections</Link>
+        </div>
         <div className='btn-group'>
           <label>Filter</label>
           <input type='search' className='form-control' onChange={this.changeFilter} ref='artistsFilter' />
