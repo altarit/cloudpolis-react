@@ -1,12 +1,10 @@
 import React, {PropTypes} from 'react'
-import cn from 'classnames'
 
 import './Sidebar.scss'
 import TrackList from '../../TrackList'
 import OpenPlaylistDialog from '../../OpenPlaylistDialog'
 
 export class Sidebar extends React.Component {
-
   static propTypes = {
     isOpen: PropTypes.bool,
     popups: PropTypes.object.isRequired,
@@ -159,10 +157,7 @@ export class Sidebar extends React.Component {
   }
 
   render() {
-    let classes = cn({
-      'sidebar': true,
-      'sidebar_open': this.props.isOpen
-    })
+    let classes = 'sidebar' + (this.props.isOpen ? ' sidebar_open' : '')
     let songs = this.props.pls[this.props.openTab]
 
     return (

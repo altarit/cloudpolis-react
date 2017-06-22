@@ -4,7 +4,6 @@ import {Link} from 'react-router'
 import './Artist.scss'
 
 export class Artists extends React.Component {
-
   static propTypes = {
     artists: PropTypes.arrayOf(PropTypes.object).isRequired,
     artistsMask: PropTypes.string,

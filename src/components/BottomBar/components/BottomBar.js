@@ -4,7 +4,6 @@ import './BottomBar.scss'
 import AudioPlayer from '../../AudioPlayer'
 
 export class BottomBar extends React.Component {
-
   static propTypes = {
     isPlaying: PropTypes.bool.isRequired,
 
@@ -24,7 +23,7 @@ export class BottomBar extends React.Component {
             {!this.props.isPlaying ? (
               <button type='button' className='btn player__btn fa fa-play' onClick={this.props.play} />
             ) : (
-              < button type='button' className='btn player__btn fa fa-pause' onClick={this.props.pause} />
+              <button type='button' className='btn player__btn fa fa-pause' onClick={this.props.pause} />
             )}
             <button type='button' className='btn player__btn fa fa-fast-forward' onClick={this.props.nextTrack} />
           </div>

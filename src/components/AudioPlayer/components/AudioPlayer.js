@@ -3,7 +3,6 @@
   import {toMMSS, trackLink} from '../../../modules/formatUtils'
 
   export class AudioPlayer extends React.Component {
-
     static propTypes = {
       title: PropTypes.string,
       artist: PropTypes.string,

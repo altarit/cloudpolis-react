@@ -17,3 +17,6 @@ indent_size = 2
 
 # Denotes whether to trim whitespace at the end of lines
 trim_trailing_whitespace = true
+
+# Denotes whether file should end with a newline
+insert_final_newline = true

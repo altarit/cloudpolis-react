@@ -116,7 +116,7 @@ export function savePlaylistToStorage(filename, playlist) {
     try {
       safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
     } catch (e) {
-      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+      console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
     let nextPlaylists = {...safePlaylists, [filename]: playlist.map(cloneTrack)}
     localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
@@ -133,7 +133,7 @@ export function openPlaylistFromStorage(filename) {
     try {
       safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
     } catch (e) {
-      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+      console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
     let playlist = safePlaylists[filename]
     if (playlist) {
@@ -154,7 +154,7 @@ export function deletePlaylistFromStorage(filename) {
     try {
       safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
     } catch (e) {
-      console.warn(`Local storage 'safePlaylists' cannot be read`) || {}
+      console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
     let playlist = safePlaylists[filename]
     if (playlist) {

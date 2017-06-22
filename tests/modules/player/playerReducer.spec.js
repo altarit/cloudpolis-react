@@ -6,7 +6,7 @@ describe('modules/player - Reducer', () => {
     it('Should have initial state', () => {
       const nextState = reducer(undefined, {})
       expect(nextState.pos).to.equal(-1)
-      expect(nextState.isPlaying).to.be.false
+      expect(nextState.isPlaying).to.be.false()
       expect(nextState.track).to.deep.equal({
         title: '',
         artist: '',
@@ -59,7 +59,7 @@ describe('modules/player - Reducer', () => {
       })
 
       expect(nextState.pos).to.equal(7)
-      expect(nextState.isPlaying).to.be.true
+      expect(nextState.isPlaying).to.be.true()
       expect(nextState.currentPl).to.equal('Romance')
       expect(nextState.track).to.deep.equal({
         title: 'Ave Maria',
@@ -90,7 +90,7 @@ describe('modules/player - Reducer', () => {
       const nextState = reducer(previousState, {
         type: types.PLAYER_NEXT
       })
-      expect(nextState.isPlaying).to.be.true
+      expect(nextState.isPlaying).to.be.true()
       expect(nextState.pos).to.equal(2)
       expect(nextState.track.title).to.equal('Minuet')
     })
@@ -102,7 +102,7 @@ describe('modules/player - Reducer', () => {
       const nextNextState = reducer(nextState, {
         type: types.PLAYER_NEXT
       })
-      expect(nextNextState.isPlaying).to.be.true
+      expect(nextNextState.isPlaying).to.be.true()
       expect(nextNextState.pos).to.equal(2)
       expect(nextNextState.track.title).to.equal('Minuet')
     })
@@ -111,7 +111,7 @@ describe('modules/player - Reducer', () => {
       const nextState = reducer(previousState, {
         type: types.TRACK_ENDS
       })
-      expect(nextState.isPlaying).to.be.true
+      expect(nextState.isPlaying).to.be.true()
       expect(nextState.pos).to.equal(2)
       expect(nextState.track.title).to.equal('Minuet')
     })
@@ -123,7 +123,7 @@ describe('modules/player - Reducer', () => {
       const nextNextState = reducer(nextState, {
         type: types.TRACK_ENDS
       })
-      expect(nextNextState.isPlaying).to.be.false
+      expect(nextNextState.isPlaying).to.be.false()
       expect(nextNextState.pos).to.equal(2)
       expect(nextNextState.track.title).to.equal('Minuet')
     })
@@ -132,7 +132,7 @@ describe('modules/player - Reducer', () => {
       const nextState = reducer(previousState, {
         type: types.PLAYER_PREV
       })
-      expect(nextState.isPlaying).to.be.true
+      expect(nextState.isPlaying).to.be.true()
       expect(nextState.pos).to.equal(0)
       expect(nextState.track.title).to.equal('Morning from Peer Gynt')
     })
@@ -144,7 +144,7 @@ describe('modules/player - Reducer', () => {
       const nextNextState = reducer(nextState, {
         type: types.PLAYER_PREV
       })
-      expect(nextNextState.isPlaying).to.be.true
+      expect(nextNextState.isPlaying).to.be.true()
       expect(nextNextState.pos).to.equal(0)
       expect(nextNextState.track.title).to.equal('Morning from Peer Gynt')
     })
@@ -163,7 +163,7 @@ describe('modules/player - Reducer', () => {
       const nextState = reducer(undefined, {
         type: types.TOGGLE_MUTE
       })
-      expect(nextState.muted).to.be.true
+      expect(nextState.muted).to.be.true()
     })
   })
 

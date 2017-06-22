@@ -6,7 +6,6 @@ import './Track.scss'
 import {trackLink} from '../../../modules/formatUtils'
 
 export class Track extends React.Component {
-
   static propTypes = {
     title: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,

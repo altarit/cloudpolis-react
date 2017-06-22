@@ -6,7 +6,6 @@ import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 
 export class HomeView extends React.Component {
-
   static propTypes = {
     tracks: PropTypes.arrayOf(PropTypes.object),
     fetchingTracks: PropTypes.bool,

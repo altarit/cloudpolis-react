@@ -5,7 +5,6 @@ import './Auth.scss'
 import AuthForm from './AuthForm'
 
 export class Auth extends React.Component {
-
   static propTypes = {
     name: PropTypes.string,
     fetching: PropTypes.bool,

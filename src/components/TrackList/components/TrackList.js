@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react'
 import Track from '../../Track'
 
 export class TrackList extends React.Component {
-
   static propTypes = {
     songs: PropTypes.arrayOf(PropTypes.object).isRequired,
     track: PropTypes.object,

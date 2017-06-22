@@ -1,41 +1,47 @@
-// ---------------------------------------
-// Test Environment Setup
-// ---------------------------------------
-import sinon from 'sinon'
+import 'normalize.js'
 import chai from 'chai'
-import sinonChai from 'sinon-chai'
+import sinon from 'sinon'
+import dirtyChai from 'dirty-chai'
 import chaiAsPromised from 'chai-as-promised'
+import sinonChai from 'sinon-chai'
 import chaiEnzyme from 'chai-enzyme'
-
-import 'babel-polyfill'
-import 'whatwg-fetch'
-import fmock from 'fetch-mock'
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import 'mock-local-storage'
+import fmock from 'fetch-mock'
 
-chai.use(sinonChai)
-chai.use(chaiAsPromised)
-chai.use(chaiEnzyme())
+// Mocha / Chai
+// ------------------------------------
+mocha.setup({ui: 'bdd'})
+chai.should()
 
 global.chai = chai
-global.sinon = sinon
 global.expect = chai.expect
-global.should = chai.should()
+global.sinon = sinon
+
 global.fmock = fmock
 global.configureStore = configureStore
 global.middlewares = [ thunk ]
 
-// ---------------------------------------
-// Require Tests
-// ---------------------------------------
-// for use with karma-webpack-with-fast-source-maps
-const __karmaWebpackManifest__ = []; // eslint-disable-line
-const inManifest = (path) => ~__karmaWebpackManifest__.indexOf(path)
+// Chai Plugins
+// ------------------------------------
+chai.use(chaiEnzyme())
+chai.use(dirtyChai)
+chai.use(chaiAsPromised)
+chai.use(sinonChai)
 
-// require all `tests/**/*.spec.js`
-const testsContext = require.context('./', true, /\.spec\.js$/)
+// Test Importer
+// ------------------------------------
+// We use a Webpack global here as it is replaced with a string during compile.
+// Using a regular JS variable is not statically analyzable so webpack will throw warnings.
+const testsContext = require.context('./', true, /\.(spec|test)\.(js|ts|tsx)$/)
 
-// only run tests that have changed after the first pass.
-const testsToRun = testsContext.keys().filter(inManifest)
-;(testsToRun.length ? testsToRun : testsContext.keys()).forEach(testsContext)
+// When a test file changes, only rerun that spec file. If something outside of a
+// test file changed, rerun all tests.
+// https://www.npmjs.com/package/karma-webpack-with-fast-source-maps
+const __karmaWebpackManifest__ = []
+const allTests = testsContext.keys()
+const changedTests = allTests.filter(path => {
+  return __karmaWebpackManifest__.indexOf(path) !== -1
+})
+
+;(changedTests.length ? changedTests : allTests).forEach(testsContext)

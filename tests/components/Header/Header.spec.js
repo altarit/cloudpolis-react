@@ -12,12 +12,12 @@ describe('(Component) Header', () => {
 
   it('Renders a welcome message', () => {
     const welcome = _wrapper.find('h1')
-    expect(welcome).to.exist
+    expect(welcome).to.exist()
     expect(welcome.contains(
       <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>
         Cloudpolis
       </IndexLink>
-    )).to.be.true
+    )).to.be.true()
     // expect(homeLink.text()).to.match(/Cloudpolis/)
   })
 
@@ -27,7 +27,7 @@ describe('(Component) Header', () => {
         <Link activeClassName='route--active' to='/music/artists'>
           Artists
         </Link>
-      )).to.be.true
+      )).to.be.true()
     })
 
     it('Should render a Link to Search route', () => {
@@ -35,7 +35,7 @@ describe('(Component) Header', () => {
         <Link activeClassName='route--active' to='/music/search'>
           Search
         </Link>
-      )).to.be.true
+      )).to.be.true()
     })
   })
 })

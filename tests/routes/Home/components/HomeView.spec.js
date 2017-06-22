@@ -1,8 +1,8 @@
 // import React from 'react'
-// import { HomeView } from 'routes/Home/components/HomeView'
+// import { HomeView } from 'routes/routes.Home/components/HomeView'
 // import { render } from 'enzyme'
 
-describe('(View) Home', () => {
+describe('(View) routes.Home', () => {
   // let _component
 
   it('TODO: fix tests', () => {

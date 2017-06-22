@@ -4,7 +4,6 @@ import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 
 export class Artist extends React.Component {
-
   static propTypes = {
     artistName: PropTypes.string.isRequired,
     songs: PropTypes.arrayOf(PropTypes.object),

@@ -4,7 +4,6 @@ import TrackList from '../../../components/TrackList'
 import {SEARCH_PL} from '../../../modules/player/playerConstants'
 
 export class Search extends React.Component {
-
   static propTypes = {
     songs: PropTypes.arrayOf(PropTypes.object),
     fetching: PropTypes.bool,

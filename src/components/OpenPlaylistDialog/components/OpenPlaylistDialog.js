@@ -3,7 +3,6 @@ import React, {PropTypes} from 'react'
 import './OpenPlaylistDialog.scss'
 
 export class OpenPlaylistDialog extends React.Component {
-
   static propTypes = {
     safePlaylists: PropTypes.arrayOf(PropTypes.string).isRequired,
     playlist: PropTypes.object.isRequired,

@@ -4,7 +4,7 @@ import Content from '../Content'
 import Sidebar from '../../components/Sidebar'
 import BottomBar from '../../components/BottomBar'
 import './CoreLayout.scss'
-import '../../styles/core.scss'
+import '../../styles/main.scss'
 
 export const CoreLayout = ({children}) => (
   <div>

@@ -13,7 +13,7 @@ describe('modules/formatUtils', () => {
   })
 
   it('trackLink', () => {
-    expect(trackLink(null)).to.be.null
+    expect(trackLink(null)).to.be.null()
     expect(trackLink('Pachelbel/Canon.mp3')).to.equal('/artists/Pachelbel/Canon.mp3')
   })
 })
