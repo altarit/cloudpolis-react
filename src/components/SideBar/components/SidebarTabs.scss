@@ -1,0 +1,48 @@
+/* Tab */
+.playmenu__tabs {
+  background-color: #889977;
+  min-height: 42px;
+  display: flex;
+  flex-flow: row;
+}
+
+.playmenu__tab {
+  cursor: pointer;
+  user-select: none;
+  width: 70px;
+  height: 42px;
+  padding: 0px 3px;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+.playmenu__tabs-control {
+  width: 25px;
+  height: 100%;
+  padding: 10px 3px;
+}
+
+.playmenu__tabs-left {
+  flex: 0 1;
+}
+
+.playmenu__tabs-center {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.playmenu__tabs-list {
+  width: 3000px;
+  transition: margin-left 0.15s ease-out;
+}
+
+.playmenu__tabs-right {
+  flex: 0 1;
+  white-space: nowrap;
+}
+
+.playmenu__tabs-right .dropdown-menu {
+  left: -240px;
+  width: 280px;
+}

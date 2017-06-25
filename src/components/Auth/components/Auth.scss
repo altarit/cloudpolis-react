@@ -1,17 +1,7 @@
 .login .btn {
-  margin-right: 5px
+  margin: 5px 5px 0px 0px;
 }
 
-.navbar-nav {
-  float: left;
-  margin: 0;
-}
-
-.navbar-nav>li {
-  float: left;
-}
-
-.navbar-nav>li>a {
-  padding-top: 15px;
-  padding-bottom: 15px;
+.auth__username-btn {
+  min-width: 100px;
 }

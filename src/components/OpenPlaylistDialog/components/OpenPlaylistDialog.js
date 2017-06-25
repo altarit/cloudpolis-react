@@ -46,7 +46,7 @@ export class OpenPlaylistDialog extends React.Component {
 
   render() {
     return (
-      <div className='dropdown open dropdown-menu filedialog' data-click='none'>
+      <div className='dropdown show dropdown-menu filedialog' data-click='none'>
         <h3>{this.props.forSave ? 'Save playlist' : 'Open playlist'}</h3>
         <ul className='filedialog__list'>
           {Object.keys(this.props.safePlaylists).map(pl => (

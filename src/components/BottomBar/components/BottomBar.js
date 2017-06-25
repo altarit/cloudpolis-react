@@ -16,7 +16,7 @@ export class BottomBar extends React.Component {
 
   render() {
     return (
-      <nav className='navbar navbar-inverse navbar-fixed-bottom'>
+      <nav className='navbar fixed-bottom navbar-light bg-faded'>
         <div className='container player'>
           <div className='player__buttons'>
             <button type='button' className='btn player__btn fa fa-fast-backward' onClick={this.props.prevTrack} />

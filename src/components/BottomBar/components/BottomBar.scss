@@ -1,16 +1,19 @@
 /* Components */
-.navbar-fixed-bottom {
+.navbar.fixed-bottom {
   background: #B0B0B0;
+  padding: 0;
+  height: 50px;
 }
 
-.player {
+div.player {
+  width: 100%;
+  padding: 0px;
   display: flex;
-  flex-flow: row;
+  flex-direction: row;
 }
 
 .player__buttons {
   flex: 0 1 120px;
-  min-width: 120px;
 }
 
 .player__progress {
@@ -18,14 +21,14 @@
 }
 
 .player__other {
-  flex: 0 1 auto;
+  flex: 0 1;
 }
 
 .player__btn {
   background: none;
   font-size: 20px;
-  margin: 0 5px;
-  padding: 0px;
+  margin: 1px 4px;
+  padding: 0;
   width: 30px;
   height: 100%;
   vertical-align: middle;
@@ -43,7 +46,7 @@
   font-size: 14px;
 }
 
-.player__progress_loaded {
+.player__progress-loaded {
   left: 0px;
   transition: none;
   height: 2px;
@@ -51,43 +54,39 @@
   position: absolute;
 }
 
-.player__progress_played {
+.player__progress-played {
   left: 0px;
-  -webkit-transition: none;
-  -moz-transition: none;
-  -o-transition: none;
   transition: none;
   height: 100%;
   position: absolute;
 }
 
-.player__progress_title {
-  top: 0px;
+.player__progress-title {
+  top: 2px;
   padding-left: 10px;
   height: 20px;
   position: absolute;
   font-size: 16px;
 }
 
-.player__progress_info {
-  top: 20px;
+.player__progress-info {
+  top: 22px;
   padding-left: 10px;
   height: 20px;
   position: absolute;
   font-size: 14px;
 }
 
-.player__progress_time {
+.player__progress-time {
   right: 5px;
   top: 3px;
   position: absolute;
 }
 
-.player__progress_length {
+.player__progress-length {
   right: 5px;
   top: 22px;
   position: absolute;
 }
-
 
 

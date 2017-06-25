@@ -242,7 +242,8 @@ export default function playerReducer(state = initialState, action) {
       if (createPlUpdates.error) {
         return {...state, errors: {createPlaylist: createPlUpdates.error}}
       }
-      return {...state,
+      return {
+        ...state,
         tabs: createPlUpdates.tabs,
         pls: createPlUpdates.pls,
         openTab: createPlUpdates.openTab,

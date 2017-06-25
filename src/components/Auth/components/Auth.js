@@ -1,8 +1,8 @@
 import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
-import './Auth.scss'
 import AuthForm from './AuthForm'
+import './Auth.scss'
 
 export class Auth extends React.Component {
   static propTypes = {
@@ -34,41 +34,37 @@ export class Auth extends React.Component {
   }
 
   render() {
+    let errorText = this.props.errorText
     return (
-      <ul className='nav navbar-nav navbar-right login dropdown open'>
+      <ul className='form-inline login dropdown open'>
         {this.props.name ? (
           <div>
-            <button type='button' className='btn btn-primary'
-              data-click='dropdown' data-for='userPopup'>
+            <button className='btn btn-primary auth__username-btn' data-click='dropdown' data-for='userPopup'>
               {this.props.name}
             </button>
           </div>
         ) : (
           <div>
-            <button type='button' className='btn btn-primary'
-              data-click='dropdown' data-for='loginPopup'>
+            <button className='btn btn-primary' data-click='dropdown' data-for='loginPopup'>
               Login
             </button>
-            <button type='button' className='btn btn-primary'
-              data-click='dropdown' data-for='signupPopup'>
+            <button className='btn btn-primary' data-click='dropdown' data-for='signupPopup'>
               Signup
             </button>
           </div>
         )}
         {this.props.loginPopup ? (
-          <div className='dropdown-menu dropdown' data-click='none'>
-            <AuthForm onSubmit={this.login} resetStatus={this.props.resetStatus}
-              errorText={this.props.errorText} />
+          <div className='dropdown-menu show' data-click='none'>
+            <AuthForm onSubmit={this.login} resetStatus={this.props.resetStatus} errorText={errorText} />
           </div>) : null}
         {this.props.signupPopup ? (
-          <div className='dropdown-menu dropdown' data-click='none'>
-            <AuthForm onSubmit={this.signup} resetStatus={this.props.resetStatus}
-              isreg errorText={this.props.errorText} />
+          <div className='dropdown-menu show' data-click='none'>
+            <AuthForm onSubmit={this.signup} resetStatus={this.props.resetStatus} isreg errorText={errorText} />
           </div>) : null}
         {this.props.userPopup ? (
-          <ul className='dropdown-menu dropdown' data-click='none'>
+          <ul className='dropdown-menu show' data-click='none'>
             <li><Link to={`/users/${this.props.name}`}> Profile</Link></li>
-            <li><a className='' onClick={this.props.logout}> Logout</a></li>
+            <li><Link className='' onClick={this.props.logout}> Logout</Link></li>
           </ul>
         ) : null}
       </ul>

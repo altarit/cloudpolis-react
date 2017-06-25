@@ -22,7 +22,9 @@ export class TrackList extends React.Component {
       let i = 0
       let isCurrentPl = this.props.currentPl === this.props.pl
       return current.map(track => (
-        <Track key={i} {...track}
+        <Track
+          {...track}
+          key={i}
           isCurrent={isCurrentPl && !!currentSrc && this.props.pos === i && (track.src || track.href) === currentSrc}
           pl={this.props.pl}
           pos={i++}
@@ -36,9 +38,11 @@ export class TrackList extends React.Component {
   }
 
   render() {
-    return <ul className={this.props.className}>
-      {this.getPlaylist()}
-    </ul>
+    return (
+      <ul className={this.props.className}>
+        {this.getPlaylist()}
+      </ul>
+    )
   }
 }
 

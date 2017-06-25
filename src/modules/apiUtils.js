@@ -72,7 +72,9 @@ export function handleResponse(response) {
       })
   }).then((parsedResponse) => {
     return new Promise((resolve, reject) => {
-      if (parsedResponse.ok) { resolve(parsedResponse.json) } else {
+      if (parsedResponse.ok) {
+        resolve(parsedResponse.json)
+      } else {
         console.warn(`Response status is not ok: ${parsedResponse.status}`)
         if (parsedResponse.status === 500) {
           reject({

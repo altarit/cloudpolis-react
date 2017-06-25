@@ -24,7 +24,7 @@ describe('(Component) Header', () => {
   describe('Navigation links...', () => {
     it('Should render a Link to Artists route', () => {
       expect(_wrapper.contains(
-        <Link activeClassName='route--active' to='/music/artists'>
+        <Link activeClassName='route--active' className='nav-link' to='/music/artists'>
           Artists
         </Link>
       )).to.be.true()
@@ -32,7 +32,7 @@ describe('(Component) Header', () => {
 
     it('Should render a Link to Search route', () => {
       expect(_wrapper.contains(
-        <Link activeClassName='route--active' to='/music/search'>
+        <Link activeClassName='route--active' className='nav-link' to='/music/search'>
           Search
         </Link>
       )).to.be.true()

@@ -2,7 +2,6 @@ import React, {PropTypes} from 'react'
 import {Link} from 'react-router'
 
 import './Track.scss'
-
 import {trackLink} from '../../../modules/formatUtils'
 
 export class Track extends React.Component {
@@ -102,12 +101,17 @@ export class Track extends React.Component {
 
     return (
       <div>
-        <div className={'track' + (this.props.isCurrent ? ' playing' : '')}
+        <div
+          className={'track' + (this.props.isCurrent ? ' playing' : '')}
           style={{
             borderTopStyle: this.state.isAbove ? 'solid' : null
           }}
-          draggable='true' onDragStart={this.dragStart}
-          onDrop={this.drop} onDragOver={this.dragOver} onDragLeave={this.dragLeave}>
+          draggable='true'
+          onDragStart={this.dragStart}
+          onDrop={this.drop}
+          onDragOver={this.dragOver}
+          onDragLeave={this.dragLeave}>
+
           <div className='track__cover' onClick={this.handlePlayButton}>
             <span className={this.props.isCurrent && this.props.isPlaying ? 'fa fa-pause' : 'fa fa-play'} />
           </div>
@@ -124,23 +128,27 @@ export class Track extends React.Component {
           </div>
         </div>
 
-        <div className='dropdown open'>
-          {this.props.trackAdd && this.props.trackAdd.from === trackPID
-            ? (
-              <ul className='dropdown-menu track_dropdown'>
-                <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>
-                {!this.props.immutable ? (
-                  <li><a className='fa fa-plus' onClick={this.removeTrack}> Remove from {this.props.pl}</a></li>
+        <div className='dropdown'>
+          {this.props.trackAdd && this.props.trackAdd.from === trackPID ? (
+            <ul className='dropdown-menu show track_dropdown'>
+              <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>
+              {!this.props.immutable ? (
+                <li>
+                  <a className='fa fa-plus' onClick={this.removeTrack}> Remove from {this.props.pl}</a>
+                </li>
               ) : null}
-                {this.props.compilation ? (
-                  <li><Link className='fa fa-plus'
-                    to={`/music/artists/${this.props.compilation}`}> Go to {this.props.compilation}</Link></li>
+              {this.props.compilation ? (
+                <li>
+                  <Link to={`/music/artists/${this.props.compilation}`} className='fa fa-plus'>
+                    Go to {this.props.compilation}
+                  </Link>
+                </li>
               ) : null}
 
-                <li><a className='fa fa-plus' href={this.getFullLink()} download> Download</a></li>
-                <li><a className='fa fa-plus' href={this.getFullLink()} target='_blank'> Open
+              <li><a className='fa fa-plus' href={this.getFullLink()} download> Download</a></li>
+              <li><a className='fa fa-plus' href={this.getFullLink()} target='_blank'> Open
                 link in a new tab</a></li>
-              </ul>
+            </ul>
           ) : null }
         </div>
       </div>

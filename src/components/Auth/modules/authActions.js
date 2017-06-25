@@ -37,15 +37,17 @@ export function login(username, password) {
       pass: password
     })
 
-    return fetchPost('/login/', {
+    let params = {
       body: JSON.stringify({username: username, password: password})
-    }).then(json => {
-      console.log('Successful request')
-      dispatch({
-        type: types.AUTH_LOGIN_SUCCESS,
-        name: json.data
+    }
+    return fetchPost('/login/', params)
+      .then(json => {
+        console.log('Successful request')
+        dispatch({
+          type: types.AUTH_LOGIN_SUCCESS,
+          name: json.data
+        })
       })
-    })
       .catch(ex => {
         console.warn(`Response ${ex.status}: ${ex.message}`)
         dispatch({
@@ -65,14 +67,16 @@ export function signup(username, password, email) {
       mail: email
     })
 
-    return fetchPost('/login/', {
+    let params = {
       body: JSON.stringify({username: username, password: password, email: email, isreg: true})
-    }).then(json => {
-      dispatch({
-        type: types.AUTH_SIGNUP_SUCCESS,
-        name: json.data
+    }
+    return fetchPost('/login/', params)
+      .then(json => {
+        dispatch({
+          type: types.AUTH_SIGNUP_SUCCESS,
+          name: json.data
+        })
       })
-    })
       .catch(ex => {
         dispatch({
           type: types.AUTH_SIGNUP_FAILURE,
