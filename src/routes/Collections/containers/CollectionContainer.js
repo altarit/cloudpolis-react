@@ -1,15 +1,16 @@
 import {connect} from 'react-redux'
 
-import {getCollections} from '../modules/collections'
+import {getCollections, toggleTree} from '../modules/collections'
 import Collections from '../components/Collections'
 
 const mapDispatchToProps = {
-  getCollections
+  getCollections,
+  toggleTree
 }
 
 const mapStateToProps = (state, props) => ({
   fetching: state.collections.fetching,
-  collections: state.collections.collections
+  dirs: state.collections.dirs
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Collections)

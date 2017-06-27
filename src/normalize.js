@@ -20,3 +20,7 @@ if (typeof Promise === 'undefined') {
 if (typeof window.fetch === 'undefined') {
   require('whatwg-fetch')
 }
+
+if (typeof Array.prototype.findIndex === 'undefined') {
+  require('array.prototype.findindex').shim()
+}
