@@ -1,10 +1,11 @@
 import {connect} from 'react-redux'
 
-import {sendCollection} from '../modules/collectionsManager'
+import {sendCollection, calculateBase} from '../modules/collectionsManager'
 import CollectionsManager from '../components/CollectionsManager'
 
 const mapDispatchToProps = {
   sendCollection,
+  calculateBase
 }
 
 const mapStateToProps = (state, props) => ({

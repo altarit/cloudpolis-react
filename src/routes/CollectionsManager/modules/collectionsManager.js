@@ -85,6 +85,28 @@ export function extractSongs() {
   }
 }
 
+export function calculateBase(form, data) {
+  let tracks = JSON.parse(data)
+  let base = tracks.reduce((base, currTrack) => {
+    const curr = currTrack.dir
+    const minLen = Math.min(base.length, curr.length)
+    let i = 0
+    while (i < minLen && base[i] === curr[i]) {
+      i++
+    }
+    if (i < base.length) {
+      return base.substring(0, i)
+    }
+    return base
+  }, tracks[0].dir)
+
+  let startDirPos = base.lastIndexOf('/', base.length - 2)
+  return (dispatch) => {
+    dispatch(change(form, 'base', base))
+    dispatch(change(form, 'name', base.substring(startDirPos + 1, base.length - 1)))
+  }
+}
+
 const initialState = {
   collections: [],
   fetching: false

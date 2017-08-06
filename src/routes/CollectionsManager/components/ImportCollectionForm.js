@@ -1,11 +1,20 @@
 import React, {PropTypes} from 'react'
 import {Field, reduxForm} from 'redux-form'
 
+let form = 'importCollection'
+let fields = ['path', 'name', 'base', 'data']
+
 class ImportCollectionForm extends React.Component {
   static propTypes = {
     errorText: PropTypes.string,
 
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    calculateBase: PropTypes.func.isRequired,
+  }
+
+  calculateBase = (e) => {
+    e.preventDefault()
+    this.props.calculateBase(form, this.refs.jsonField.value.replace(/\\/g, '/'))
   }
 
   render() {
@@ -29,6 +38,9 @@ class ImportCollectionForm extends React.Component {
         </div>
         <div>{this.props.errorText}</div>
         <div className='btn-group'>
+          <button className='btn btn-primary' onClick={this.calculateBase}>Calculate Base</button>
+        </div>
+        <div className='btn-group'>
           <button type='submit' className='btn btn-primary'>Send</button>
         </div>
       </form>
@@ -36,8 +48,6 @@ class ImportCollectionForm extends React.Component {
   }
 }
 
-let form = 'importCollection'
-let fields = ['path', 'name', 'base', 'data']
 export default reduxForm({
   form, fields
 })(ImportCollectionForm)

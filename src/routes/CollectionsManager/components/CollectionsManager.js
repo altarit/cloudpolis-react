@@ -6,6 +6,7 @@ import ImportCollectionForm from './ImportCollectionForm'
 export class CollectionsManager extends React.Component {
   static propTypes = {
     sendCollection: PropTypes.func.isRequired,
+    calculateBase: PropTypes.func.isRequired,
   }
 
   sendForm = (values) => {
@@ -20,6 +21,7 @@ export class CollectionsManager extends React.Component {
           onSubmit={this.sendForm}
           path={this.props.path}
           base={this.props.base}
+          calculateBase={this.props.calculateBase}
         />
       </div>
     )
