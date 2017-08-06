@@ -33,84 +33,23 @@ export function toggleTree(path) {
 
 const initialState = {
   dirs: []
-  /*dirs: [{
-    name: 'Dm',
-  }, {
-    name: 'mlp',
-    dirs: [{
-      name: 'fa16',
-      dirs: [{
-        name: 'A',
-        dirs: [{
-          name: 'a'
-        }]
-      }, {
-        name: 'B'
-      }]
-    }, {
-      name: 'add3'
-    }, {
-      name: 'new'
-    }]
-  }, {
-    name: 'Dp',
-    dirs: [{
-      name: 'markI'
-    }, {
-      name: 'markII'
-    }]
-  }]*/
 }
-
-// function oldGetToggledTree(rootDirs, pathStr) {
-//   let pathDirs = pathStr.split('/')
-//   pathDirs.shift()
-//   //console.log(pathStr)
-//   console.log(`dirs: ${pathDirs.join('/')}`)
-//   let nextRoot = {
-//     dirs: rootDirs
-//   }
-//   let node = nextRoot
-//   //let prevNode = null
-//   while (pathDirs.length > 0 && node && node.dirs) {
-//     let dirName = pathDirs.shift()
-//     console.log(`dirName: ${dirName}  dirs: ${node.dirs.length}`)
-//     //prevNode = node
-//     let foundDirIndex = node.dirs.findIndex(dir => dir.name === dirName)
-//     console.log(`found at ${foundDirIndex}`)
-//
-//     if (foundDirIndex == -1) {
-//       throw new Error('Incorrect arguments or the tree')
-//     }
-//     node.dirs = [...node.dirs]
-//     let foundDir = node.dirs[foundDirIndex]
-//     let nextFoundDir = {...foundDir}
-//     node.dirs[foundDirIndex] = nextFoundDir
-//     node = nextFoundDir
-//   }
-//   node.open = !node.open
-//   console.log('left ' + pathDirs.join('/'))
-//   console.log('res ' + node.name)
-//   console.log(nextRoot.dirs)
-//   return nextRoot.dirs
-// }
 
 function copyTree(rootDirs, pathStr) {
   let pathDirs = pathStr.split('/')
   pathDirs.shift()
-  //console.log(pathStr)
+  // console.log(pathStr)
   console.log(`dirs(${pathDirs.length}) ${pathDirs.join('/')}`)
   let nextRoot = {
     dirs: rootDirs
   }
   let node = nextRoot
 
-
   while (pathDirs.length > 0 && node && node.dirs) {
     let dirName = pathDirs.shift()
     if (dirName == '') continue
     console.log(`dirName: ${dirName}  dirs: ${node.dirs.length}`)
-    //prevNode = node
+    // prevNode = node
     let foundDirIndex = node.dirs.findIndex(dir => dir.name === dirName)
     console.log(`found at ${foundDirIndex}`)
 
@@ -123,7 +62,7 @@ function copyTree(rootDirs, pathStr) {
     node.dirs[foundDirIndex] = nextFoundDir
     node = nextFoundDir
   }
-  //node.open = !node.open
+  // node.open = !node.open
   console.log('left ' + pathDirs.join('/'))
   console.log('res ' + node.name)
   console.log(nextRoot.dirs)
@@ -146,7 +85,7 @@ function updateTree(rootDirs, pathStr, nodes, tracks) {
   console.log(newDirs)
   let newTreeInfo = copyTree(rootDirs, pathStr)
   console.log(newTreeInfo.node.dirs)
-  //newTreeInfo.node.dirs.push({qwe: 1})
+  // newTreeInfo.node.dirs.push({qwe: 1})
   console.log(newTreeInfo.node)
   if (pathStr == '/') {
     newTreeInfo.dirs = newDirs

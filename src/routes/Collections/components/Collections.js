@@ -48,24 +48,24 @@ export class Collections extends React.Component {
         ) : dirs.map(elem => (
           <li key={elem.name} className='list-group-item library__dir'>
             <div className='library__title'>
-              <button className='btn btn-secondary btn-sm' onClick={() => {this.toggleTree(`${base}/${elem.name}`)}}>
+              <button className='btn btn-secondary btn-sm' onClick={() => { this.toggleTree(`${base}/${elem.name}`) }}>
                 {elem.open ? '-' : '+'}
               </button>
               <Link to={`/music/collections/${elem.name}`}> {elem.name}</Link>
-              {/*<div className='btn-group-sm library__dir-buttons'>
+              {/* <div className='btn-group-sm library__dir-buttons'>
                 <button className='btn btn-secondary btn-sm'>
                   <Link to={'/music/collections/create' + base + '/' + elem.name + '/'}>Add</Link>
                 </button>
                 <button className='btn btn-secondary btn-sm'>
                   Edit
                 </button>
-              </div>*/}
+              </div> */}
             </div>
             {elem.open ? (
               <div>
                 {this.getDirs(elem.dirs, `${base}/${elem.name}`)}
                 <TrackList songs={elem.tracks || []} pl={`${base}/${elem.name}`} immutable
-                           updatePlaylist={this.updatePlaylist}/>
+                  updatePlaylist={this.updatePlaylist} />
               </div>
             ) : null}
 

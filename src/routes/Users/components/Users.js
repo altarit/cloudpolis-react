@@ -3,7 +3,6 @@ import {Link} from 'react-router'
 
 export class Users extends React.Component {
   static propTypes = {
-    username: PropTypes.string,
     users: PropTypes.arrayOf(PropTypes.object),
 
     getUsers: PropTypes.func.isRequired

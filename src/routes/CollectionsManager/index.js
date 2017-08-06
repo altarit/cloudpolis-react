@@ -7,9 +7,9 @@ export default (store) => ({
       const CollectionsManager = require('./containers/CollectionsManagerContainer').default
       const reducer = require('./modules/collectionsManager').default
 
-      injectReducer(store, {key: 'collections', reducer})
+      injectReducer(store, {key: 'collectionsManager', reducer})
 
       cb(null, CollectionsManager)
-    }, 'collections')
+    }, 'collectionsManager')
   }
 })

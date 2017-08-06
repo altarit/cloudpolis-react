@@ -8,9 +8,8 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-  fetching: state.collections.fetching,
+  fetching: state.collectionsManager.fetching,
   path: state.location.pathname.substring('/music/collections/create'.length),
-  base: state.collections.base,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CollectionsManager)

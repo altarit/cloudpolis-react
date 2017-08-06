@@ -1,5 +1,4 @@
-import {TREE_TOGGLE} from 'routes/Collections/modules/collections'
-import reducer from 'routes/Collections/modules/collections'
+import reducer, {TREE_TOGGLE} from 'routes/Collections/modules/collections'
 
 describe('routes/Collections - Reducer', () => {
   it('TREE_TOGGLE', () => {
