@@ -13,6 +13,9 @@ export class Admin extends React.Component {
         <div>
           <Link to='/admin/access/'>Access Log</Link>
         </div>
+        <div>
+          <Link to={`/music/collections/`}>Collections</Link>
+        </div>
       </div>
     )
   }

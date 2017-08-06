@@ -16,5 +16,5 @@ export function apiLink(link) {
 
 export function trackLink(src) {
   if (!src) return null
-  return BASE_URL + '/artists/' + src
+  return BASE_URL + '/library' + src
 }

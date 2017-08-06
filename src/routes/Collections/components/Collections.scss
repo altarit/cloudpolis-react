@@ -1,10 +1,19 @@
-.library-dir {
+.library__dir {
   display: block;
   background: transparent;
   border: none;
   border-left: 1px dotted;
 }
 
-.library-dir:hover {
+.library__dir-buttons {
+  display: none;
+}
+
+.library__title:hover > .library__dir-buttons {
+  display: inline-block;
+}
+
+
+.library__dir:hover {
   //background-color: #777777;
 }
