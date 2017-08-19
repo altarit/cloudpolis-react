@@ -27,7 +27,7 @@ export class Artists extends React.Component {
         result.push(
           <li key={artist.name} className='list-group-item artist_el'>
             <span className='badge'>{artist.count}</span>
-            <Link to={`/music/artists/${artist.name}`}>{artist.name}</Link>
+            <Link to={`/music/artists/${artist.library}/${artist.name}`}>{artist.name}</Link>
           </li>
         )
       }

@@ -10,10 +10,14 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-  songs: state.artist.songs,
+  tracks: state.artist.tracks,
+  albums: state.artist.albums,
   library: state.artist.library,
   count: state.artist.count,
-  artistName: props.params.artistName
+  artistName: props.params.artistName,
+  artistsLibrary: props.params.artistsLibrary,
+  albumName: props.location.query.album,
+  view: props.location.query.view,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Artist)
