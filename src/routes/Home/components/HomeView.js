@@ -29,18 +29,18 @@ export class HomeView extends React.Component {
     return (
       <div className='container'>
         <div className='row'>
-          <div className='col-md-6'>
+          <div className='col-lg-6'>
             <h2>Welcome to Cloudpolis!</h2>
 
             <div className='row'>
-              <div className='col-sm-7'>
+              <div className='col-md-7'>
                 <img
                   alt='Cloudpolis Logo!'
                   className='logo'
                   src={LogoImage} />
               </div>
 
-              <div className='col-sm-5'>
+              <div className='col-md-5'>
                 Tracks: 2147<br />
                 Artists: 248<br />
                 Total duration: 9d 8h 47m<br />
@@ -54,27 +54,27 @@ export class HomeView extends React.Component {
             it.<br />
 
           </div>
-          <div className='col-md-6'>
+          <div className='col-lg-6'>
             <h2>Random tracks</h2>
             <TrackList songs={this.props.tracks} pl={DEFAULT_PL} immutable updatePlaylist={this.updatePlaylist} />
           </div>
         </div>
 
         <div className='row'>
-          <div className='col-md-4'>
+          <div className='col-lg-4'>
             <h3>Functionality</h3>
             Cloudpolis is meant to be as advanced and intuitive as popular desktop music players.
             It has lots features for managing playlists and sorting tracks
-            so you can build your personal playlists fast and easy.<br />
+            so you can build your personal playlist with ease.<br />
             {/* I won't be lying if I said I was inpired by AIMP and took some ideas from it. */}
           </div>
-          <div className='col-md-4'>
+          <div className='col-lg-4'>
             <h3>Quality</h3>
             All tracks in my collection have highest bitrate I could find for mp3.
-            I have some free space on server so if you like Cloudpolis and want more tracks to be in the library feel
-            free to contact me.
+            I have some free space on the server so if you like Cloudpolis and want more tracks to be in the library
+            feel free to contact me.
           </div>
-          <div className='col-md-4'>
+          <div className='col-lg-4'>
             <h3>Cross-platform</h3>
             Cloudpolis works on mobile devices as well as on desktop browsers.
             However you need good internet connection to listen to music online.
@@ -82,22 +82,22 @@ export class HomeView extends React.Component {
         </div>
 
         <div className='row'>
-          <div className='col-md-12'>
+          <div className='col-lg-12'>
             <h2>Featured artists</h2>
           </div>
         </div>
 
         <div className='row'>
-          <div className='col-md-12'>
+          <div className='col-lg-12'>
             <h2>Useful links</h2>
           </div>
         </div>
 
         <div className='row'>
-          <div className='col-md-12'>
+          <div className='col-lg-12'>
             <h2>More</h2>
             If you have any questions, please feel free to contact me at
-            <a href='mailto:admin@cloudpolis.ru'>admin@cloudpolis.ru</a>
+            <a href='mailto:admin@cloudpolis.ru'> admin@cloudpolis.ru</a>
           </div>
         </div>
       </div>

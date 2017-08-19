@@ -1,10 +1,14 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {IndexLink, Link} from 'react-router'
 
 import './Header.scss'
 import Auth from '../Auth'
 
 export class Header extends React.Component {
+  static propTypes = {
+    sidebar: PropTypes.bool.isRequired,
+  }
+
   constructor(props) {
     super(props)
     this.state = {collapse: true}
@@ -16,16 +20,15 @@ export class Header extends React.Component {
 
   render() {
     return (
-      <nav className='container navbar navbar-toggleable-md navbar-light bg-faded'>
+      <nav className={'container navbar navbar-light bg-faded navbar-header ' +
+      (this.props.sidebar ? 'navbar-expand-lg' : 'navbar-expand-sm')}>
+        <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>Cloudpolis</IndexLink>
         <button
           className='navbar-toggler navbar-toggler-right'
           type='button'
           onClick={this.toggleNav}>
-          <span className='navbar-toggler-icon' />
+          <span className='navbar-toggler-icon'/>
         </button>
-        <h1 className='navbar-brand mb-0'>
-          <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>Cloudpolis</IndexLink>
-        </h1>
         <div className={'navbar-collapse ' + (this.state.collapse ? 'collapse' : '')}>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>

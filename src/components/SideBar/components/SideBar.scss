@@ -1,6 +1,16 @@
+$sidebarColor: red;
+$topMenuColor: #dddddd;
+$playMenuListColor: #f0f0f0;
+$playMenuStatusColor: #dddddd;
+$playMenuBottomColor: #dddddd;
+$panelBorder: 1px solid #7d7d7d;
+
 /* SideBar */
 .sidebar {
-  background-color: #aaaaaa;
+  background-color: $sidebarColor;
+  border-left: $panelBorder;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
   position: fixed;
   width: 360px;
   max-width: 100%;
@@ -8,10 +18,13 @@
   bottom: 50px;
   right: 0px;
   transition: right 0.3s ease-out;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar--open {
   right: -360px;
+  box-shadow: none;
 }
 
 .sidebar__widget {
@@ -26,9 +39,12 @@
 }
 
 .playmenu__top {
-  background-color: #997788;
+  background-color: $topMenuColor;
   flex: 0 1;
-  min-height: 32px;
+  min-height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .playmenu__tabs {
@@ -36,23 +52,24 @@
 }
 
 .playmenu__list {
-  background-color: #998877;
+  background-color: $playMenuListColor;
   flex: 1 1 auto;
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
 .playmenu__status {
-  background-color: #887799;
+  background-color: $playMenuStatusColor;
   flex: 0 1;
   min-height: 40px;
   text-align: center;
 }
 
 .playmenu__bottom {
-  background-color: #779988;
+  background-color: $playMenuBottomColor;
   flex: 0 1;
   min-height: 32px;
+  padding-left: 5px;
 }
 
 /* Button popups */
@@ -65,33 +82,25 @@
 
 .playmenu__top button {
   height: 100%;
-}
-
-.playmenu__volume {
-  height: 100%;
+  width: 35px;
 }
 
 .playmenu__bottom button {
   height: 100%;
+  width: auto;
+  margin: 5px;
 }
 
-.playmenu__list .dropdown-menu {
-
+.playmenu__top-empty {
+  flex: 1 1 auto;
 }
 
 .dropdown_fixed {
   position: fixed;
 }
 
-.playmenu__volume {
-  display: inline-block;
-  float: right;
-
-}
-
 .playmenu__volume-slider {
   display: inline-block;
-  float: right;
   max-width: 80px;
   margin: 5px;
 }

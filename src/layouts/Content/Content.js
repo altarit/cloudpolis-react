@@ -4,7 +4,7 @@ import Header from '../../components/Header'
 
 export const Content = (props) => (
   <div className={'content__out' + (props.sidebar ? ' content__out_shifted' : '')}>
-    <Header />
+    <Header sidebar={props.sidebar} />
     <div className='core-layout__viewport'>
       {props.children}
     </div>

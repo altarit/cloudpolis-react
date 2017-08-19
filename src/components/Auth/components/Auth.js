@@ -36,7 +36,7 @@ export class Auth extends React.Component {
   render() {
     let errorText = this.props.errorText
     return (
-      <ul className='form-inline login dropdown open'>
+      <ul className='login dropdown open'>
         {this.props.name ? (
           <div>
             <button className='btn btn-primary auth__username-btn' data-click='dropdown' data-for='userPopup'>
@@ -64,7 +64,7 @@ export class Auth extends React.Component {
         {this.props.userPopup ? (
           <ul className='dropdown-menu show' data-click='none'>
             <li><Link to={`/users/${this.props.name}`}> Profile</Link></li>
-            <li><Link className='' onClick={this.props.logout}> Logout</Link></li>
+            <li><Link className='link' onClick={this.props.logout}> Logout</Link></li>
           </ul>
         ) : null}
       </ul>

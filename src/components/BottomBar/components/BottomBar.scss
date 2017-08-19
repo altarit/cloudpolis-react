@@ -1,37 +1,33 @@
 /* Components */
 .navbar.fixed-bottom {
-  background: #B0B0B0;
-  padding: 0;
+  border-top: 1px solid #d5d5d5;
+  background-image: linear-gradient(#ffffff, #eeeeee 50%, #e4e4e4);
   height: 50px;
+}
+
+@media (max-width: 768px) {
+  .navbar.fixed-bottom, .player {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 
 div.player {
   width: 100%;
-  padding: 0px;
+  height: 100%;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.player__buttons {
-  flex: 0 1 120px;
+.btn-def.player__btn {
+  height: 100%;
+  font-size: 20px;
+  min-width: 38px;
 }
 
 .player__progress {
   flex: 1 1;
-}
-
-.player__other {
-  flex: 0 1;
-}
-
-.player__btn {
-  background: none;
-  font-size: 20px;
-  margin: 1px 4px;
-  padding: 0;
-  width: 30px;
-  height: 100%;
-  vertical-align: middle;
 }
 
 /* Progress */

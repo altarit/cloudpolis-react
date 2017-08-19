@@ -16,7 +16,9 @@ export class SidebarTabs extends React.Component {
 
   getTabs = () => {
     return this.props.tabs.map(plName => (
-      <li key={plName} className={'nav-item'} onClick={e => { this.props.selectTab(plName) }}>
+      <li key={plName} className={'nav-item'} onClick={e => {
+        this.props.selectTab(plName)
+      }}>
         <a className={'playmenu__tab nav-link' + (this.props.openTab === plName ? ' active' : '')} draggable='true'>
           {plName}
         </a>
@@ -38,36 +40,35 @@ export class SidebarTabs extends React.Component {
 
   render() {
     return (
-      <div className='playmenu__tabs'>
-        <div className='playmenu__tabs-left'>
-          <button
-            className='btn btn-primary fa fa-chevron-left playmenu__tabs-control'
-            onClick={this.scrollLeft}
-          />
-        </div>
+      <div className='playmenu__tabs dropdown'>
+        <button
+          className='btn btn-def fa fa-chevron-left playmenu__tabs-control'
+          onClick={this.scrollLeft}
+        />
 
         <div className='playmenu__tabs-center'>
-          <ul className='nav nav-tabs playmenu__tabs-list' style={{marginLeft: -this.props.scrolledTabs * 72}}>
+          <ul className='nav nav-tabs playmenu__tabs-list' style={{marginLeft: -this.props.scrolledTabs * 70}}>
             {this.getTabs()}
           </ul>
         </div>
 
-        <div className='playmenu__tabs-right dropdown'>
-          <button
-            type='button'
-            className='btn fa btn-primary fa-chevron-right playmenu__tabs-control'
-            onClick={this.scrollRight}
-          />
-          <button
-            type='button'
-            className='btn btn-primary fa fa-list playmenu__tabs-control'
-            data-click='dropdown'
-            data-for='allPlaylists'
-          />
-          {this.props.popups.allPlaylists ? (
-            <ul className='dropdown-menu show'>
-              {this.getTabs()}
-            </ul>) : ''}
+        <button
+          type='button'
+          className='btn fa btn-def fa-chevron-right playmenu__tabs-control'
+          onClick={this.scrollRight}
+        />
+        <button
+          type='button'
+          className='btn btn-def fa fa-list playmenu__tabs-control'
+          data-click='dropdown'
+          data-for='allPlaylists'
+        />
+
+        <div className="dropdown playmenu__tabs-dropdown">
+        {this.props.popups.allPlaylists ? (
+          <ul className='dropdown-menu show'>
+            {this.getTabs()}
+          </ul>) : ''}
         </div>
       </div>
     )

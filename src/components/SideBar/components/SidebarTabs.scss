@@ -1,12 +1,23 @@
+$playMenuTabsColor: #aaaaaa;
+$tabBorder: 1px solid #7d7d7d;
+$tabBackgroundColor: #999999;
+$tabPanelBackgroundColor: #909090;
+$tabActiveBackgroundColor: #f0f0f0;
+
 /* Tab */
 .playmenu__tabs {
-  background-color: #889977;
+  background-color: $playMenuTabsColor;
   min-height: 42px;
   display: flex;
   flex-flow: row;
 }
 
-.playmenu__tab {
+.nav-tabs {
+  border-bottom: none;
+}
+
+.nav-tabs .nav-item .playmenu__tab {
+  background-color: $tabBackgroundColor;
   cursor: pointer;
   user-select: none;
   width: 70px;
@@ -15,20 +26,21 @@
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
+  border-top: $tabBorder;
+  border-left: $tabBorder;
+  border-right: $tabBorder;
+}
+
+.nav-tabs .nav-item .playmenu__tab.active {
+  background-color: $tabActiveBackgroundColor;
 }
 
 .playmenu__tabs-control {
-  width: 25px;
-  height: 100%;
-  padding: 10px 3px;
-}
-
-.playmenu__tabs-left {
-  flex: 0 1;
+  height: 40px;
+  min-width: 26px;
 }
 
 .playmenu__tabs-center {
-  flex: 1 1 auto;
   overflow: hidden;
 }
 
@@ -37,12 +49,12 @@
   transition: margin-left 0.15s ease-out;
 }
 
-.playmenu__tabs-right {
-  flex: 0 1;
-  white-space: nowrap;
+.playmenu__tabs .dropdown-menu {
+  left: -300px;
+  width: 295px;
 }
 
-.playmenu__tabs-right .dropdown-menu {
-  left: -240px;
-  width: 280px;
+.playmenu__tabs-dropdown .playmenu__tab {
+  line-height: 1;
+  padding: 7px;
 }

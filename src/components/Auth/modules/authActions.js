@@ -1,4 +1,5 @@
 import {fetchGet, fetchPost} from '../../../modules/apiUtils'
+import {closeAllPopups} from '../../../modules/popups'
 
 import * as types from './authConstants'
 
@@ -47,6 +48,7 @@ export function login(username, password) {
           type: types.AUTH_LOGIN_SUCCESS,
           name: json.data
         })
+        dispatch(closeAllPopups())
       })
       .catch(ex => {
         console.warn(`Response ${ex.status}: ${ex.message}`)
@@ -76,6 +78,7 @@ export function signup(username, password, email) {
           type: types.AUTH_SIGNUP_SUCCESS,
           name: json.data
         })
+        dispatch(closeAllPopups())
       })
       .catch(ex => {
         dispatch({
@@ -97,6 +100,7 @@ export function logout() {
         dispatch({
           type: types.AUTH_LOGOUT_SUCCESS
         })
+        dispatch(closeAllPopups())
       })
       .catch(ex => {
         dispatch({

@@ -15,33 +15,24 @@ export class SidebarTopMenu extends React.Component {
   render() {
     return (
       <div className='playmenu__top'>
-        <button type='button' className='btn btn-primary fa fa-fast-backward' />
-        <button type='button' className='btn btn-primary fa fa-fast-forward' />
-        <button type='button' className='btn btn-primary fa fa-retweet' />
-        <button type='button' className='btn btn-primary fa fa-random' />
-        <div className='playmenu__volume'>
-          {this.props.muted ? (
-            <button
-              type='button'
-              className='btn btn-danger fa fa-volume-off'
-              style={{width: 40}}
-              onClick={this.props.toggleMute}
-            />
-          ) : (
-            <button
-              type='button'
-              className='btn btn-primary fa fa-volume-up'
-              onClick={this.props.toggleMute}
-            />
-          )}
-          <input
-            type='range'
-            className='playmenu__volume-slider'
-            min='1' max='20'
-            defaultValue='10'
-            onChange={this.volumeChanged}
-          />
-        </div>
+        <button type='button' className='btn btn-def fa fa-fast-backward'/>
+        <button type='button' className='btn btn-def fa fa-fast-forward'/>
+        <button type='button' className='btn btn-def fa fa-retweet'/>
+        <button type='button' className='btn btn-def fa fa-random'/>
+        <div className='playmenu__top-empty'></div>
+        <button
+          type='button'
+          className={'btn fa btn-def ' + (this.props.muted ? 'btn-danger fa-volume-off' : 'fa-volume-up')}
+          style={{width: 40}}
+          onClick={this.props.toggleMute}
+        />
+        <input
+          type='range'
+          className='playmenu__volume-slider'
+          min='1' max='20'
+          defaultValue='10'
+          onChange={this.volumeChanged}
+        />
       </div>
     )
   }

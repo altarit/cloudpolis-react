@@ -3,6 +3,24 @@
   padding-bottom: 50px;
 }
 
+@media (max-width: 768px) {
+  .core-layout__viewport > .container {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .row {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  .row > div {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}
+
+
 @media (min-width: 768px) {
 
   .content__out {

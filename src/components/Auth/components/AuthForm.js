@@ -16,7 +16,7 @@ class AuthForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit}>
+      <form className='login-form' onSubmit={this.props.handleSubmit}>
         <div className='form-group'>
           <label htmlFor='username'>Username</label>
           <Field name='username' component='input' type='text' className='form-control' />
