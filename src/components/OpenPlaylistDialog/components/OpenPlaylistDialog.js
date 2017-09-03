@@ -58,7 +58,7 @@ export class OpenPlaylistDialog extends React.Component {
         </ul>
         <form onSubmit={this.openOrSavePlaylist}>
           <div className='form-group'>
-            <label htmlFor='artists-filter'>Filename</label>
+            <label>Filename</label>
             <input type='text' className='form-control' ref='filename' />
           </div>
           {this.props.forSave ? (

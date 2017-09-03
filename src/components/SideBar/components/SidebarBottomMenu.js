@@ -30,9 +30,15 @@ export class SidebarBottomMenu extends React.Component {
     let position = {bottom: this.props.popups.bottomAdd.ry + 20, left: this.props.popups.bottomAdd.x - 40}
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
-        <li><span className='option fa fa-plus'> From current page to "{this.props.openTab}"</span></li>
-        <li><span className='option fa fa-plus'> From another playlist</span></li>
-        <li><span className='option fa fa-plus'> Close other</span></li>
+        <li className='option'>
+          <span className='fa fa-fw fa-plus' />From current page to "{this.props.openTab}"
+        </li>
+        <li className='option'>
+          <span className='fa fa-fw fa-plus' />From another playlist
+        </li>
+        <li className='option'>
+          <span className='fa fa-fw fa-plus' />Close other
+        </li>
       </ul>
     )
   }
@@ -42,9 +48,15 @@ export class SidebarBottomMenu extends React.Component {
     let position = {bottom: this.props.popups.bottomRemove.ry + 20, left: this.props.popups.bottomRemove.x - 85}
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
-        <li><span className='option fa fa-minus'> Remove current track from playlist</span></li>
-        <li><span className='option fa fa-minus'> Remove all in "{this.props.openTab}"</span></li>
-        <li><span className='option fa fa-minus'> Remove selected tracks</span></li>
+        <li className='option'>
+          <span className='fa fa-fw fa-minus' />Remove current track from playlist
+        </li>
+        <li className='option'>
+          <span className='fa fa-fw fa-minus' />Remove all in "{this.props.openTab}"
+        </li>
+        <li className='option'>
+          <span className='fa fa-fw fa-minus' />Remove selected tracks
+        </li>
       </ul>
     )
   }
@@ -54,12 +66,24 @@ export class SidebarBottomMenu extends React.Component {
     let position = {bottom: this.props.popups.bottomSort.ry + 20, left: this.props.popups.bottomSort.x - 90}
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
-        <li><span className='option fa fa-sort' onClick={this.props.sortByTitle}> Sort by title</span></li>
-        <li><span className='option fa fa-sort' onClick={this.props.sortByArtist}> Sort by artist</span></li>
-        <li><span className='option fa fa-sort' onClick={this.props.sortByDuration}> Sort by duration</span></li>
-        <li><span className='option fa fa-sort' onClick={this.props.sortByPath}> Sort by path</span></li>
-        <li><span className='option fa fa-sort' onClick={this.props.shuffle}> Shuffle</span></li>
-        <li><span className='option fa fa-sort' onClick={this.props.reverse}> Reverse</span></li>
+        <li className='option' onClick={this.props.sortByTitle}>
+          <span className='fa fa-fw fa-sort' />Sort by title
+        </li>
+        <li className='option' onClick={this.props.sortByArtist}>
+          <span className='fa fa-fw fa-sort' />Sort by artist
+        </li>
+        <li className='option' onClick={this.props.sortByDuration}>
+          <span className='fa fa-fw fa-sort' />Sort by duration
+        </li>
+        <li className='option' onClick={this.props.sortByPath}>
+          <span className='fa fa-fw fa-sort' />Sort by path
+        </li>
+        <li className='option' onClick={this.props.shuffle}>
+          <span className='fa fa-fw fa-sort' />Shuffle
+        </li>
+        <li className='option' onClick={this.props.reverse}>
+          <span className='fa fa-fw fa-sort' />Reverse
+        </li>
       </ul>
     )
   }
@@ -69,20 +93,20 @@ export class SidebarBottomMenu extends React.Component {
     let position = {bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 110}
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
-        <li>
-          <span className='option fa fa-file-o' data-click='dropdown' data-for='playlistCreation'> New playlist</span>
+        <li className='option' data-click='dropdown' data-for='playlistCreation'>
+          <span className='fa fa-fw fa-file-o' />New playlist
         </li>
-        <li>
-          <span className='option fa fa-times' onClick={this.props.closeOpenPlaylist}> Close playlist</span>
+        <li className='option' onClick={this.props.closeOpenPlaylist}>
+          <span className='fa fa-fw fa-times' />Close playlist
         </li>
-        <li>
-          <span className='option fa fa-angle-double-down' onClick={this.props.closeOtherPlaylists}> Close others</span>
+        <li className='option' onClick={this.props.closeOtherPlaylists}>
+          <span className='fa fa-fw fa-angle-double-down' />Close others
         </li>
-        <li>
-          <span className='option fa fa-folder-open-o' data-click='dropdown' data-for='openPlaylistDialog'> Open playlist</span>
+        <li className='option' data-click='dropdown' data-for='openPlaylistDialog'>
+          <span className='fa fa-fw fa-folder-open-o' />Open playlist
         </li>
-        <li>
-          <span className='option fa fa-floppy-o' data-click='dropdown' data-for='savePlaylistDialog'> Save playlist</span>
+        <li className='option' data-click='dropdown' data-for='savePlaylistDialog'>
+          <span className='fa fa-fw fa-floppy-o' />Save playlist
         </li>
       </ul>
     )
@@ -95,7 +119,7 @@ export class SidebarBottomMenu extends React.Component {
         <form onSubmit={this.createPlaylist}>
           <div className='form-group'>
             <label htmlFor='artists-filter'>Playlist name</label>
-            <input type='text' className='form-control' ref='menuPlCreationInput'/>
+            <input type='text' className='form-control' ref='menuPlCreationInput' />
             <span>{this.props.errors.createPlaylist}</span>
           </div>
           <div className='btn-group'>
@@ -114,8 +138,7 @@ export class SidebarBottomMenu extends React.Component {
 
     return (
       <div className='playmenu__bottom dropdown'>
-        <button type='button' className='btn btn-def fa fa-check' data-click='dropdown' data-for='bottomAdd'>
-        </button>
+        <button type='button' className='btn btn-def fa fa-check' data-click='dropdown' data-for='bottomAdd' />
         <button type='button' className='btn btn-def fa fa-plus' data-click='dropdown' data-for='bottomAdd'>
           <label>Add</label>
         </button>
@@ -136,11 +159,11 @@ export class SidebarBottomMenu extends React.Component {
         {this.renderPlaylistCreationPopup()}
 
         {this.props.popups.openPlaylistDialog ? (
-          <OpenPlaylistDialog playlist={this.props.pls[openTab]}/>
+          <OpenPlaylistDialog playlist={this.props.pls[openTab]} />
         ) : null }
 
         {this.props.popups.savePlaylistDialog ? (
-          <OpenPlaylistDialog playlist={this.props.pls[openTab]} forSave='true' filename={openTab}/>
+          <OpenPlaylistDialog playlist={this.props.pls[openTab]} forSave='true' filename={openTab} />
         ) : null }
       </div>
     )
