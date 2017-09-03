@@ -27,7 +27,7 @@ export class Header extends React.Component {
           className='navbar-toggler navbar-toggler-right'
           type='button'
           onClick={this.toggleNav}>
-          <span className='navbar-toggler-icon'/>
+          <span className='navbar-toggler-icon' />
         </button>
         <div className={'navbar-collapse ' + (this.state.collapse ? 'collapse' : '')}>
           <ul className='navbar-nav mr-auto'>

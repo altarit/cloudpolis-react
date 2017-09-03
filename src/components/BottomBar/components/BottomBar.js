@@ -18,17 +18,23 @@ export class BottomBar extends React.Component {
     return (
       <nav className='navbar fixed-bottom navbar-light bg-faded'>
         <div className='container player'>
-          <button type='button' className='btn btn-def player__btn fa fa-fast-backward' onClick={this.props.prevTrack}/>
+          <button
+            type='button' className='btn btn-def player__btn fa fa-fast-backward'
+            onClick={this.props.prevTrack}
+          />
           {!this.props.isPlaying ? (
-            <button type='button' className='btn btn-def player__btn fa fa-play' onClick={this.props.play}/>
+            <button type='button' className='btn btn-def player__btn fa fa-play' onClick={this.props.play} />
           ) : (
-            <button type='button' className='btn btn-def player__btn fa fa-pause' onClick={this.props.pause}/>
+            <button type='button' className='btn btn-def player__btn fa fa-pause' onClick={this.props.pause} />
           )}
-          <button type='button' className='btn btn-def player__btn fa fa-fast-forward' onClick={this.props.nextTrack}/>
+          <button
+            type='button' className='btn btn-def player__btn fa fa-fast-forward'
+            onClick={this.props.nextTrack}
+          />
 
           <AudioPlayer />
 
-          <button type='button' className='btn btn-def player__btn fa fa-bars' onClick={this.props.toggleSidebar}/>
+          <button type='button' className='btn btn-def player__btn fa fa-bars' onClick={this.props.toggleSidebar} />
         </div>
       </nav>
     )

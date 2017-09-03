@@ -64,11 +64,11 @@ export class SidebarTabs extends React.Component {
           data-for='allPlaylists'
         />
 
-        <div className="dropdown playmenu__tabs-dropdown">
-        {this.props.popups.allPlaylists ? (
-          <ul className='dropdown-menu show'>
-            {this.getTabs()}
-          </ul>) : ''}
+        <div className='dropdown playmenu__tabs-dropdown'>
+          {this.props.popups.allPlaylists ? (
+            <ul className='dropdown-menu show'>
+              {this.getTabs()}
+            </ul>) : ''}
         </div>
       </div>
     )
