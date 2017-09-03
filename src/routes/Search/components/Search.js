@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 
 import TrackList from '../../../components/TrackList'
 import {SEARCH_PL} from '../../../modules/player/playerConstants'
+import Input from '../../../components/Input'
 
 export class Search extends React.Component {
   static propTypes = {
@@ -15,27 +16,15 @@ export class Search extends React.Component {
     this.props.getTracksByQuery('')
   }
 
-  changeFilter = (e) => {
-    this.props.getTracksByQuery(e.target.value)
-  }
-
-  clearFilter = () => {
-    this.refs.searchQuery.value = ''
-    this.props.getTracksByQuery('')
-    this.refs.searchQuery.focus()
+  changeFilter = (newValue) => {
+    this.props.getTracksByQuery(newValue)
   }
 
   render() {
     return (
       <div className='container'>
         <h2>Search</h2>
-        <form className='form-horizontal form-search'>
-          <div className='btn-group'>
-            <label>Query</label>
-            <input type='search' className='form-control' onChange={this.changeFilter} ref='searchQuery' />
-            <span id='searchclear' className='fa fa-close' onClick={this.clearFilter} />
-          </div>
-        </form>
+        <Input onChange={this.changeFilter} />
         <div>
           {!this.props.songs ? (
             <div>Loading...</div>
