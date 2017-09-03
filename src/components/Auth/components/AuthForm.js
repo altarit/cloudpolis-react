@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import {Field, reduxForm} from 'redux-form'
 
 class AuthForm extends React.Component {
   static propTypes = {
@@ -33,16 +32,12 @@ class AuthForm extends React.Component {
         ) : null}
         <div>{this.props.errorText}</div>
         <div className='btn-group'>
-          <button type='submit' className='btn btn-primary'>Send</button>
+          <button type='submit' className='btn btn-outline-secondary mr-2'>Send</button>
         </div>
         <div className='btn-group'>
-          <button type='button' className='btn btn-primary' data-click='closeall'>Cancel</button>
+          <button type='button' className='btn btn-outline-secondary' data-click='closeall'>Cancel</button>
         </div>
       </form>
     )
   }
 }
-
-export default reduxForm({
-  form: 'login'
-})(AuthForm)
