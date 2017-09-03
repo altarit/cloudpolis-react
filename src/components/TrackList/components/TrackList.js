@@ -11,6 +11,7 @@ export class TrackList extends React.Component {
     pl: PropTypes.string.isRequired,
     className: PropTypes.string,
     immutable: PropTypes.bool.isRequired,
+    controls: PropTypes.bool,
 
     updatePlaylist: PropTypes.func
   }
@@ -39,9 +40,24 @@ export class TrackList extends React.Component {
 
   render() {
     return (
-      <ul className={this.props.className}>
-        {this.getPlaylist()}
-      </ul>
+      <div>
+        {this.props.controls ? (
+          <div className='d-flex justify-content-between'>
+            <div className='d-flex'>
+              <button className='btn btn-outline-secondary mr-2'>
+                Listen All
+              </button>
+              <button className='btn btn-outline-secondary'>
+                Add to Playlist
+              </button>
+            </div>
+            <div className='d-flex' />
+          </div>
+        ) : null}
+        <ul className={this.props.className}>
+          {this.getPlaylist()}
+        </ul>
+      </div>
     )
   }
 }

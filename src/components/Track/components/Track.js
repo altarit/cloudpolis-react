@@ -131,23 +131,35 @@ export class Track extends React.Component {
         <div className='dropdown'>
           {this.props.trackAdd && this.props.trackAdd.from === trackPID ? (
             <ul className='dropdown-menu show track_dropdown'>
-              <li><a className='fa fa-plus'> Add into the end of {this.props.currentPl}</a></li>
+              <li>
+                <a>
+                  <span className='fa fa-fw fa-plus' />Add into the end of {this.props.currentPl}
+                </a>
+              </li>
               {!this.props.immutable ? (
                 <li>
-                  <a className='fa fa-plus' onClick={this.removeTrack}> Remove from {this.props.pl}</a>
+                  <a onClick={this.removeTrack}>
+                    <span className='fa fa-fw fa-plus' />Remove from {this.props.pl}
+                  </a>
                 </li>
               ) : null}
               {this.props.compilation ? (
                 <li>
-                  <Link to={`/music/artists/${this.props.compilation}`} className='fa fa-plus'>
-                    Go to {this.props.compilation}
+                  <Link to={`/music/artists/${this.props.compilation}`}>
+                    <span className='fa fa-fw fa-plus' />Go to {this.props.compilation}
                   </Link>
                 </li>
               ) : null}
-
-              <li><a className='fa fa-plus' href={this.getFullLink()} download> Download</a></li>
-              <li><a className='fa fa-plus' href={this.getFullLink()} target='_blank'> Open
-                link in a new tab</a></li>
+              <li>
+                <a href={this.getFullLink()} download>
+                  <span className='fa fa-fw fa-plus' />Download
+                </a>
+              </li>
+              <li>
+                <a href={this.getFullLink()} target='_blank'>
+                  <span className='fa fa-fw fa-plus' />Open link in a new tab
+                </a>
+              </li>
             </ul>
           ) : null }
         </div>
