@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react'
 import {Field, reduxForm} from 'redux-form'
 
-let form = 'importCollection'
-let fields = ['path', 'name', 'base', 'data']
+let form = 'createCompilationsBulk'
+let fields = ['path', 'base', 'data']
 
-class ImportCollectionForm extends React.Component {
+class CreateCompilationsBulkForm extends React.Component {
   static propTypes = {
     errorText: PropTypes.string,
+    library: PropTypes.string,
 
     handleSubmit: PropTypes.func.isRequired,
     calculateBase: PropTypes.func.isRequired,
@@ -21,12 +22,8 @@ class ImportCollectionForm extends React.Component {
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className='form-group'>
-          <label htmlFor='path'>Path...</label>
-          <input name='path' type='text' className='form-control' readOnly defaultValue={this.props.path} />
-        </div>
-        <div className='form-group'>
-          <label htmlFor='name'>Name...</label>
-          <Field name='name' component='input' type='text' className='form-control' />
+          <label htmlFor='path'>Library...</label>
+          <input name='path' type='text' className='form-control' readOnly defaultValue={this.props.library} />
         </div>
         <div className='form-group'>
           <label htmlFor='base'>Base path...</label>
@@ -37,11 +34,12 @@ class ImportCollectionForm extends React.Component {
           <Field name='data' component='textarea' type='text' ref='jsonField' className='form-control' />
         </div>
         <div>{this.props.errorText}</div>
+        <div className='btn-group' />
+        <div className='btn-group' />
         <div className='btn-group'>
           <button className='btn btn-primary' onClick={this.calculateBase}>Calculate Base</button>
-        </div>
-        <div className='btn-group'>
           <button type='submit' className='btn btn-primary'>Send</button>
+          <button className='btn btn-primary' data-click='closeall'>Cancel</button>
         </div>
       </form>
     )
@@ -50,4 +48,4 @@ class ImportCollectionForm extends React.Component {
 
 export default reduxForm({
   form, fields
-})(ImportCollectionForm)
+})(CreateCompilationsBulkForm)
