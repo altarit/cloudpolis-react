@@ -11,10 +11,10 @@ export function getArtist($artistsLibrary, artistName) {
     })
 
     return fetchGet(`/music/artists/${$artistsLibrary}/${artistName}`)
-      .then(artist => {
+      .then(response => {
         dispatch({
           type: GET_ARTIST_SUCCESS,
-          albums: artist.data.albums
+          tracks: response.data.artist.songs
         })
       })
   }
@@ -29,13 +29,31 @@ const initialState = {
 export default function artistsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_ARTIST_REQUEST:
-      return {...state, albums: [], tracks: [], fetching: true}
+      return {...state, albums: [], tracks: [], fetching: true, q: 2}
     case GET_ARTIST_SUCCESS:
-      let tracks = (action.albums || []).reduce((res, album) => {
-        if (album) res.push(...album.tracks);
-        return res;
-        }, [])
-      let albums = action.albums.filter(alb => alb.tracks.length)
+      // let tracks = (action.albums || []).reduce((res, album) => {
+      //   if (album) res.push(...album.tracks);
+      //   return res;
+      //   }, [])
+      let tracks = action.tracks
+      // let albums = [];//action.albums.filter(alb => alb.tracks.length)
+      let albumsHash = action.tracks.reduce((res, track) => {
+        let albumName = track.album || track.compilation
+        if (!res[albumName]) {
+          res[albumName] = []
+        }
+        let album = res[albumName]
+        album.push(track)
+        return res
+      }, [])
+      let albums = []
+      for (let albumName of Object.keys(albumsHash)) {
+        albums.push({
+          name: albumName,
+          tracks: albumsHash[albumName]
+        })
+      }
+      console.log(albums)
       return {...state, albums: albums, tracks: tracks, fetching: false}
     case GET_ARTIST_FAILED:
       return {...state, fetching: false, errorText: action.errorText}

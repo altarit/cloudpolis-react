@@ -22,51 +22,96 @@ export class Artist extends React.Component {
 
   componentDidMount() {
     this.props.getArtist(this.props.artistsLibrary, this.props.artistName)
+    console.log(this.props.albums)
   }
 
   updatePlaylist = () => {
-    this.props.updatePlaylist(null, this.props.tracks)
+    if (this.props.albumName === undefined) {
+      this.props.updatePlaylist(null, this.props.tracks)
+    } else {
+      let currentAlbum = (this.props.albums.filter(el => el.name === this.props.albumName)[0] || []).tracks || []
+      this.props.updatePlaylist(null, currentAlbum)
+    }
+  }
+
+  getAlbums = () => {
+    return (
+      <ul className='libraries-list list-group'>
+        {this.props.albums.map(album =>
+          <li key={album.name}
+            className='list-group-item list-group-item-action
+                           flex-row align-items-center d-flex h-100 justify-content-between'>
+            <Link className='list-group-item-action'
+              to={`/music/libraries/${this.props.artistsLibrary}/${this.props.artistName}?album=${album.name}`}>
+              {album.name}
+            </Link>
+            <button type='button' className='btn btn-def fa'
+              data-for='moreCompilationsPopup' data-click='dropdown' data-from={album.name}>
+              ...
+            </button>
+          </li>
+        )}
+      </ul>
+    )
   }
 
   render() {
     return (
       <div className='container'>
-        <h2>{this.props.artistName}</h2>
-        <h3>{this.props.artistsLibrary}</h3>
         <div>
-          <Link to={`/music/artists/${this.props.artistsLibrary}/${this.props.artistName}?view=tracks`}>
-            All Tracks
-          </Link>
-          <Link to={`/music/artists/${this.props.artistsLibrary}/${this.props.artistName}?view=albums`}>
-            Albums
-          </Link>
+          <span>
+            <Link to={`/music/libraries`}>/libraries/</Link>
+            <Link to={`/music/libraries/${this.props.artistsLibrary}`}>{this.props.artistsLibrary}/</Link>
+            {this.props.albumName ? (
+              <Link to={`/music/libraries/${this.props.artistsLibrary}/${this.props.artistName}/`}>
+                {this.props.artistName}/
+              </Link>
+            ) : null}
+          </span>
         </div>
+        <h2>{this.props.artistName}</h2>
+        <ul className='nav'>
+          <li className='nav-item'>
+            <Link className='nav-link'
+              to={`/music/libraries/${this.props.artistsLibrary}/${this.props.artistName}`}>
+              Main
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link className='nav-link'
+              to={`/music/libraries/${this.props.artistsLibrary}/${this.props.artistName}?view=tracks`}>
+              All Tracks
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link className='nav-link'
+              to={`/music/libraries/${this.props.artistsLibrary}/${this.props.artistName}?view=albums`}>
+              Albums
+            </Link>
+          </li>
+        </ul>
         {this.props.fetching ? (
           <div>Loading...</div>
         ) : (
           <div>
-            {this.props.view === 'albums' ? this.props.albums.map((album) => (
-              <Link
-                key={album.name}
-                to={`/music/artists/${this.props.artistsLibrary}/${this.props.artistName}?album=${album.name}`}
-              >
-                {album.name}
-              </Link>
-            )) : this.props.albumName === undefined ? (
-              <TrackList
-                songs={this.props.tracks}
-                pl={DEFAULT_PL}
-                immutable
-                updatePlaylist={this.updatePlaylist}
-              />
-            ) : (
-              <TrackList
-                songs={(this.props.albums.filter(el => el.name === this.props.albumName)[0] || []).tracks || []}
-                pl={DEFAULT_PL}
-                immutable
-                updatePlaylist={this.updatePlaylist}
-              />
-            )}
+            {this.props.view === 'albums' ? this.getAlbums()
+              : this.props.albumName === undefined ? (
+                <TrackList
+                  songs={this.props.tracks}
+                  pl={DEFAULT_PL}
+                  immutable
+                  updatePlaylist={this.updatePlaylist}
+                  controls
+                />
+              ) : (
+                <TrackList
+                  songs={(this.props.albums.filter(el => el.name === this.props.albumName)[0] || []).tracks || []}
+                  pl={DEFAULT_PL}
+                  immutable
+                  updatePlaylist={this.updatePlaylist}
+                  controls
+                />
+              )}
           </div>
         )}
       </div>
