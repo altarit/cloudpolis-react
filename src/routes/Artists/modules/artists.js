@@ -35,9 +35,22 @@ export const actions = {
   changeArtistsFilter
 }
 
+function filterArtists(artists, mask) {
+  if (!mask) {
+    return artists
+  }
+
+  let rx = new RegExp(mask, 'i')
+  let result = artists.filter(artist => {
+    return rx.test(artist.name)
+  })
+  return result
+}
+
 const initialState = {
   fetching: false,
   artists: [],
+  filteredArtists: [],
   artistsMask: ''
 }
 
@@ -46,18 +59,21 @@ export default function artistsReducer(state = initialState, action) {
     case GET_ARTISTS_REQUEST:
       return {
         ...state,
-        fetching: true
+        fetching: true,
+        artistsMask: ''
       }
     case GET_ARTISTS_SUCCESS:
       return {
         ...state,
         fetching: false,
-        artists: action.payload
+        artists: action.payload,
+        filteredArtists: filterArtists(action.payload, state.artistsMask)
       }
     case CHANGE_ARTISTS_FILTER:
       return {
         ...state,
-        artistsMask: action.mask
+        artistsMask: action.mask,
+        filteredArtists: filterArtists(state.artists, action.mask)
       }
   }
 

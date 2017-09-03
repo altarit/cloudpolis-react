@@ -11,6 +11,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   fetching: state.artists.fetching,
   artists: state.artists.artists,
+  filteredArtists: state.artists.filteredArtists,
   artistsMask: state.artists.artistsMask
 })
 
