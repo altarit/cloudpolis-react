@@ -5,7 +5,7 @@
   margin: 0;
   text-align: center;
   vertical-align: middle;
-  width: 25px;
+  //width: 25px;
 }
 
 .btn-def label {
@@ -25,10 +25,6 @@ button.btn:focus {
 a:focus {
   outline: none;
   box-shadow: none;
-}
-
-.option {
-  cursor: default;
 }
 
 .link {

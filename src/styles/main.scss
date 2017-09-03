@@ -1,6 +1,7 @@
 @import 'base';
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 @import './buttons';
+@import './dropdown';
 
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
@@ -41,16 +42,3 @@ body {
 .dropdown-menu.show {
   display: block;
 }
-
-#searchclear {
-  position: absolute;
-  right: 5px;
-  top: 30px;
-  bottom: 0;
-  height: 30px;
-  margin: auto;
-  font-size: 20px;
-  cursor: pointer;
-  color: #ccc;
-}
-
