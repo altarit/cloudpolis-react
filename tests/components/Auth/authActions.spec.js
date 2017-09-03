@@ -1,6 +1,7 @@
 import {apiLink} from 'modules/formatUtils'
 import * as types from 'components/Auth/modules/authConstants'
 import * as actions from 'components/Auth/modules/authActions'
+import * as popups from 'modules/popups'
 
 const mockStore = configureStore(middlewares)
 
@@ -53,8 +54,11 @@ describe('components/Auth - Actions', () => {
       const store = mockStore()
       const expectedActions = [
         {type: types.AUTH_LOGIN_REQUEST, name: username, pass: password},
-        {type: types.AUTH_LOGIN_SUCCESS, name: 'Aj'}
+        {type: types.AUTH_LOGIN_SUCCESS, name: 'Aj'},
+        {type: popups.POPUP_CLOSE_ALL}
       ]
+
+
 
       return store.dispatch(actions.login(username, password))
         .then(() => {
@@ -113,7 +117,8 @@ describe('components/Auth - Actions', () => {
       const store = mockStore()
       const expectedActions = [
         {type: types.AUTH_SIGNUP_REQUEST, name: username, pass: password, mail: email},
-        {type: types.AUTH_SIGNUP_SUCCESS, name: username}
+        {type: types.AUTH_SIGNUP_SUCCESS, name: username},
+        {type: popups.POPUP_CLOSE_ALL}
       ]
 
       return store.dispatch(actions.signup(username, password, email))
@@ -134,7 +139,8 @@ describe('components/Auth - Actions', () => {
       const store = mockStore()
       const expectedActions = [
         {type: types.AUTH_LOGOUT_REQUEST},
-        {type: types.AUTH_LOGOUT_SUCCESS}
+        {type: types.AUTH_LOGOUT_SUCCESS},
+        {type: popups.POPUP_CLOSE_ALL}
       ]
 
       return store.dispatch(actions.logout())

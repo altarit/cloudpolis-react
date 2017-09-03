@@ -11,7 +11,7 @@ describe('(Component) Header', () => {
   })
 
   it('Renders a welcome message', () => {
-    const welcome = _wrapper.find('h1')
+    const welcome = _wrapper.find('.navbar-header')
     expect(welcome).to.exist()
     expect(welcome.contains(
       <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>

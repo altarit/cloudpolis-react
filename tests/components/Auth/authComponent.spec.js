@@ -22,6 +22,6 @@ function setup() {
 describe('components/Auth - Component', () => {
   it('There is auth component', () => {
     const {enzymeWrapper} = setup()
-    expect(enzymeWrapper.find('ul').hasClass('login')).to.be.true()
+    expect(enzymeWrapper.find('.login').hasClass('login')).to.be.true()
   })
 })
