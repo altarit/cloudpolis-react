@@ -2,6 +2,8 @@ import React, {Component, PropTypes} from 'react'
 import {browserHistory, Router} from 'react-router'
 import {Provider} from 'react-redux'
 
+import {resizedWindow} from './Sidebar/modules/sideBar'
+
 import {closeAllPopups, openPopup} from '../modules/popups'
 
 class AppContainer extends Component {
@@ -12,6 +14,18 @@ class AppContainer extends Component {
 
   shouldComponentUpdate() {
     return false
+  }
+
+  resizeWindow = () => {
+    this.props.store.dispatch(resizedWindow())
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeWindow)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeWindow)
   }
 
   handleClick = (e) => {

@@ -1,7 +1,7 @@
 import {connect} from 'react-redux'
 
 import BottomBar from '../components/BottomBar'
-import {toggleSidebar} from '../../../components/Sidebar/modules/sidebar'
+import {toggleSidebar} from '../../../components/Sidebar/modules/sideBar'
 import {nextTrack, prevTrack, play, pause} from '../../../modules/player/playerActions'
 
 const mapDispatchToProps = {

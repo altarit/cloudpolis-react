@@ -1,8 +1,4 @@
-import {
-  TOGGLE_SIDEBAR,
-  toggleSidebar,
-  default as reducer
-} from 'components/Sidebar/modules/sideBar'
+import {default as reducer, TOGGLE_SIDEBAR, toggleSidebar} from "components/Sidebar/modules/sideBar";
 
 describe('SideBar - modules', () => {
   it('toogleSidebar', () => {
@@ -17,7 +13,8 @@ describe('SideBar - modules', () => {
     })
 
     expect(nextState).to.deep.equal({
-      isOpen: false
+      isOpen: false,
+      mobile: true
     })
   })
 })
