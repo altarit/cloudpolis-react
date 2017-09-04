@@ -1,5 +1,10 @@
 .login {
   position: relative;
+
+  .dropdown-menu {
+    position: absolute;
+    left: -120px;
+  }
 }
 
 .login__username-btn {

@@ -14,9 +14,7 @@ describe('(Component) Header', () => {
     const welcome = _wrapper.find('.navbar-header')
     expect(welcome).to.exist()
     expect(welcome.contains(
-      <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>
-        Cloudpolis
-      </IndexLink>
+        <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
     )).to.be.true()
     // expect(homeLink.text()).to.match(/Cloudpolis/)
   })
@@ -24,16 +22,18 @@ describe('(Component) Header', () => {
   describe('Navigation links...', () => {
     it('Should render a Link to Artists route', () => {
       expect(_wrapper.contains(
-        <Link activeClassName='route--active' className='nav-link' to='/music/artists'>
-          Artists
+        <Link to='/music/artists' className='nav-link' activeClassName='route--active'>
+          <span className='fa fa-music' />
+          <span className='navbar__link-label'>Artists</span>
         </Link>
       )).to.be.true()
     })
 
     it('Should render a Link to Search route', () => {
       expect(_wrapper.contains(
-        <Link activeClassName='route--active' className='nav-link' to='/music/search'>
-          Search
+        <Link to='/music/search' className='nav-link' activeClassName='route--active'>
+          <span className='fa fa-search' />
+          <span className='navbar__link-label'>Search</span>
         </Link>
       )).to.be.true()
     })

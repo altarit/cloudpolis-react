@@ -9,10 +9,12 @@ export class Auth extends React.Component {
     name: PropTypes.string,
     fetching: PropTypes.bool,
     errorText: PropTypes.string,
+    mobile: PropTypes.bool,
 
     loginPopup: PropTypes.object,
     signupPopup: PropTypes.object,
     userPopup: PropTypes.object,
+    signPopup: PropTypes.object,
 
     resetStatus: PropTypes.func.isRequired,
     hi: PropTypes.func.isRequired,
@@ -37,21 +39,47 @@ export class Auth extends React.Component {
     let errorText = this.props.errorText
     return (
       <div className='login dropdown open'>
-        {this.props.name ? (
-          <button className='btn btn-outline-secondary login__username-btn mr-2'
-            data-click='dropdown' data-for='userPopup'>
-            {this.props.name}
-          </button>
+        {this.props.mobile ? (
+          <div>
+            <ul className='navbar-nav mr-auto'>
+              <li className='nav-item'>
+                {this.props.name ? (
+                  <Link data-click='dropdown' data-for='userPopup' className='nav-link' activeClassName='route--active'>
+                    <span className='fa fa-user' />
+                    <span className='navbar__link-label'>Profile</span>
+                  </Link>
+                ) : (
+                  <Link data-click='dropdown' data-for='signPopup' className='nav-link' activeClassName='route--active'>
+                    <span className='fa fa-sign-in' />
+                    <span className='navbar__link-label'>Sign&nbsp;In</span>
+                  </Link>
+                )}
+              </li>
+            </ul>
+            {this.props.signPopup ? (
+              <ul className='dropdown-menu show' data-click='none'>
+                <li><span data-click='dropdown' data-for='loginPopup'> Login</span></li>
+                <li><span data-click='dropdown' data-for='signupPopup'> Signup</span></li>
+              </ul>
+            ) : null}
+          </div>
         ) : (
-          <button className='btn btn-outline-secondary mr-2' data-click='dropdown' data-for='loginPopup'>
-            Login
-          </button>
+          this.props.name ? (
+            <button className='btn btn-outline-secondary login__username-btn mr-2'
+              data-click='dropdown' data-for='userPopup'>
+              {this.props.name}
+            </button>
+          ) : (
+            <div>
+              <button className='btn btn-outline-secondary mr-2' data-click='dropdown' data-for='loginPopup'>
+                Login
+              </button>
+              <button className='btn btn-outline-secondary' data-click='dropdown' data-for='signupPopup'>
+                Signup
+              </button>
+            </div>
+          )
         )}
-        {!this.props.name ? (
-          <button className='btn btn-outline-secondary' data-click='dropdown' data-for='signupPopup'>
-            Signup
-          </button>
-        ) : null}
 
         {this.props.loginPopup ? (
           <div className='dropdown-menu show' data-click='none'>

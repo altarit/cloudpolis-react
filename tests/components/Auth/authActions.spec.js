@@ -58,8 +58,6 @@ describe('components/Auth - Actions', () => {
         {type: popups.POPUP_CLOSE_ALL}
       ]
 
-
-
       return store.dispatch(actions.login(username, password))
         .then(() => {
           expect(store.getActions()).to.deep.equal(expectedActions)

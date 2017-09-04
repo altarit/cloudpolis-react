@@ -19,9 +19,11 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   name: state.auth.name,
+  mobile: state.sidebar.mobile,
   loginPopup: state.popups.loginPopup,
   signupPopup: state.popups.signupPopup,
   userPopup: state.popups.userPopup,
+  signPopup: state.popups.signPopup,
   errorText: state.auth.errorText
 })
 

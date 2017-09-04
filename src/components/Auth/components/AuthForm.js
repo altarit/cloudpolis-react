@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import {Field, reduxForm} from 'redux-form'
 
 class AuthForm extends React.Component {
   static propTypes = {
@@ -41,3 +42,7 @@ class AuthForm extends React.Component {
     )
   }
 }
+
+export default reduxForm({
+  form: 'login'
+})(AuthForm)

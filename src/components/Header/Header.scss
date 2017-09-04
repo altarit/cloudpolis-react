@@ -1,13 +1,46 @@
-.route--active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-.nav-link {
-  padding-top: 15px;
-}
-
 .navbar-header {
   border: 1px solid #d5d5d5;
   background-image: linear-gradient(#ffffff, #eeeeee 50%, #e4e4e4);
+
+  .navbar-brand {
+    line-height: 1;
+  }
+
+  .nav-link {
+    &.route--active {
+      color: #000000;
+    }
+
+    padding-top: 15px;
+  }
+
+  .nav-link .fa {
+    display: none;
+  }
+
+  .navbar-header-mobile {
+    padding: 0;
+
+    .navbar-brand {
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+      line-height: 1.4;
+    }
+
+    .nav-link {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+      .fa {
+        font-size: 20px;
+        display: inline;
+      }
+
+      .navbar__link-label {
+        font-size: 12px;
+      }
+    }
+  }
 }

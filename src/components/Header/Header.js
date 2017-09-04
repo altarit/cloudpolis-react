@@ -7,6 +7,7 @@ import Auth from '../Auth'
 export class Header extends React.Component {
   static propTypes = {
     sidebar: PropTypes.bool.isRequired,
+    mobile: PropTypes.bool.isRequired,
   }
 
   constructor(props) {
@@ -20,35 +21,38 @@ export class Header extends React.Component {
 
   render() {
     return (
-      <nav className={'container navbar navbar-light bg-faded navbar-header ' +
-      (this.props.sidebar ? 'navbar-expand-lg' : 'navbar-expand-sm')}>
-        <IndexLink className='navbar-brand' activeClassName='route--active' to='/'>Cloudpolis</IndexLink>
-        <button
-          className='navbar-toggler navbar-toggler-right'
-          type='button'
-          onClick={this.toggleNav}>
-          <span className='navbar-toggler-icon' />
-        </button>
-        <div className={'navbar-collapse ' + (this.state.collapse ? 'collapse' : '')}>
+      <nav className='container navbar navbar-light bg-faded navbar-header navbar-expand'>
+        <div className={'navbar-collapse' + (this.props.mobile ? ' navbar-header-mobile' : '')}>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
+              <IndexLink className='navbar-brand nav-link' activeClassName='route--active' to='/'>
+                <span className='fa fa-cloud' />
+                <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
+                <span className='navbar__link-label d-sm-none'>Home</span>
+              </IndexLink>
+            </li>
+            <li className='nav-item'>
               <Link to='/music/artists' className='nav-link' activeClassName='route--active'>
-                Artists
+                <span className='fa fa-music' />
+                <span className='navbar__link-label'>Artists</span>
               </Link>
             </li>
             <li className='nav-item'>
               <Link to='/music/search' className='nav-link' activeClassName='route--active'>
-                Search
+                <span className='fa fa-search' />
+                <span className='navbar__link-label'>Search</span>
               </Link>
             </li>
             <li className='nav-item'>
               <Link to='/users' className='nav-link' activeClassName='route--active'>
-                Users
+                <span className='fa fa-users' />
+                <span className='navbar__link-label'>Users</span>
               </Link>
             </li>
             <li className='nav-item'>
               <Link to='/admin' className='nav-link' activeClassName='route--active'>
-                Admin
+                <span className='fa fa-cogs' />
+                <span className='navbar__link-label'>Admin</span>
               </Link>
             </li>
           </ul>
