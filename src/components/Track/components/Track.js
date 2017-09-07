@@ -8,6 +8,7 @@ export class Track extends React.Component {
   static propTypes = {
     title: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
+    library: PropTypes.string.isRequired,
     compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     href: PropTypes.string,
@@ -96,6 +97,47 @@ export class Track extends React.Component {
     this.props.removeTrack(this.props.pl, this.props.pos)
   }
 
+  getDropdownMenu = () => {
+    return (
+      <ul className='dropdown-menu show track_dropdown'>
+        <li className='option'>
+          <a>
+            <span className='fa fa-fw fa-plus' />Play next
+          </a>
+        </li>
+        <li className='option'>
+          <a>
+            <span className='fa fa-fw fa-plus' />Play later
+          </a>
+        </li>
+        <li className='option'>
+          <a>
+            <span className='fa fa-fw fa-plus' />Add to {this.props.currentPl}
+          </a>
+        </li>
+        {!this.props.immutable ? (
+          <li className='option'>
+            <a onClick={this.removeTrack}>
+              <span className='fa fa-fw fa-plus' />Remove from {this.props.pl}
+            </a>
+          </li>
+        ) : null}
+        {this.props.compilation ? (
+          <li className='option'>
+            <Link to={`/music/libraries/${this.props.library}/${this.props.compilation}`}>
+              <span className='fa fa-fw fa-plus' />Go to {this.props.compilation}
+            </Link>
+          </li>
+        ) : null}
+        <li className='option'>
+          <a href={this.getFullLink()} download>
+            <span className='fa fa-fw fa-plus' />Download
+          </a>
+        </li>
+      </ul>
+    )
+  }
+
   render() {
     let trackPID = `${this.props.pl}:${this.props.pos}:${!this.props.immutable}`
 
@@ -129,39 +171,7 @@ export class Track extends React.Component {
         </div>
 
         <div className='dropdown'>
-          {this.props.trackAdd && this.props.trackAdd.from === trackPID ? (
-            <ul className='dropdown-menu show track_dropdown'>
-              <li>
-                <a>
-                  <span className='fa fa-fw fa-plus' />Add into the end of {this.props.currentPl}
-                </a>
-              </li>
-              {!this.props.immutable ? (
-                <li>
-                  <a onClick={this.removeTrack}>
-                    <span className='fa fa-fw fa-plus' />Remove from {this.props.pl}
-                  </a>
-                </li>
-              ) : null}
-              {this.props.compilation ? (
-                <li>
-                  <Link to={`/music/artists/${this.props.compilation}`}>
-                    <span className='fa fa-fw fa-plus' />Go to {this.props.compilation}
-                  </Link>
-                </li>
-              ) : null}
-              <li>
-                <a href={this.getFullLink()} download>
-                  <span className='fa fa-fw fa-plus' />Download
-                </a>
-              </li>
-              <li>
-                <a href={this.getFullLink()} target='_blank'>
-                  <span className='fa fa-fw fa-plus' />Open link in a new tab
-                </a>
-              </li>
-            </ul>
-          ) : null }
+          {this.props.trackAdd && this.props.trackAdd.from === trackPID ? this.getDropdownMenu() : null }
         </div>
       </div>
     )

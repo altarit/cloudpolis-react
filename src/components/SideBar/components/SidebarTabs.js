@@ -16,10 +16,13 @@ export class SidebarTabs extends React.Component {
 
   getTabs = () => {
     return this.props.tabs.map(plName => (
-      <li key={plName} className={'nav-item'} onClick={e => {
+      <li key={plName} className='nav-item option' onClick={e => {
         this.props.selectTab(plName)
       }}>
-        <a className={'playmenu__tab nav-link' + (this.props.openTab === plName ? ' active' : '')} draggable='true'>
+        <a
+          className={'playmenu__tab nav-link' + (this.props.openTab === plName ? ' active' : '')}
+          draggable='true'
+        >
           {plName}
         </a>
       </li>

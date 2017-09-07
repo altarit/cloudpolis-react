@@ -14,7 +14,7 @@ describe('(Component) Header', () => {
     const welcome = _wrapper.find('.navbar-header')
     expect(welcome).to.exist()
     expect(welcome.contains(
-        <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
+      <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
     )).to.be.true()
     // expect(homeLink.text()).to.match(/Cloudpolis/)
   })

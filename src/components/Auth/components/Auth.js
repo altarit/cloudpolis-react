@@ -58,8 +58,8 @@ export class Auth extends React.Component {
             </ul>
             {this.props.signPopup ? (
               <ul className='dropdown-menu show' data-click='none'>
-                <li><span data-click='dropdown' data-for='loginPopup'> Login</span></li>
-                <li><span data-click='dropdown' data-for='signupPopup'> Signup</span></li>
+                <li className='option'><span data-click='dropdown' data-for='loginPopup'> Login</span></li>
+                <li className='option'><span data-click='dropdown' data-for='signupPopup'> Signup</span></li>
               </ul>
             ) : null}
           </div>
@@ -91,8 +91,8 @@ export class Auth extends React.Component {
           </div>) : null}
         {this.props.userPopup ? (
           <ul className='dropdown-menu show' data-click='none'>
-            <li><Link to={`/users/${this.props.name}`}> Profile</Link></li>
-            <li><Link className='link' onClick={this.props.logout}> Logout</Link></li>
+            <li className='option'><Link to={`/users/${this.props.name}`}> Profile</Link></li>
+            <li className='option'><Link className='link' onClick={this.props.logout}> Logout</Link></li>
           </ul>
         ) : null}
       </div>

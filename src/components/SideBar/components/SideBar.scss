@@ -15,7 +15,7 @@ $panelBorder: 1px solid #7d7d7d;
   width: 360px;
   max-width: 100%;
   top: 0px;
-  bottom: 60px;
+  bottom: 50px;
   right: 0px;
   transition: right 0.3s ease-out;
   overflow: hidden;
@@ -41,7 +41,7 @@ $panelBorder: 1px solid #7d7d7d;
 .playmenu__top {
   background-color: $topMenuColor;
   flex: 0 1;
-  min-height: 35px;
+  min-height: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -68,8 +68,9 @@ $panelBorder: 1px solid #7d7d7d;
 .playmenu__bottom {
   background-color: $playMenuBottomColor;
   flex: 0 1;
-  min-height: 32px;
+  min-height: 42px;
   padding-left: 5px;
+  display: flex;
 }
 
 /* Button popups */
@@ -82,13 +83,14 @@ $panelBorder: 1px solid #7d7d7d;
 
 .playmenu__top button {
   height: 100%;
-  width: 35px;
+  width: 40px;
+  font-size: 16px;
 }
 
 .playmenu__bottom button {
   height: 100%;
   width: auto;
-  margin: 5px;
+  margin: 0 7px;
 }
 
 .playmenu__top-empty {

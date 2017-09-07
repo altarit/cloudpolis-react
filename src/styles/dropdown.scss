@@ -3,6 +3,15 @@
     cursor: default;
     font-size: 16px;
 
+    a {
+      color: #212529;
+      cursor: default;
+    }
+
+    @include media-breakpoint-down(xs) {
+      font-size: 17px;
+    }
+
     span.fa {
       //padding-left: 20px;
     }
