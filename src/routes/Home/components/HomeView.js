@@ -1,4 +1,5 @@
 import React, {PropTypes} from 'react'
+import {Link} from 'react-router'
 
 import LogoImage from '../assets/logo.png'
 import './HomeView.scss'
@@ -50,8 +51,6 @@ export class HomeView extends React.Component {
 
               </div>
             </div>
-            It's a cloud music player. At first I wrote it for my own personal use, but I don't mind if anybody uses
-            it.<br />
 
           </div>
           <div className='col-lg-6'>
@@ -61,23 +60,21 @@ export class HomeView extends React.Component {
         </div>
 
         <div className='row'>
-          <div className='col-lg-4'>
-            <h3>Functionality</h3>
-            Cloudpolis is meant to be as advanced and intuitive as popular desktop music players.
-            It has lots features for managing playlists and sorting tracks
-            so you can build your personal playlist with ease.<br />
-            {/* I won't be lying if I said I was inpired by AIMP and took some ideas from it. */}
+          <div className='col-xl-4'>
+            <h3>What's this?</h3>
+            It's a cloud music player. At first I wrote it for my own personal use,
+            but it'd be great if anybody uses it. I'd like to take any feedbacks to make it better.
           </div>
-          <div className='col-lg-4'>
-            <h3>Quality</h3>
-            All tracks in my collection have highest bitrate I could find for mp3.
-            I have some free space on the server so if you like Cloudpolis and want more tracks to be in the library
-            feel free to contact me.
+          <div className='col-xl-4'>
+            <h3>How to?</h3>
+            I've added a lot of cool things but tried to keep it easy to use and understand.
+            If you think it's not, <Link to={'/howto'}>check this</Link>.
+
           </div>
-          <div className='col-lg-4'>
-            <h3>Cross-platform</h3>
-            Cloudpolis works on mobile devices as well as on desktop browsers.
-            However you need good internet connection to listen to music online.
+          <div className='col-xl-4'>
+            <h3>Need more music?</h3>
+            There's some more space on the server so I could add something. Either you can set up your own server.
+            Feel free to <Link to={'/contacts'}>contact me</Link>.
           </div>
         </div>
 
