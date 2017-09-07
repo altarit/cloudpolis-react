@@ -1,7 +1,13 @@
 import {connect} from 'react-redux'
 
 import Track from '../components/Track'
-import {setTrack, pause, moveTrack, removeTrack} from '../../../modules/player/playerActions'
+import {
+  setTrack,
+  pause,
+  moveTrack,
+  removeTrack,
+  addToPlaylist,
+} from '../../../modules/player/playerActions'
 import {openPopup} from '../../../modules/popups'
 
 const mapDispatchToProps = {
@@ -9,14 +15,16 @@ const mapDispatchToProps = {
   pause,
   moveTrack,
   removeTrack,
-  openPopup
+  openPopup,
+  addToPlaylist,
 }
 
 const mapStateToProps = (state, props) => ({
   isPlaying: state.player.isPlaying,
   trackAdd: state.popups.trackAdd,
   src: props.src || props.href,
-  currentPl: state.player.currentPl
+  currentPl: state.player.currentPl,
+  openTab: state.player.openTab,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Track)

@@ -84,6 +84,9 @@ function moveTrack(statePls, stateCurrentPl, statePos, oldTrack, plFromName, pos
   // let track = plFrom.splice(posFrom, 1)
   let plTo = [...nextPls[plToName]]
   nextPls[plToName] = plTo
+  if (posTo === null || posTo === undefined) {
+    posTo = plTo.length
+  }
   let offset = (plFromName === plToName && posFrom < posTo) ? -1 : 0
   plTo.splice(posTo + offset, 0, track)
 
@@ -280,6 +283,12 @@ export default function playerReducer(state = initialState, action) {
       let removeUpdates = removeTrack(state.pls, state.currentPl, state.pos, action.plName, action.pos)
       setTitle(removeUpdates.track)
       return {...state, pls: removeUpdates.pls, pos: removeUpdates.pos, track: removeUpdates.track}
+    case types.ADD_TO_PLAYLIST:
+      let addToPlaylistUpdates = moveTrack(
+        state.pls, state.currentPl, state.pos, action.track,
+        null, null, action.listTo, action.addNext ? state.pos + 1 : null
+      )
+      return {...state, pls: addToPlaylistUpdates.pls}
     // sort
     case types.SORT_PLAYLIST:
       let sortUpdates = sortBy(action.by, state.pls, state.openTab, state.currentPl, state.pos)

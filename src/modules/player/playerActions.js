@@ -193,6 +193,15 @@ export function removeTrack(plName, pos) {
   }
 }
 
+export function addToPlaylist(track, listTo, addNext) {
+  return {
+    type: types.ADD_TO_PLAYLIST,
+    track,
+    listTo,
+    addNext
+  }
+}
+
 // --------------------------------
 // Sort
 // --------------------------------

@@ -117,6 +117,7 @@ describe('modules/player - Actions', () => {
         safePlaylists: {
           'G.Sviridov': [{
             title: 'Winter Road',
+            library: undefined,
             artist: undefined,
             src: undefined,
             duration: undefined,

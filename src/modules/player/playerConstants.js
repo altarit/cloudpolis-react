@@ -25,6 +25,7 @@ export const SEARCH_PL = '__Search__'
 
 export const MOVE_TRACK = 'MOVE_TRACK'
 export const REMOVE_TRACK = 'REMOVE_TRACK'
+export const ADD_TO_PLAYLIST = 'ADD_TO_PLAYLIST'
 
 export const SORT_PLAYLIST = 'SORT_PLAYLIST'
 export const BY_TITLE = 'BY_TITLE'

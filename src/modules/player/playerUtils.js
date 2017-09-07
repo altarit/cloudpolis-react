@@ -1,6 +1,7 @@
 export function cloneTrack(track) {
   return {
     title: track.title,
+    library: track.library,
     artist: track.artist,
     src: (track.src || track.href),
     duration: track.duration,

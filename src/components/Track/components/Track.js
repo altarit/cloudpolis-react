@@ -19,6 +19,7 @@ export class Track extends React.Component {
     pos: PropTypes.number.isRequired,
     immutable: PropTypes.bool.isRequired,
     currentPl: PropTypes.string.isRequired,
+    openTab: PropTypes.string.isRequired,
     pl: PropTypes.string,
 
     trackAdd: PropTypes.object,
@@ -28,7 +29,8 @@ export class Track extends React.Component {
     updatePlaylist: PropTypes.func,
     moveTrack: PropTypes.func.isRequired,
     openPopup: PropTypes.func.isRequired,
-    removeTrack: PropTypes.func.isRequired
+    removeTrack: PropTypes.func.isRequired,
+    addToPlaylist: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -97,41 +99,53 @@ export class Track extends React.Component {
     this.props.removeTrack(this.props.pl, this.props.pos)
   }
 
+  playNext = () => {
+    this.props.addToPlaylist(this.props, this.props.currentPl, true)
+  }
+
+  playLater = () => {
+    this.props.addToPlaylist(this.props, this.props.currentPl)
+  }
+
+  addToOpenTab = () => {
+    this.props.addToPlaylist(this.props, this.props.openTab)
+  }
+
   getDropdownMenu = () => {
     return (
       <ul className='dropdown-menu show track_dropdown'>
         <li className='option'>
-          <a>
-            <span className='fa fa-fw fa-plus' />Play next
+          <a onClick={this.playNext}>
+            <span className='fa fa-fw fa-mail-forward' />Play next
           </a>
         </li>
         <li className='option'>
-          <a>
-            <span className='fa fa-fw fa-plus' />Play later
+          <a onClick={this.playLater}>
+            <span className='fa fa-fw fa-hourglass' />Play later
           </a>
         </li>
         <li className='option'>
-          <a>
-            <span className='fa fa-fw fa-plus' />Add to {this.props.currentPl}
+          <a onClick={this.addToOpenTab}>
+            <span className='fa fa-fw fa-plus' />Add to {this.props.openTab}
           </a>
         </li>
         {!this.props.immutable ? (
           <li className='option'>
             <a onClick={this.removeTrack}>
-              <span className='fa fa-fw fa-plus' />Remove from {this.props.pl}
+              <span className='fa fa-fw fa-remove' />Remove from {this.props.pl}
             </a>
           </li>
         ) : null}
         {this.props.compilation ? (
           <li className='option'>
             <Link to={`/music/libraries/${this.props.library}/${this.props.compilation}`}>
-              <span className='fa fa-fw fa-plus' />Go to {this.props.compilation}
+              <span className='fa fa-fw fa-user' />Go to {this.props.compilation}
             </Link>
           </li>
         ) : null}
         <li className='option'>
           <a href={this.getFullLink()} download>
-            <span className='fa fa-fw fa-plus' />Download
+            <span className='fa fa-fw fa-download' />Download
           </a>
         </li>
       </ul>
