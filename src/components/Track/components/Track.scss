@@ -1,7 +1,6 @@
 /* Tracklist */
 .track {
-  display: block;
-  border-radius: 5px;
+  border-radius: 2px;
   list-style-type: none;
   margin-left: -40px;
   cursor: default;
@@ -33,11 +32,6 @@
   flex: 1 1 auto;
   overflow: hidden;
   height: 48px;
-}
-
-.playing {
-  background-color: rgba(20, 40, 20, 0.2);
-  border-radius: 7px;
 }
 
 .track__title {
@@ -84,12 +78,23 @@
   width: 230px;
 }
 
-.track:hover {
-  background-color: #777777;
+.playing {
+  background-color: #dfdfdf;
 }
 
-.track:hover .track__control {
-  display: block;
+@media (max-width: 576px) {
+  .track .track__control {
+    display: block;
+  }
+}
+
+@media (min-width: 577px) {
+  .track:hover {
+    background-color: #b6b6b6;
+  }
+  .track:hover .track__control {
+    display: block;
+  }
 }
 
 .playing .track__control {

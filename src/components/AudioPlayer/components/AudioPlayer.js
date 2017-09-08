@@ -146,7 +146,7 @@ export class AudioPlayer extends React.Component {
         onDragStart={this.dragStart}>
 
         <div
-          className='progress-bar bg-info player__progress-played'
+          className='progress-bar player__progress-played'
           style={{width: (this.state.time / this.state.duration * 100) + '%'}}
         />
         <div
@@ -154,7 +154,7 @@ export class AudioPlayer extends React.Component {
           style={{width: this.state.progress + '%'}}
         />
         <div className='player__progress-title'>
-          <b>{this.props.title}</b>
+          {this.props.title}
         </div>
         <div className='player__progress-info'>
           {this.props.artist}

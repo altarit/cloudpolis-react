@@ -25,12 +25,38 @@ div.player {
 
 .btn-def.player__btn {
   height: 100%;
-  font-size: 20px;
   min-width: 38px;
+
+  &.fa-fast-backward {
+    font-size: 18px;
+    order: 0;
+  }
+  &.fa-play, &.fa-pause {
+    font-size: 22px;
+    order: 1;
+  }
+  &.fa-fast-forward {
+    font-size: 18px;
+    order: 2;
+  }
+  &.fa-bars {
+    font-size: 22px;
+    order: 5;
+  }
+
+  @media (max-width: 576px) {
+    &.fa-fast-backward {
+      display: none;
+    }
+    &.fa-fast-forward {
+      order: 4;
+    }
+  }
 }
 
 .player__progress {
   flex: 1 1;
+  order: 3;
 }
 
 /* Progress */
@@ -38,7 +64,7 @@ div.player {
   cursor: default;
   height: 100%;
   position: relative;
-  background: rgba(255, 255, 255, 0);
+  background: #dedede;
   overflow: hidden;
   white-space: nowrap;
   font-size: 14px;
@@ -46,6 +72,7 @@ div.player {
 
 .player__progress-loaded {
   left: 0px;
+  background: #6a6a6a;
   transition: none;
   height: 2px;
   bottom: 0px;
@@ -54,36 +81,43 @@ div.player {
 
 .player__progress-played {
   left: 0px;
+  background-color: #aaaaaa;
   transition: none;
   height: 100%;
+  opacity: 1;
   position: absolute;
 }
 
 .player__progress-title {
-  top: 2px;
-  padding-left: 10px;
+  top: 0px;
+  padding-left: 5px;
   height: 20px;
+  width: calc(100% - 32px);
   position: absolute;
   font-size: 16px;
+  font-weight: bold;
+  overflow: hidden;
 }
 
 .player__progress-info {
-  top: 22px;
-  padding-left: 10px;
+  top: 20px;
+  padding-left: 5px;
   height: 20px;
+  width: calc(100% - 32px);
   position: absolute;
   font-size: 14px;
+  overflow: hidden;
 }
 
 .player__progress-time {
-  right: 5px;
-  top: 3px;
+  right: 3px;
+  top: 0px;
   position: absolute;
 }
 
 .player__progress-length {
-  right: 5px;
-  top: 22px;
+  right: 3px;
+  top: 20px;
   position: absolute;
 }
 

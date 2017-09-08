@@ -177,7 +177,7 @@ export class Track extends React.Component {
           </div>
 
           <div className='track__control'>
-            <button type='button' className='btn fa fa-plus' data-click='nothing' onClick={this.openMenu} />
+            <button type='button' className='btn fa fa-ellipsis-h' data-click='nothing' onClick={this.openMenu} />
           </div>
           <div className='track__end'>
             {this.props.duration}

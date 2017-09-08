@@ -15,10 +15,8 @@ export class SidebarTopMenu extends React.Component {
   render() {
     return (
       <div className='playmenu__top'>
-        <button type='button' className='btn btn-def fa fa-fast-backward' />
-        <button type='button' className='btn btn-def fa fa-fast-forward' />
         <button type='button' className='btn btn-def fa fa-retweet' />
-        <button type='button' className='btn btn-def fa fa-random' />
+        <button type='button' className='btn btn-def fa fa-bell' />
         <div className='playmenu__top-empty' />
         <button
           type='button'

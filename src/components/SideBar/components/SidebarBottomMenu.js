@@ -96,17 +96,20 @@ export class SidebarBottomMenu extends React.Component {
         <li className='option' data-click='dropdown' data-for='playlistCreation'>
           <span className='fa fa-fw fa-file-o' />New playlist
         </li>
+        <li className='option' data-click='dropdown' data-for='openPlaylistDialog'>
+          <span className='fa fa-fw fa-folder-open-o' />Open playlist
+        </li>
+        <li className='option' data-click='dropdown' data-for='savePlaylistDialog'>
+          <span className='fa fa-fw fa-floppy-o' />Save playlist
+        </li>
         <li className='option' onClick={this.props.closeOpenPlaylist}>
           <span className='fa fa-fw fa-times' />Close playlist
         </li>
         <li className='option' onClick={this.props.closeOtherPlaylists}>
           <span className='fa fa-fw fa-angle-double-down' />Close others
         </li>
-        <li className='option' data-click='dropdown' data-for='openPlaylistDialog'>
-          <span className='fa fa-fw fa-folder-open-o' />Open playlist
-        </li>
-        <li className='option' data-click='dropdown' data-for='savePlaylistDialog'>
-          <span className='fa fa-fw fa-floppy-o' />Save playlist
+        <li className='option' onClick={this.props.renamePlaylist}>
+          <span className='fa fa-fw fa-edit' />Rename
         </li>
       </ul>
     )
@@ -138,7 +141,7 @@ export class SidebarBottomMenu extends React.Component {
 
     return (
       <div className='playmenu__bottom dropdown'>
-        <button type='button' className='btn btn-def fa fa-check' data-click='dropdown' data-for='bottomAdd' />
+        <button type='button' className='btn btn-def fa fa-check' />
         <button type='button' className='btn btn-def fa fa-plus' data-click='dropdown' data-for='bottomAdd'>
           <label>Add</label>
         </button>

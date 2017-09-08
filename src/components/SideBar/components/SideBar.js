@@ -77,7 +77,7 @@ export class Sidebar extends React.Component {
             />
 
             <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
+              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini'/>
             </div>
 
             <div className='playmenu__status'>
@@ -94,6 +94,13 @@ export class Sidebar extends React.Component {
               closeOpenPlaylist={this.props.closeOpenPlaylist}
               createPlaylist={this.props.createPlaylist}
               closeOtherPlaylists={this.props.closeOtherPlaylists}
+
+              sortByTitle={this.props.sortByTitle}
+              sortByArtist={this.props.sortByArtist}
+              sortByDuration={this.props.sortByDuration}
+              sortByPath={this.props.sortByPath}
+              shuffle={this.props.shuffle}
+              reverse={this.props.reverse}
             />
           </div>
         </div>
