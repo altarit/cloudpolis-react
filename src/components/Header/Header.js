@@ -32,9 +32,21 @@ export class Header extends React.Component {
               </IndexLink>
             </li>
             <li className='nav-item'>
+              <Link to='/music/libraries' className='nav-link' activeClassName='route--active'>
+                <span className='fa fa-book' />
+                <span className='navbar__link-label'>Libraries</span>
+              </Link>
+            </li>
+            <li className='nav-item'>
               <Link to='/music/artists' className='nav-link' activeClassName='route--active'>
                 <span className='fa fa-music' />
                 <span className='navbar__link-label'>Artists</span>
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link to='/music/playlists' className='nav-link' activeClassName='route--active'>
+                <span className='fa fa-star' />
+                <span className='navbar__link-label'>Playlists</span>
               </Link>
             </li>
             <li className='nav-item'>
@@ -43,18 +55,14 @@ export class Header extends React.Component {
                 <span className='navbar__link-label'>Search</span>
               </Link>
             </li>
+            {/*
             <li className='nav-item'>
               <Link to='/users' className='nav-link' activeClassName='route--active'>
                 <span className='fa fa-users' />
                 <span className='navbar__link-label'>Users</span>
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link to='/admin' className='nav-link' activeClassName='route--active'>
-                <span className='fa fa-cogs' />
-                <span className='navbar__link-label'>Admin</span>
-              </Link>
-            </li>
+            */}
           </ul>
           <Auth />
         </div>

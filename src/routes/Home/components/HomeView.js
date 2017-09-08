@@ -46,8 +46,6 @@ export class HomeView extends React.Component {
                 Artists: 248<br />
                 Total duration: 9d 8h 47m<br />
                 Total size: 21Gb<br />
-                Average bitrate: 217kb/s<br />
-                Most tracks in 320kb/s
 
               </div>
             </div>
@@ -60,19 +58,19 @@ export class HomeView extends React.Component {
         </div>
 
         <div className='row'>
-          <div className='col-xl-4'>
+          <div className='col-lg-4'>
             <h3>What's this?</h3>
-            It's a cloud music player. At first I wrote it for my own personal use,
+            It's a music app. I wrote it for my own personal use,
             but it'd be great if anybody uses it. I'd like to take any feedbacks to make it better.
           </div>
-          <div className='col-xl-4'>
+          <div className='col-lg-4'>
             <h3>How to?</h3>
-            I've added a lot of cool things but tried to keep it easy to use and understand.
-            If you think it's not, <Link to={'/howto'}>check this</Link>.
+            I've added lots of cool things but tried to keep it easy to use and understand.
+            If you think it's not, <Link to={'/howto'}>check out this</Link>.
 
           </div>
-          <div className='col-xl-4'>
-            <h3>Need more music?</h3>
+          <div className='col-lg-4'>
+            <h3>More music?</h3>
             There's some more space on the server so I could add something. Either you can set up your own server.
             Feel free to <Link to={'/contacts'}>contact me</Link>.
           </div>
