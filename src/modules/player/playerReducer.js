@@ -1,5 +1,6 @@
 import * as types from './playerConstants'
 import {cloneTrack, setTitle} from './playerUtils'
+import playerLocalStorageReducer from './playerStorage'
 
 function getNextIndexByType(currentIndex, type) {
   switch (type) {
@@ -263,17 +264,6 @@ export default function playerReducer(state = initialState, action) {
         openTab: state.openTab,
         scrolledTabs: 0
       }
-    // storage
-    case types.STORAGE_LOAD_PLAYLISTS_SUCCESS:
-      return {...state, safePlaylists: action.safePlaylists}
-    case types.STORAGE_SAVE_PLAYLIST_SUCCESS:
-      return {...state, safePlaylists: action.safePlaylists}
-    case types.STORAGE_OPEN_PLAYLIST_SUCCESS:
-      let nextPls = {...state.pls, [action.filename]: action.playlist}
-      let nextTabs = ~state.tabs.indexOf(action.filename) ? state.tabs : [...state.tabs, action.filename]
-      return {...state, pls: nextPls, tabs: nextTabs, openTab: action.filename}
-    case types.STORAGE_DELETE_PLAYLIST_SUCCESS:
-      return {...state, safePlaylists: action.safePlaylists}
     // editing a playlist
     case types.MOVE_TRACK:
       let moveUpdates = moveTrack(state.pls, state.currentPl, state.pos,
@@ -305,5 +295,7 @@ export default function playerReducer(state = initialState, action) {
     case types.SCROLL_RIGHT:
       return {...state, scrolledTabs: state.scrolledTabs + 1}
   }
-  return state
+
+  let storageState = playerLocalStorageReducer(state, action)
+  return storageState
 }

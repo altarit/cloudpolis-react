@@ -6,7 +6,7 @@ import {
   savePlaylistToStorage,
   openPlaylistFromStorage,
   deletePlaylistFromStorage
-} from '../../../modules/player/playerActions'
+} from '../../../modules/player/playerStorage'
 
 const mapDispatchToProps = {
   loadPlaylistsFromStorage,
