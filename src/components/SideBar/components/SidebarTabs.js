@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react'
 
-import './SidebarTabs.scss'
+import './SideBarTabs.scss'
 
 export class SidebarTabs extends React.Component {
   static propTypes = {

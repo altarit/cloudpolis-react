@@ -4,13 +4,13 @@ export const GET_ARTIST_REQUEST = 'GET_ARTIST_REQUEST'
 export const GET_ARTIST_SUCCESS = 'GET_ARTIST_SUCCESS'
 export const GET_ARTIST_FAILED = 'GET_ARTIST_FAILED'
 
-export function getArtist($artistsLibrary, artistName) {
+export function getArtist(artistsLibrary, artistName) {
   return (dispatch) => {
     dispatch({
       type: GET_ARTIST_REQUEST
     })
 
-    return fetchGet(`/music/artists/${$artistsLibrary}/${artistName}`)
+    return fetchGet(`/music/artists/${artistsLibrary}/${artistName}`)
       .then(response => {
         dispatch({
           type: GET_ARTIST_SUCCESS,

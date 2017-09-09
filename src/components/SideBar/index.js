@@ -1,3 +1,3 @@
-import Sidebar from './containers/SidebarContainer'
+import Sidebar from './containers/SideBarContainer'
 
 export default Sidebar

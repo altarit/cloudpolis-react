@@ -2,7 +2,7 @@ import {combineReducers} from 'redux'
 import {reducer as formReducer} from 'redux-form'
 import locationReducer from './location'
 
-import sidebarReducer from '../components/Sidebar/modules/sideBar'
+import sidebarReducer from '../components/SideBar/modules/sideBar'
 import playerReducer from '../modules/player/playerReducer'
 import popupReducer from '../modules/popups'
 import homeReducer from '../routes/Home/modules/home'

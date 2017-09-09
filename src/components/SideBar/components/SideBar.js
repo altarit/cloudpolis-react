@@ -1,10 +1,10 @@
 import React, {PropTypes} from 'react'
 
-import './Sidebar.scss'
+import './SideBar.scss'
 import TrackList from '../../TrackList'
 import SidebarTopMenu from './SideBarTopMenu'
-import SidebarTabs from './SidebarTabs'
-import SidebarBottomMenu from './SidebarBottomMenu'
+import SidebarTabs from './SideBarTabs'
+import SidebarBottomMenu from './SideBarBottomMenu'
 
 export class Sidebar extends React.Component {
   static propTypes = {
@@ -77,7 +77,7 @@ export class Sidebar extends React.Component {
             />
 
             <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini'/>
+              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
             </div>
 
             <div className='playmenu__status'>

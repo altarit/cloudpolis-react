@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {browserHistory, Router} from 'react-router'
 import {Provider} from 'react-redux'
 
-import {resizedWindow} from './Sidebar/modules/sideBar'
+import {resizedWindow} from './SideBar/modules/sideBar'
 
 import {closeAllPopups, openPopup} from '../modules/popups'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Content from '../Content'
-import Sidebar from '../../components/Sidebar'
+import Sidebar from '../../components/SideBar'
 import BottomBar from '../../components/BottomBar'
 import './CoreLayout.scss'
 import '../../styles/main.scss'
