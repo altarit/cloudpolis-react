@@ -7,11 +7,11 @@ import './Library.scss'
 export class Library extends React.Component {
   static propTypes = {
     libraryName: PropTypes.string,
-    fetching: PropTypes.bool,
+    // fetching: PropTypes.bool,
     compilations: PropTypes.arrayOf(PropTypes.object).isRequired,
 
     createCompilationsBulkPopup: PropTypes.object,
-    moreCompilationsPopup: PropTypes.func,
+    // moreCompilationsPopup: PropTypes.func,
 
     calculateBase: PropTypes.func.isRequired,
     getCompilations: PropTypes.func.isRequired,

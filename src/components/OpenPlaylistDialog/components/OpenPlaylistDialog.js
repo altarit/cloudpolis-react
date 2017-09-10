@@ -17,6 +17,7 @@ export class OpenPlaylistDialog extends React.Component {
     openPlaylistFromStorage: PropTypes.func.isRequired,
     deletePlaylistFromStorage: PropTypes.func.isRequired,
     getServerPlaylists: PropTypes.func.isRequired,
+    openServerPlaylist: PropTypes.func.isRequired,
     putServerPlaylist: PropTypes.func.isRequired,
     deleteServerPlaylist: PropTypes.func.isRequired,
     selectOpenDialogLocalTab: PropTypes.func.isRequired,

@@ -7,7 +7,6 @@ import Input from '../../../components/Input'
 export class Artists extends React.Component {
   static propTypes = {
     filteredArtists: PropTypes.arrayOf(PropTypes.object).isRequired,
-    artistsMask: PropTypes.string,
     fetching: PropTypes.bool,
 
     getArtists: PropTypes.func.isRequired,

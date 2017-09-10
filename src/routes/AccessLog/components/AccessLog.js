@@ -4,7 +4,7 @@ import './AccessLog.scss'
 
 export class AccessLog extends React.Component {
   static propTypes = {
-    name: PropTypes.string,
+    // userName: PropTypes.string,
     requests: PropTypes.arrayOf(PropTypes.object).isRequired,
 
     getAccessLog: PropTypes.func.isRequired

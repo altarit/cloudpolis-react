@@ -12,8 +12,6 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => ({
   tracks: state.artist.tracks,
   albums: state.artist.albums,
-  library: state.artist.library,
-  count: state.artist.count,
   artistName: props.params.artistName,
   artistsLibrary: props.params.artistsLibrary,
   albumName: props.location.query.album,

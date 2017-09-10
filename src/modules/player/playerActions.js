@@ -1,5 +1,4 @@
 import * as types from './playerConstants'
-import {cloneTrack} from './playerUtils'
 
 // --------------------------------
 // General

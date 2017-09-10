@@ -7,7 +7,7 @@ import Input from '../../../components/Input'
 export class Search extends React.Component {
   static propTypes = {
     songs: PropTypes.arrayOf(PropTypes.object),
-    fetching: PropTypes.bool,
+    // fetching: PropTypes.bool,
 
     getTracksByQuery: PropTypes.func.isRequired
   }

@@ -195,7 +195,7 @@ export default function playerLocalStorageReducer(state, action) {
       let serverPlIndex = state.serverPlaylists.find(el => el.name === action.name)
       let nextPls = {...state.pls, [action.name]: serverPlIndex.tracks}
       let nextTabs = ~state.tabs.indexOf(action.name) ? state.tabs : [...state.tabs, action.name]
-      return {...state, pls: nextServerPls, tabs: nextServerTabs, openTab: action.name}
+      return {...state, pls: nextPls, tabs: nextTabs, openTab: action.name}
     }
     case GET_SERVER_PLAYLISTS_REQUEST:
       return {...state}

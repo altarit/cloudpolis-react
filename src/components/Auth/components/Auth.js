@@ -7,7 +7,7 @@ import './Auth.scss'
 export class Auth extends React.Component {
   static propTypes = {
     name: PropTypes.string,
-    fetching: PropTypes.bool,
+    // fetching: PropTypes.bool,
     errorText: PropTypes.string,
     mobile: PropTypes.bool,
 

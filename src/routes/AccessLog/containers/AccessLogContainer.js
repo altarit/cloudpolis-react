@@ -8,7 +8,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  name: state.auth.name,
+  userName: state.auth.name,
   requests: state.accessLog.requests,
   fetching: state.accessLog.fetching,
   errorText: state.accessLog.errorText

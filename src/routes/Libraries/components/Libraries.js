@@ -7,7 +7,7 @@ import './Libraries.scss'
 export class Libraries extends React.Component {
   static propTypes = {
     libraries: PropTypes.arrayOf(PropTypes.object).isRequired,
-    fetching: PropTypes.bool,
+    // fetching: PropTypes.bool,
     addLibraryPopup: PropTypes.object,
     moreLibrariesPopup: PropTypes.object,
     deleteLibraryDialog: PropTypes.object,

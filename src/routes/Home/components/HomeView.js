@@ -9,10 +9,6 @@ import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 export class HomeView extends React.Component {
   static propTypes = {
     tracks: PropTypes.arrayOf(PropTypes.object),
-    fetchingTracks: PropTypes.bool,
-    currentPl: PropTypes.string,
-    track: PropTypes.object,
-    sidebar: PropTypes.bool.isRequired,
 
     getFeaturedTracks: PropTypes.func.isRequired,
     updatePlaylist: PropTypes.func.isRequired

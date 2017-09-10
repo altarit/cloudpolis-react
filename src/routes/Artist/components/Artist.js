@@ -10,8 +10,6 @@ export class Artist extends React.Component {
     artistsLibrary: PropTypes.string.isRequired,
     tracks: PropTypes.arrayOf(PropTypes.object),
     albums: PropTypes.arrayOf(PropTypes.object),
-    library: PropTypes.string,
-    count: PropTypes.number,
     fetching: PropTypes.bool,
     view: PropTypes.string,
     albumName: PropTypes.string,

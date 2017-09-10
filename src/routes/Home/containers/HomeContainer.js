@@ -10,11 +10,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-  fetchingTracks: state.home.fetchingTracks,
   tracks: state.home.tracks.slice(0, 5),
-  currentPl: state.player.currentPl,
-  track: state.player.track,
-  sidebar: state.sidebar.isOpen
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

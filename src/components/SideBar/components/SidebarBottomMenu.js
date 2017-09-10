@@ -10,6 +10,7 @@ export class SidebarBottomMenu extends React.Component {
     errors: PropTypes.object.isRequired,
 
     createPlaylist: PropTypes.func.isRequired,
+    renamePlaylist: PropTypes.func.isRequired,
     closeOpenPlaylist: PropTypes.func.isRequired,
     closeOtherPlaylists: PropTypes.func.isRequired,
     sortByTitle: PropTypes.func.isRequired,

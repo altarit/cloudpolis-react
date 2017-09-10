@@ -6,7 +6,6 @@ import Auth from '../Auth'
 
 export class Header extends React.Component {
   static propTypes = {
-    sidebar: PropTypes.bool.isRequired,
     mobile: PropTypes.bool.isRequired,
   }
 
