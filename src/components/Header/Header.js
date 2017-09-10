@@ -44,7 +44,7 @@ export class Header extends React.Component {
               </Link>
             </li>
             <li className='nav-item'>
-              <Link to='/music/playlists' className='nav-link' activeClassName='route--active'>
+              <Link to='/admin' className='nav-link' activeClassName='route--active'>
                 <span className='fa fa-star' />
                 <span className='navbar__link-label'>Playlists</span>
               </Link>

@@ -31,13 +31,10 @@ export class SidebarBottomMenu extends React.Component {
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
         <li className='option'>
-          <span className='fa fa-fw fa-plus' />From current page to "{this.props.openTab}"
+          <span className='fa fa-fw fa-plus' />From tab...
         </li>
         <li className='option'>
-          <span className='fa fa-fw fa-plus' />From another playlist
-        </li>
-        <li className='option'>
-          <span className='fa fa-fw fa-plus' />Close other
+          <span className='fa fa-fw fa-plus' />10 random tracks
         </li>
       </ul>
     )
@@ -53,9 +50,6 @@ export class SidebarBottomMenu extends React.Component {
         </li>
         <li className='option'>
           <span className='fa fa-fw fa-minus' />Remove all in "{this.props.openTab}"
-        </li>
-        <li className='option'>
-          <span className='fa fa-fw fa-minus' />Remove selected tracks
         </li>
       </ul>
     )

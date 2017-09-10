@@ -2,7 +2,7 @@ import {toMMSS, apiLink, trackLink} from 'modules/formatUtils.js'
 
 describe('modules/formatUtils', () => {
   it('toMMSS', () => {
-    expect(toMMSS(null)).to.equal('-:--')
+    expect(toMMSS(null)).to.equal('')
     expect(toMMSS(27)).to.equal('0:27')
     expect(toMMSS(67)).to.equal('1:07')
     expect(toMMSS(680)).to.equal('11:20')
