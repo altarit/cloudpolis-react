@@ -16,6 +16,13 @@ const defaultPostOptions = {
   headers: defaultHeaders
 }
 
+const defaultPutOptions = {
+  method: 'PUT',
+  credentials: 'include',
+  cache: 'no-cache',
+  headers: defaultHeaders
+}
+
 const defaultDeleteOptions = {
   method: 'DELETE',
   credentials: 'include',
@@ -33,6 +40,13 @@ export function fetchGet(url, options = {}) {
 export function fetchPost(url, options = {}) {
   return fetch(apiLink(url), {
     ...defaultPostOptions,
+    ...options
+  }).then(handleResponse)
+}
+
+export function fetchPut(url, options = {}) {
+  return fetch(apiLink(url), {
+    ...defaultPutOptions,
     ...options
   }).then(handleResponse)
 }

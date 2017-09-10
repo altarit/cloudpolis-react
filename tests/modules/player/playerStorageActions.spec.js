@@ -1,10 +1,9 @@
 import * as playerStorage from 'modules/player/playerStorage'
-import reducer from 'modules/player/playerStorage'
 
 const mockStore = configureStore(middlewares)
 
 describe('modules/playerStorage - Actions', () => {
-  describe('[actions]', () => {
+  describe('[local storage]', () => {
     beforeEach(() => {
       localStorage.clear()
       localStorage.itemInsertionCallback = null
@@ -84,86 +83,6 @@ describe('modules/playerStorage - Actions', () => {
       store.dispatch(playerStorage.deletePlaylistFromStorage('Johann Strauss'))
       expect(store.getActions()).to.deep.equal(expectedActions)
       expect(localStorage.getItem('safePlaylists')).to.equal('{"Sviridov":[{"title":"Winter Road"}]}')
-    })
-  })
-
-  describe('[reducer]', () => {
-    it('STORAGE_LOAD_PLAYLISTS_SUCCESS', () => {
-      const nextState = reducer({}, {
-        type: playerStorage.STORAGE_LOAD_PLAYLISTS_SUCCESS,
-        safePlaylists: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        }
-      })
-
-      expect(nextState).to.deep.equal({
-        safePlaylists: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        }
-      })
-    })
-
-    it('STORAGE_SAVE_PLAYLIST_SUCCESS', () => {
-      const nextState = reducer({}, {
-        type: playerStorage.STORAGE_SAVE_PLAYLIST_SUCCESS,
-        safePlaylists: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        }
-      })
-
-      expect(nextState).to.deep.equal({
-        safePlaylists: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        }
-      })
-    })
-
-    it('STORAGE_OPEN_PLAYLIST_SUCCESS', () => {
-      const nextState = reducer({
-        tabs: [],
-        pls: {}
-      }, {
-        type: playerStorage.STORAGE_OPEN_PLAYLIST_SUCCESS,
-        filename: 'Johann Strauss',
-        playlist: [{
-          title: 'Emperor Waltz'
-        }]
-      })
-
-      expect(nextState).to.deep.equal({
-        tabs: ['Johann Strauss'],
-        pls: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        },
-        openTab: 'Johann Strauss'
-      })
-    })
-
-    it('STORAGE_DELETE_PLAYLIST_SUCCESS', () => {
-      const nextState = reducer({
-        safePlaylists: {
-          'Johann Strauss': [{
-            title: 'Emperor Waltz'
-          }]
-        }
-      }, {
-        type: playerStorage.STORAGE_DELETE_PLAYLIST_SUCCESS,
-        safePlaylists: {}
-      })
-
-      expect(nextState).to.deep.equal({
-        safePlaylists: {}
-      })
     })
   })
 })

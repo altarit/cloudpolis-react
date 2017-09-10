@@ -208,6 +208,8 @@ const initialState = {
   scrolledTabs: 0,
 
   safePlaylists: {},
+  serverPlaylists: [],
+  isLocal: true,
   errors: {}
 }
 
