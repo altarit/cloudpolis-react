@@ -1,8 +1,9 @@
-import * as playerStorage from 'modules/player/playerStorage'
+import * as types from 'modules/player/storage/storageConstants'
+import * as actions from 'modules/player/storage/storageActions'
 
 const mockStore = configureStore(middlewares)
 
-describe('modules/playerStorage - Actions', () => {
+describe('modules/storage/storageActions - Actions', () => {
   describe('[local storage]', () => {
     beforeEach(() => {
       localStorage.clear()
@@ -13,13 +14,13 @@ describe('modules/playerStorage - Actions', () => {
       localStorage.setItem('safePlaylists', '{"Johann Strauss":[{"title":"Emperor Waltz"}]}')
       const store = mockStore()
       const expectedActions = [{
-        type: playerStorage.STORAGE_LOAD_PLAYLISTS_SUCCESS,
+        type: types.STORAGE_LOAD_PLAYLISTS_SUCCESS,
         safePlaylists: {
           'Johann Strauss': [{title: 'Emperor Waltz'}]
         }
       }]
 
-      store.dispatch(playerStorage.loadPlaylistsFromStorage())
+      store.dispatch(actions.loadPlaylistsFromStorage())
       expect(store.getActions()).to.deep.equal(expectedActions)
     })
 
@@ -27,7 +28,7 @@ describe('modules/playerStorage - Actions', () => {
       localStorage.setItem('safePlaylists', '{"Johann Strauss":[{"title":"Emperor Waltz"}]}')
       const store = mockStore()
       const expectedActions = [{
-        type: playerStorage.STORAGE_SAVE_PLAYLIST_SUCCESS,
+        type: types.STORAGE_SAVE_PLAYLIST_SUCCESS,
         safePlaylists: {
           'G.Sviridov': [{
             title: 'Winter Road',
@@ -43,7 +44,7 @@ describe('modules/playerStorage - Actions', () => {
         }
       }]
 
-      store.dispatch(playerStorage.savePlaylistToStorage('G.Sviridov', [
+      store.dispatch(actions.savePlaylistToStorage('G.Sviridov', [
         {title: 'Winter Road'}
       ]))
       expect(store.getActions()).to.deep.equal(expectedActions)
@@ -55,14 +56,14 @@ describe('modules/playerStorage - Actions', () => {
       localStorage.setItem('safePlaylists', '{"Sviridov": [{"title":"Winter Road"}]}')
       const store = mockStore()
       const expectedActions = [{
-        type: playerStorage.STORAGE_OPEN_PLAYLIST_SUCCESS,
+        type: types.STORAGE_OPEN_PLAYLIST_SUCCESS,
         filename: 'Sviridov',
         playlist: [{
           title: 'Winter Road'
         }]
       }]
 
-      store.dispatch(playerStorage.openPlaylistFromStorage('Sviridov'))
+      store.dispatch(actions.openPlaylistFromStorage('Sviridov'))
       expect(store.getActions()).to.deep.equal(expectedActions)
       expect(localStorage.getItem('safePlaylists')).to.equal('{"Sviridov": [{"title":"Winter Road"}]}')
     })
@@ -72,7 +73,7 @@ describe('modules/playerStorage - Actions', () => {
         '{"Sviridov":[{"title":"Winter Road" }],"Johann Strauss":[{"title":"Emperor Waltz"}]}')
       const store = mockStore()
       const expectedActions = [{
-        type: playerStorage.STORAGE_DELETE_PLAYLIST_SUCCESS,
+        type: types.STORAGE_DELETE_PLAYLIST_SUCCESS,
         safePlaylists: {
           'Sviridov':[{
             title: 'Winter Road'
@@ -80,7 +81,7 @@ describe('modules/playerStorage - Actions', () => {
         }
       }]
 
-      store.dispatch(playerStorage.deletePlaylistFromStorage('Johann Strauss'))
+      store.dispatch(actions.deletePlaylistFromStorage('Johann Strauss'))
       expect(store.getActions()).to.deep.equal(expectedActions)
       expect(localStorage.getItem('safePlaylists')).to.equal('{"Sviridov":[{"title":"Winter Road"}]}')
     })

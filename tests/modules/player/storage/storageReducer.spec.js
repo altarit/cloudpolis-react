@@ -1,4 +1,5 @@
-import reducer, * as types from 'modules/player/playerStorage'
+import * as types from 'modules/player/storage/storageConstants'
+import reducer from 'modules/player/storage/storageReducer'
 
 describe('modules/playerStorage - Reducer', () => {
   describe('[local storage]', () => {

@@ -11,7 +11,7 @@ import {
   selectOpenDialogLocalTab,
   openServerPlaylist,
   deleteServerPlaylist,
-} from '../../../modules/player/playerStorage'
+} from '../../../modules/player/storage/storageActions'
 
 const mapDispatchToProps = {
   loadPlaylistsFromStorage,
