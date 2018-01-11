@@ -11,6 +11,7 @@ import UserDetails from './UserDetails'
 import AccessLog from './AccessLog'
 import Libraries from './Libraries'
 import Library from './Library'
+import Playlists from './Playlists'
 
 /*  Note: Instead of using JSX, we recommend using react-router
  PlainRoute objects to build route definitions.   */
@@ -30,6 +31,7 @@ export const createRoutes = (store) => ({
     AccessLog(store),
     Libraries(store),
     Library(store),
+    Playlists(store),
   ]
 })
 

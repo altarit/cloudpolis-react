@@ -97,6 +97,7 @@ export class Artist extends React.Component {
                 <TrackList
                   songs={this.props.tracks}
                   pl={DEFAULT_PL}
+                  plName={this.props.artistName}
                   immutable
                   updatePlaylist={this.updatePlaylist}
                   controls
@@ -105,6 +106,7 @@ export class Artist extends React.Component {
                 <TrackList
                   songs={(this.props.albums.filter(el => el.name === this.props.albumName)[0] || []).tracks || []}
                   pl={DEFAULT_PL}
+                  plName={this.props.artistName}
                   immutable
                   updatePlaylist={this.updatePlaylist}
                   controls
