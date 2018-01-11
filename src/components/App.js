@@ -1,5 +1,6 @@
-import React, {Component, PropTypes} from 'react'
-import {browserHistory, Router} from 'react-router'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import {BrowserRouter, Router} from 'react-router-dom'
 import {Provider} from 'react-redux'
 
 import {resizedWindow} from './SideBar/modules/sideBar'
@@ -57,7 +58,7 @@ class AppContainer extends Component {
     return (
       <Provider store={store}>
         <div style={{height: '100%'}} onClick={this.handleClick}>
-          <Router history={browserHistory} children={routes} />
+          <BrowserRouter children={routes} />
         </div>
       </Provider>
     )

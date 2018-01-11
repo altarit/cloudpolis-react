@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {IndexLink, Link} from 'react-router'
+import {NavLink, Link} from 'react-router-dom'
 
 import './Header.scss'
 import Auth from '../Auth'
@@ -24,11 +24,11 @@ export class Header extends React.Component {
         <div className={'navbar-collapse' + (this.props.mobile ? ' navbar-header-mobile' : '')}>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
-              <IndexLink className='navbar-brand nav-link' activeClassName='route--active' to='/'>
+              <NavLink className='navbar-brand nav-link' activeClassName='route--active' to='/'>
                 <span className='fa fa-cloud' />
                 <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
                 <span className='navbar__link-label d-sm-none'>Home</span>
-              </IndexLink>
+              </NavLink>
             </li>
             <li className='nav-item'>
               <Link to='/music/libraries' className='nav-link' activeClassName='route--active'>

@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 
 import './Artist.scss'
 import Input from '../../../components/Input'
