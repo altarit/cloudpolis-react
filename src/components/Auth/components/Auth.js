@@ -45,15 +45,15 @@ export class Auth extends React.Component {
             <ul className='navbar-nav mr-auto'>
               <li className='nav-item'>
                 {this.props.name ? (
-                  <Link data-click='dropdown' data-for='userPopup' className='nav-link' activeClassName='route--active'>
+                  <a data-click='dropdown' data-for='userPopup' className='nav-link'>
                     <span className='fa fa-user' />
                     <span className='navbar__link-label'>Profile</span>
-                  </Link>
+                  </a>
                 ) : (
-                  <Link data-click='dropdown' data-for='signPopup' className='nav-link' activeClassName='route--active'>
+                  <a data-click='dropdown' data-for='signPopup' className='nav-link'>
                     <span className='fa fa-sign-in' />
                     <span className='navbar__link-label'>Sign&nbsp;In</span>
-                  </Link>
+                  </a>
                 )}
               </li>
             </ul>
