@@ -1,10 +1,13 @@
 import {applyMiddleware, compose, createStore as createReduxStore} from 'redux'
 import thunk from 'redux-thunk'
-import {browserHistory} from 'react-router-dom'
+import createHistory from 'history/createBrowserHistory'
 import makeRootReducer from './reducers'
 import {updateLocation} from './location'
 
 const createStore = (initialState = {}) => {
+
+  const history = createHistory()
+
   // ======================================================
   // Middleware Configuration
   // ======================================================
@@ -46,7 +49,9 @@ const createStore = (initialState = {}) => {
     })
   }
 
-  return store
+  return {
+    store, history
+  }
 }
 
 export default createStore

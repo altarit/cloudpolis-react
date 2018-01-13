@@ -1,15 +1,10 @@
-import {injectReducer} from '../../store/reducers'
-
-export default (store) => ({
-  path: 'music/libraries/:artistsLibrary/:artistName',
-  getComponent(nextState, cb) {
-    require.ensure([], (require) => {
-      const Artist = require('./containers/ArtistContainer').default
-      const reducer = require('./modules/artist').default
-
-      injectReducer(store, {key: 'artist', reducer})
-
-      cb(null, Artist)
-    }, 'artist')
+export default {
+  path: '/music/libraries/:artistsLibrary/:artistName',
+  name: 'artist',
+  getComponent() {
+    return Promise.all([
+      import('./containers/ArtistContainer'),
+      import('./modules/artist'),
+    ])
   }
-})
+}

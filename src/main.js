@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import createStore from './store/createStore'
 import './styles/main.scss'
+import createStore from './store/createStore'
+import {Provider} from 'react-redux'
+import {BrowserRouter} from 'react-router-dom'
 
 // Store Initialization
 // ------------------------------------
-const store = createStore(window.__INITIAL_STATE__)
+const {store, history} = createStore(window.__INITIAL_STATE__)
 
 // Render Setup
 // ------------------------------------
@@ -16,7 +18,11 @@ let render = () => {
   const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
-    <App store={store} routes={routes} />,
+    <Provider store={store}>
+      <BrowserRouter history={history}>
+        <App store={store} routes={routes}></App>
+      </BrowserRouter>
+    </Provider>,
     MOUNT_NODE
   )
 }

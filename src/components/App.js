@@ -1,17 +1,20 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {BrowserRouter, Router} from 'react-router-dom'
-import {Provider} from 'react-redux'
+import {Route, Link, Router} from 'react-router-dom'
+import Loadable from 'react-loadable'
 
 import {resizedWindow} from './SideBar/modules/sideBar'
+import {injectReducer} from '../store/reducers'
+import CoreLayout from '../layouts/CoreLayout'
 
 import {closeAllPopups, openPopup} from '../modules/popups'
+import Home from '../routes/Third/components/Third'
 
-class AppContainer extends Component {
+class App extends Component {
   static propTypes = {
     routes: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
-  };
+  }
 
   shouldComponentUpdate() {
     return false
@@ -52,17 +55,40 @@ class AppContainer extends Component {
     this.props.store.dispatch(closeAllPopups())
   }
 
-  render() {
-    const {routes, store} = this.props
+
+  lazy = (lazyComponent) => {
+    const loadable = Loadable({
+      loader: () => {
+        return lazyComponent.getComponent()
+          .then(modules => {
+            injectReducer(this.props.store, {key: lazyComponent.name, reducer: modules[1].default})
+            return modules[0]
+          })
+      },
+      loading() {
+        return <div>Loading...</div>
+      }
+    })
 
     return (
-      <Provider store={store}>
-        <div style={{height: '100%'}} onClick={this.handleClick}>
-          <BrowserRouter children={routes} />
-        </div>
-      </Provider>
+      <Route exact path={lazyComponent.path} component={loadable}/>
+    )
+  }
+
+  render() {
+    // return (
+    //   <div style={{height: '100%'}} onClick={this.handleClick}>
+    //     <Route exact path="/" component={Home}/>
+    //     {this.lazy(Artists)}
+    //   </div>
+    //
+
+    return (
+      <div style={{height: '100%'}} onClick={this.handleClick}>
+        <CoreLayout children={(<Home/>)}/>
+      </div>
     )
   }
 }
 
-export default AppContainer
+export default App

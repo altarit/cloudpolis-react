@@ -23,7 +23,7 @@ export const createRoutes = (store) => ({
   childRoutes: [
     ThirdRoute,
     Artists(store),
-    Artist(store),
+    //Artist(store),
     Search(store),
     Admin(store),
     Users(store),
