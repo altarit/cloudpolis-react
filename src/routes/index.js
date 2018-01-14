@@ -1,5 +1,8 @@
-// We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout/CoreLayout'
+import React, {Component} from 'react'
+import {Route, Link, Router} from 'react-router-dom'
+import Loadable from 'react-loadable'
+
+import {injectReducer} from "../store/reducers"
 import Home from './Home'
 import ThirdRoute from './Third'
 import Artists from './Artists'
@@ -13,27 +16,45 @@ import Libraries from './Libraries'
 import Library from './Library'
 import Playlists from './Playlists'
 
-/*  Note: Instead of using JSX, we recommend using react-router
- PlainRoute objects to build route definitions.   */
+export const createRoutes = (store) => [
+  Home,
+  Artists,
+  Artist,
+  Search(store),
+  Admin(store),
+  Users(store),
+  UserDetails(store),
+  AccessLog(store),
+  Libraries(store),
+  Library(store),
+  Playlists(store),
+].map(component => createLoadableComponent(component, store))
 
-export const createRoutes = (store) => ({
-  path: '/',
-  component: CoreLayout,
-  indexRoute: Home,
-  childRoutes: [
-    ThirdRoute,
-    Artists(store),
-    //Artist(store),
-    Search(store),
-    Admin(store),
-    Users(store),
-    UserDetails(store),
-    AccessLog(store),
-    Libraries(store),
-    Library(store),
-    Playlists(store),
-  ]
-})
+function createLoadableComponent(lazyComponent, store) {
+  if (lazyComponent.component) {
+    return <Route key={lazyComponent.path} exact path={lazyComponent.path} component={lazyComponent.component}/>
+  }
+
+  const loadable = Loadable({
+    loader: () => {
+      return lazyComponent.getComponent()
+        .then(modules => {
+          if (modules[1]) {
+            injectReducer(store, {key: lazyComponent.name, reducer: modules[1].default})
+          }
+          return modules[0]
+        })
+    },
+    loading() {
+      return <div>Loading...</div>
+    }
+  })
+
+  return (
+    <Route key={lazyComponent.path} exact path={lazyComponent.path} component={loadable}/>
+  )
+}
+
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
  using getChildRoutes with the following signature:

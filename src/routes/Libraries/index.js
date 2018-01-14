@@ -1,17 +1,18 @@
 import {injectReducer} from '../../store/reducers'
 
 export default (store) => ({
-  path: 'music/libraries',
-  getComponent(nextState, cb) {
-    require.ensure([], (require) => {
-      const Libraries = require('./containers/LibrariesContainer').default
-      const reducer = require('./modules/libraries').default
-      const additionalReducer = require('./modules/librariesManager').default
-
-      injectReducer(store, {key: 'libraries', reducer})
-      injectReducer(store, {key: 'librariesManager', additionalReducer})
-
-      cb(null, Libraries)
-    }, 'libraries')
+  path: '/music/libraries',
+  name: 'libraries',
+  getComponent() {
+    return Promise.all([
+      import('./containers/LibrariesContainer'),
+      import('./modules/libraries'),
+      import('./modules/librariesManager'),
+    ])
+      .then(modules => {
+        injectReducer(store, {key: 'libraries', reducer: modules[1]}).default
+        injectReducer(store, {key: 'librariesManager', reducer: modules[2].default})
+        return [modules[0]]
+      })
   }
 })

@@ -55,6 +55,8 @@ export class Artist extends React.Component {
   }
 
   render() {
+
+    console.log(`Artists.render`)
     return (
       <div className='container'>
         <div>
