@@ -54,8 +54,8 @@ export class Sidebar extends React.Component {
   }
 
   render() {
+    console.log(`SideBar.render`)
     let songs = this.props.pls[this.props.openTab]
-
     return (
       <div className={'sidebar' + (this.props.isOpen ? ' sidebar--open' : '')}>
         <div className='sidebar__widget'>

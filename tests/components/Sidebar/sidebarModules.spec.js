@@ -1,7 +1,7 @@
-import {default as reducer, TOGGLE_SIDEBAR, toggleSidebar} from 'components/Sidebar/modules/sideBar'
+import {default as reducer, TOGGLE_SIDEBAR, toggleSidebar} from 'components/SideBar/modules/sideBar'
 
 describe('SideBar - modules', () => {
-  it('toogleSidebar', () => {
+  it('toogleSideBar', () => {
     expect(toggleSidebar()).to.deep.equal({
       type: TOGGLE_SIDEBAR
     })

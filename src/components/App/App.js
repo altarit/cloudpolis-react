@@ -1,31 +1,41 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import {Route, Link, Router} from 'react-router-dom'
-import Loadable from 'react-loadable'
 
-import {resizedWindow} from './SideBar/modules/sideBar'
-import {injectReducer} from '../store/reducers'
-import CoreLayout from '../layouts/CoreLayout'
-
-import {closeAllPopups, openPopup} from '../modules/popups'
-import Home from '../routes/Third/components/Third'
+import {resizedWindow} from '../SideBar/modules/sideBar'
+import {closeAllPopups, openPopup} from '../../modules/popups'
+import Sidebar from '../SideBar'
+import BottomBar from '../BottomBar'
+import Header from '../Header'
+import './App.scss'
+import '../../styles/main.scss'
 
 class App extends Component {
   static propTypes = {
-    routes: PropTypes.object.isRequired,
+    routes: PropTypes.array.isRequired,
     store: PropTypes.object.isRequired
   }
 
-  shouldComponentUpdate() {
-    return false
+  constructor(props) {
+    super(props)
+    this.currentState = {}
+    this.state = {}
   }
 
   resizeWindow = () => {
     this.props.store.dispatch(resizedWindow())
   }
 
+  changedSideBar = () => {
+    const previousState = this.currentState
+    this.currentState = this.props.store.getState().sidebar
+    if (previousState == this.currentState) {
+      this.setState(this.currentState)
+    }
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.resizeWindow)
+    this.props.store.subscribe(this.changedSideBar)
   }
 
   componentWillUnmount() {
@@ -55,37 +65,18 @@ class App extends Component {
     this.props.store.dispatch(closeAllPopups())
   }
 
-
-  lazy = (lazyComponent) => {
-    const loadable = Loadable({
-      loader: () => {
-        return lazyComponent.getComponent()
-          .then(modules => {
-            injectReducer(this.props.store, {key: lazyComponent.name, reducer: modules[1].default})
-            return modules[0]
-          })
-      },
-      loading() {
-        return <div>Loading...</div>
-      }
-    })
-
-    return (
-      <Route exact path={lazyComponent.path} component={loadable}/>
-    )
-  }
-
   render() {
-    // return (
-    //   <div style={{height: '100%'}} onClick={this.handleClick}>
-    //     <Route exact path="/" component={Home}/>
-    //     {this.lazy(Artists)}
-    //   </div>
-    //
-
+    console.log(`App.render`)
     return (
       <div style={{height: '100%'}} onClick={this.handleClick}>
-        <CoreLayout children={(<Home/>)}/>
+        <div className={'content__out' + (this.state.isOpen ? ' content__out_shifted' : '')}>
+          <Header sidebar={this.state.isOpen} mobile={this.state.mobile}/>
+          <div className='core-layout__viewport'>
+            {this.props.routes}
+          </div>
+        </div>
+        <Sidebar/>
+        <BottomBar/>
       </div>
     )
   }

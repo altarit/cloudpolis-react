@@ -20,12 +20,13 @@ export class Header extends React.Component {
   }
 
   render() {
+    console.log('Header.render')
     return (
       <nav className='container navbar navbar-light bg-faded navbar-header navbar-expand'>
         <div className={'navbar-collapse' + (this.props.mobile ? ' navbar-header-mobile' : '')}>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
-              <NavLink className='navbar-brand nav-link' activeclassname='route--active' to='/'>
+              <NavLink to='/' className='navbar-brand nav-link' activeclassname='route--active'>
                 <span className='fa fa-cloud' />
                 <span className='navbar__link-label d-none d-sm-inline'>Cloudpolis</span>
                 <span className='navbar__link-label d-sm-none'>Home</span>

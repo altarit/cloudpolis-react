@@ -92,10 +92,10 @@ export class Auth extends React.Component {
           </div>) : null}
         {this.props.userPopup ? (
           <ul className='dropdown-menu show' data-click='none'>
-            <li className='option'><Link to={`/users/${this.props.name}`}> Profile</Link></li>
+            <li className='option'><a to={`/users/${this.props.name}`}> Profile</a></li>
             <li className='option'><Link to='/users'> Users</Link></li>
             <li className='option'><Link to='/admin'> Admin</Link></li>
-            <li className='option'><Link className='link' onClick={this.props.logout}> Logout</Link></li>
+            <li className='option'><a className='link' onClick={this.props.logout}> Logout</a></li>
           </ul>
         ) : null}
       </div>
