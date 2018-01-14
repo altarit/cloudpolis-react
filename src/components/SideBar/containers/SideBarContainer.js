@@ -37,7 +37,6 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  isOpen: !state.sidebar.isOpen,
   scrolledTabs: state.player.scrolledTabs,
   tabs: state.player.tabs,
   openTab: state.player.openTab,

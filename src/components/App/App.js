@@ -17,8 +17,8 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.currentState = {}
-    this.state = {}
+    this.currentState = props.store.getState().sidebar
+    this.state = this.currentState
   }
 
   resizeWindow = () => {
@@ -27,9 +27,9 @@ class App extends Component {
 
   changedSideBar = () => {
     const previousState = this.currentState
-    this.currentState = this.props.store.getState().sidebar
-    if (previousState == this.currentState) {
-      this.setState(this.currentState)
+    const state = this.currentState = this.props.store.getState().sidebar
+    if (previousState !== state && (previousState.isOpen !== state.isOpen || previousState.mobile !== state.mobile)) {
+      this.setState(state)
     }
   }
 
@@ -75,7 +75,9 @@ class App extends Component {
             {this.props.routes}
           </div>
         </div>
-        <Sidebar/>
+        <div className={'sidebar' + (!this.state.isOpen ? ' sidebar--open' : '')}>
+          <Sidebar/>
+        </div>
         <BottomBar/>
       </div>
     )

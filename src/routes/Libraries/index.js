@@ -10,7 +10,7 @@ export default (store) => ({
       import('./modules/librariesManager'),
     ])
       .then(modules => {
-        injectReducer(store, {key: 'libraries', reducer: modules[1]}).default
+        injectReducer(store, {key: 'libraries', reducer: modules[1].default})
         injectReducer(store, {key: 'librariesManager', reducer: modules[2].default})
         return [modules[0]]
       })

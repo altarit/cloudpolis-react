@@ -10,7 +10,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state, props) => ({
-  libraryName: props.params.libraryName,
+  libraryName: props.match.params.libraryName,
   fetching: state.library.fetching,
   compilations: state.library.compilations,
   createCompilationsBulkPopup: state.popups.createCompilationsBulkPopup,

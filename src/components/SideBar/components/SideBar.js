@@ -9,7 +9,6 @@ import SidebarBottomMenu from './SideBarBottomMenu'
 
 export class Sidebar extends React.Component {
   static propTypes = {
-    isOpen: PropTypes.bool,
     popups: PropTypes.object.isRequired,
     tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
     pls: PropTypes.object.isRequired,
@@ -57,53 +56,51 @@ export class Sidebar extends React.Component {
     console.log(`SideBar.render`)
     let songs = this.props.pls[this.props.openTab]
     return (
-      <div className={'sidebar' + (this.props.isOpen ? ' sidebar--open' : '')}>
-        <div className='sidebar__widget'>
-          <div className='playmenu'>
-            <SidebarTopMenu
-              muted={this.props.muted}
-              toggleMute={this.props.toggleMute}
-              setVolume={this.props.setVolume}
-            />
+      <div className='sidebar__widget'>
+        <div className='playmenu'>
+          <SidebarTopMenu
+            muted={this.props.muted}
+            toggleMute={this.props.toggleMute}
+            setVolume={this.props.setVolume}
+          />
 
-            <SidebarTabs
-              tabs={this.props.tabs}
-              openTab={this.props.openTab}
-              scrolledTabs={this.props.scrolledTabs}
-              popups={this.props.popups}
+          <SidebarTabs
+            tabs={this.props.tabs}
+            openTab={this.props.openTab}
+            scrolledTabs={this.props.scrolledTabs}
+            popups={this.props.popups}
 
-              selectTab={this.props.selectTab}
-              scrollLeft={this.props.scrollLeft}
-              scrollRight={this.props.scrollRight}
-            />
+            selectTab={this.props.selectTab}
+            scrollLeft={this.props.scrollLeft}
+            scrollRight={this.props.scrollRight}
+          />
 
-            <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-              <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
-            </div>
-
-            <div className='playmenu__status'>
-              Open: <b>{this.props.openTab}</b><br />
-              Playing: <b>{this.props.currentPl}</b>
-            </div>
-
-            <SidebarBottomMenu
-              popups={this.props.popups}
-              openTab={this.props.openTab}
-              pls={this.props.pls}
-              errors={this.props.errors}
-
-              closeOpenPlaylist={this.props.closeOpenPlaylist}
-              createPlaylist={this.props.createPlaylist}
-              closeOtherPlaylists={this.props.closeOtherPlaylists}
-
-              sortByTitle={this.props.sortByTitle}
-              sortByArtist={this.props.sortByArtist}
-              sortByDuration={this.props.sortByDuration}
-              sortByPath={this.props.sortByPath}
-              shuffle={this.props.shuffle}
-              reverse={this.props.reverse}
-            />
+          <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
+            <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini'/>
           </div>
+
+          <div className='playmenu__status'>
+            Open: <b>{this.props.openTab}</b><br/>
+            Playing: <b>{this.props.currentPl}</b>
+          </div>
+
+          <SidebarBottomMenu
+            popups={this.props.popups}
+            openTab={this.props.openTab}
+            pls={this.props.pls}
+            errors={this.props.errors}
+
+            closeOpenPlaylist={this.props.closeOpenPlaylist}
+            createPlaylist={this.props.createPlaylist}
+            closeOtherPlaylists={this.props.closeOtherPlaylists}
+
+            sortByTitle={this.props.sortByTitle}
+            sortByArtist={this.props.sortByArtist}
+            sortByDuration={this.props.sortByDuration}
+            sortByPath={this.props.sortByPath}
+            shuffle={this.props.shuffle}
+            reverse={this.props.reverse}
+          />
         </div>
       </div>
     )
