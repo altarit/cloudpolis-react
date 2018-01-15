@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react'
-import {Link} from 'react-router'
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 import AuthForm from './AuthForm'
 import './Auth.scss'
@@ -44,15 +45,15 @@ export class Auth extends React.Component {
             <ul className='navbar-nav mr-auto'>
               <li className='nav-item'>
                 {this.props.name ? (
-                  <Link data-click='dropdown' data-for='userPopup' className='nav-link' activeClassName='route--active'>
+                  <a data-click='dropdown' data-for='userPopup' className='nav-link'>
                     <span className='fa fa-user' />
                     <span className='navbar__link-label'>Profile</span>
-                  </Link>
+                  </a>
                 ) : (
-                  <Link data-click='dropdown' data-for='signPopup' className='nav-link' activeClassName='route--active'>
+                  <a data-click='dropdown' data-for='signPopup' className='nav-link'>
                     <span className='fa fa-sign-in' />
                     <span className='navbar__link-label'>Sign&nbsp;In</span>
-                  </Link>
+                  </a>
                 )}
               </li>
             </ul>
@@ -91,10 +92,10 @@ export class Auth extends React.Component {
           </div>) : null}
         {this.props.userPopup ? (
           <ul className='dropdown-menu show' data-click='none'>
-            <li className='option'><Link to={`/users/${this.props.name}`}> Profile</Link></li>
+            <li className='option'><a to={`/users/${this.props.name}`}> Profile</a></li>
             <li className='option'><Link to='/users'> Users</Link></li>
             <li className='option'><Link to='/admin'> Admin</Link></li>
-            <li className='option'><Link className='link' onClick={this.props.logout}> Logout</Link></li>
+            <li className='option'><a className='link' onClick={this.props.logout}> Logout</a></li>
           </ul>
         ) : null}
       </div>

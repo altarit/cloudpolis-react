@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import Track from '../../Track'
 
@@ -9,6 +10,7 @@ export class TrackList extends React.Component {
     pos: PropTypes.number,
     currentPl: PropTypes.string,
     pl: PropTypes.string.isRequired,
+    plName: PropTypes.string,
     className: PropTypes.string,
     immutable: PropTypes.bool.isRequired,
     controls: PropTypes.bool,
@@ -38,13 +40,17 @@ export class TrackList extends React.Component {
     }
   }
 
+  openInPlaylist = () => {
+    this.props.updatePlaylist(this.props.plName || this.props.pl, this.props.songs)
+  }
+
   render() {
     return (
       <div>
         {this.props.controls ? (
           <div className='d-flex justify-content-between'>
             <div className='d-flex'>
-              <button className='btn btn-outline-secondary mr-2'>
+              <button className='btn btn-outline-secondary mr-2' onClick={this.openInPlaylist}>
                 Listen All
               </button>
               <button className='btn btn-outline-secondary'>

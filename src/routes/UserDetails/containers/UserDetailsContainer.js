@@ -9,7 +9,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state, props) => ({
   fetching: state.userDetails.fetching,
-  username: props.params.username,
+  username: props.match.params.username,
   created: state.userDetails.created,
   errorText: state.userDetails.errorText
 })

@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react'
-import {Link} from 'react-router'
+import React from 'react'
+import PropTypes from 'prop-types'
+import {Link} from 'react-router-dom'
 
 import TrackList from '../../../components/TrackList'
 import {DEFAULT_PL} from '../../../modules/player/playerConstants'
@@ -54,6 +55,8 @@ export class Artist extends React.Component {
   }
 
   render() {
+
+    console.log(`Artists.render`)
     return (
       <div className='container'>
         <div>
@@ -97,6 +100,7 @@ export class Artist extends React.Component {
                 <TrackList
                   songs={this.props.tracks}
                   pl={DEFAULT_PL}
+                  plName={this.props.artistName}
                   immutable
                   updatePlaylist={this.updatePlaylist}
                   controls
@@ -105,6 +109,7 @@ export class Artist extends React.Component {
                 <TrackList
                   songs={(this.props.albums.filter(el => el.name === this.props.albumName)[0] || []).tracks || []}
                   pl={DEFAULT_PL}
+                  plName={this.props.artistName}
                   immutable
                   updatePlaylist={this.updatePlaylist}
                   controls

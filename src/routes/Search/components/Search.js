@@ -1,4 +1,5 @@
-import React, {PropTypes} from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import TrackList from '../../../components/TrackList'
 import {SEARCH_PL} from '../../../modules/player/playerConstants'

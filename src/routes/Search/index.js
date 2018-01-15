@@ -1,15 +1,10 @@
-import {injectReducer} from '../../store/reducers'
-
 export default (store) => ({
-  path: 'music/search',
-  getComponent(nextState, cb) {
-    require.ensure([], (require) => {
-      const Search = require('./containers/SearchContainer').default
-      const reducer = require('./modules/search').default
-
-      injectReducer(store, {key: 'search', reducer})
-
-      cb(null, Search)
-    }, 'search')
+  path: '/music/search',
+  name: 'search',
+  getComponent() {
+    return Promise.all([
+      import('./containers/SearchContainer'),
+      import('./modules/search'),
+    ])
   }
 })
