@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {Link} from 'react-router-dom'
 
 import TrackList from '../../../components/TrackList'
-import {DEFAULT_PL} from '../../../modules/player/playerConstants'
+// import {DEFAULT_PL} from '../../../modules/player/playerConstants'
 
 export class Playlists extends React.Component {
   static propTypes = {
@@ -43,8 +42,8 @@ export class Playlists extends React.Component {
                 <TrackList
                   songs={curr.tracks}
                   pl={curr.name}
-                  immutable="true"
-                  updatePlaylist={()=>this.updatePlaylist(curr)}
+                  immutable='true'
+                  updatePlaylist={() => this.updatePlaylist(curr)}
                 />
               </div>
             )}

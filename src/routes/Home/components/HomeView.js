@@ -39,17 +39,20 @@ export class HomeView extends React.Component {
               </div>
 
               <div className='col-md-5'>
-                Tracks: 2147<br />
-                Artists: 248<br />
-                Total duration: 9d 8h 47m<br />
-                Total size: 21Gb<br />
+                Tracks: 1477<br />
+                Artists: 227<br />
+                Duration: 4d 5h<br />
+                Total size: 12Gb<br />
 
               </div>
             </div>
 
           </div>
           <div className='col-lg-6'>
-            <h2>Random tracks</h2>
+            <h2>
+              Random tracks
+              <button onClick={this.props.getFeaturedTracks} type='button' className='btn btn-def fa fa-refresh' />
+            </h2>
             <TrackList songs={this.props.tracks} pl={DEFAULT_PL} immutable updatePlaylist={this.updatePlaylist} />
           </div>
         </div>
@@ -89,7 +92,7 @@ export class HomeView extends React.Component {
           <div className='col-lg-12'>
             <h2>More</h2>
             If you have any questions, please feel free to contact me at
-            <a href='mailto:admin@cloudpolis.ru'> admin@cloudpolis.ru</a>
+            <a href='mailto:admin@cloudpolis.net'> admin@cloudpolis.net</a>
           </div>
         </div>
       </div>

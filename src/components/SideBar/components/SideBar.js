@@ -76,11 +76,11 @@ export class Sidebar extends React.Component {
           />
 
           <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-            <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini'/>
+            <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
           </div>
 
           <div className='playmenu__status'>
-            Open: <b>{this.props.openTab}</b><br/>
+            Open: <b>{this.props.openTab}</b><br />
             Playing: <b>{this.props.currentPl}</b>
           </div>
 

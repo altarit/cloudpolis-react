@@ -1,10 +1,9 @@
-import React, {Component} from 'react'
-import {Route, Link, Router} from 'react-router-dom'
+import React from 'react'
+import {Route} from 'react-router-dom'
 import Loadable from 'react-loadable'
 
-import {injectReducer} from "../store/reducers"
+import {injectReducer} from '../store/reducers'
 import Home from './Home'
-import ThirdRoute from './Third'
 import Artists from './Artists'
 import Artist from './Artist'
 import Search from './Search'
@@ -32,7 +31,7 @@ export const createRoutes = (store) => [
 
 function createLoadableComponent(lazyComponent, store) {
   if (lazyComponent.component) {
-    return <Route key={lazyComponent.path} exact path={lazyComponent.path} component={lazyComponent.component}/>
+    return <Route key={lazyComponent.path} exact path={lazyComponent.path} component={lazyComponent.component} />
   }
 
   const loadable = Loadable({
@@ -51,10 +50,9 @@ function createLoadableComponent(lazyComponent, store) {
   })
 
   return (
-    <Route key={lazyComponent.path} exact path={lazyComponent.path} component={loadable}/>
+    <Route key={lazyComponent.path} exact path={lazyComponent.path} component={loadable} />
   )
 }
-
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically
  using getChildRoutes with the following signature:

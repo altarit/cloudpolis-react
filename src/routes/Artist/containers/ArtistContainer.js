@@ -10,7 +10,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state, props) => {
-  const query = new URLSearchParams(props.location.search);
+  const query = new URLSearchParams(props.location.search)
   return {
     tracks: state.artist.tracks,
     albums: state.artist.albums,

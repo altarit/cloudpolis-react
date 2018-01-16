@@ -20,7 +20,7 @@ let render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App store={store} routes={routes}></App>
+        <App store={store} routes={routes} />
       </ConnectedRouter>
     </Provider>,
     MOUNT_NODE

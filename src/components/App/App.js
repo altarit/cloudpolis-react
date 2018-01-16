@@ -70,15 +70,15 @@ class App extends Component {
     return (
       <div style={{height: '100%'}} onClick={this.handleClick}>
         <div className={'content__out' + (this.state.isOpen ? ' content__out_shifted' : '')}>
-          <Header sidebar={this.state.isOpen} mobile={this.state.mobile}/>
+          <Header sidebar={this.state.isOpen} mobile={this.state.mobile} />
           <div className='core-layout__viewport'>
             {this.props.routes}
           </div>
         </div>
         <div className={'sidebar' + (!this.state.isOpen ? ' sidebar--open' : '')}>
-          <Sidebar/>
+          <Sidebar />
         </div>
-        <BottomBar/>
+        <BottomBar />
       </div>
     )
   }
