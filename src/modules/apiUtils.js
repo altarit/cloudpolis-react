@@ -6,7 +6,8 @@ const defaultHeaders = {
 
 const defaultGetOptions = {
   credentials: 'include',
-  cache: 'no-cache'
+  cache: 'no-cache',
+  headers: defaultHeaders
 }
 
 const defaultPostOptions = {
@@ -30,29 +31,37 @@ const defaultDeleteOptions = {
   headers: defaultHeaders
 }
 
+function secureFetch(url, options) {
+  const token = localStorage.getItem('auth')
+  if (token) {
+    options.headers['Auth'] = token
+  }
+  return fetch(url, options)
+}
+
 export function fetchGet(url, options = {}) {
-  return fetch(apiLink(url), {
+  return secureFetch(apiLink(url), {
     ...defaultGetOptions,
     ...options
   }).then(handleResponse)
 }
 
 export function fetchPost(url, options = {}) {
-  return fetch(apiLink(url), {
+  return secureFetch(apiLink(url), {
     ...defaultPostOptions,
     ...options
   }).then(handleResponse)
 }
 
 export function fetchPut(url, options = {}) {
-  return fetch(apiLink(url), {
+  return secureFetch(apiLink(url), {
     ...defaultPutOptions,
     ...options
   }).then(handleResponse)
 }
 
 export function fetchDelete(url, options = {}) {
-  return fetch(apiLink(url), {
+  return secureFetch(apiLink(url), {
     ...defaultDeleteOptions,
     ...options
   }).then(handleResponse)
@@ -60,8 +69,12 @@ export function fetchDelete(url, options = {}) {
 
 export function handleResponse(response) {
   return new Promise((resolve, reject) => {
-    // console.log('handle response')
-    // console.dir(response)
+    console.log('handle response')
+    console.dir(response)
+    const token = response.headers.get('Auth')
+    if (token) {
+      localStorage.setItem('auth', token)
+    }
     return response.json()
       .then(json => {
         resolve({

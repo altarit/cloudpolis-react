@@ -44,6 +44,7 @@ export function login(username, password) {
     return fetchPost('/login/', params)
       .then(json => {
         console.log('Successful request')
+
         dispatch({
           type: types.AUTH_LOGIN_SUCCESS,
           name: json.data
