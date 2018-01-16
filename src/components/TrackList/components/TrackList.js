@@ -15,7 +15,8 @@ export class TrackList extends React.Component {
     immutable: PropTypes.bool.isRequired,
     controls: PropTypes.bool,
 
-    updatePlaylist: PropTypes.func
+    updatePlaylist: PropTypes.func,
+    updateAnotherPlaylist: PropTypes.func,
   }
 
   getPlaylist = () => {
@@ -41,7 +42,7 @@ export class TrackList extends React.Component {
   }
 
   openInPlaylist = () => {
-    this.props.updatePlaylist(this.props.plName || this.props.pl, this.props.songs)
+    this.props.updateAnotherPlaylist(this.props.plName || this.props.pl, this.props.songs)
   }
 
   render() {
@@ -51,10 +52,10 @@ export class TrackList extends React.Component {
           <div className='d-flex justify-content-between'>
             <div className='d-flex'>
               <button className='btn btn-outline-secondary mr-2' onClick={this.openInPlaylist}>
-                Listen All
+                Open New Tab
               </button>
               <button className='btn btn-outline-secondary'>
-                Add to Playlist
+                Add To Tab ...
               </button>
             </div>
             <div className='d-flex' />

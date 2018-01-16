@@ -50,8 +50,10 @@ export class HomeView extends React.Component {
           </div>
           <div className='col-lg-6'>
             <h2>
-              Random tracks
-              <button onClick={this.props.getFeaturedTracks} type='button' className='btn btn-def fa fa-refresh' />
+              Random tracks &nbsp;
+              <button type='button' className='btn btn-sm btn-outline-secondary' onClick={this.props.getFeaturedTracks}>
+                Refresh
+              </button>
             </h2>
             <TrackList songs={this.props.tracks} pl={DEFAULT_PL} immutable updatePlaylist={this.updatePlaylist} />
           </div>
