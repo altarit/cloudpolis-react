@@ -164,7 +164,7 @@ export class AudioPlayer extends React.Component {
           {toMMSS(this.state.time)}
         </div>
         <div className='player__progress-length'>
-          {this.props.duration}
+          {toMMSS(this.state.duration)}
         </div>
 
         <audio

@@ -12,7 +12,7 @@ const mapDispatchToProps = {
 const mapStateProps = (state) => ({
   title: state.player.track.title,
   artist: state.player.track.artist,
-  src: state.player.track.href || state.player.track.src,
+  src: state.player.track.src,
   duration: state.player.track.duration,
   compilation: state.player.track.compiltaion,
 

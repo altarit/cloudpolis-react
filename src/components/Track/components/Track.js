@@ -13,7 +13,7 @@ export class Track extends React.Component {
     compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     href: PropTypes.string,
-    duration: PropTypes.string.isRequired,
+    // duration: PropTypes.string.isRequired,
 
     isPlaying: PropTypes.bool.isRequired,
     isCurrent: PropTypes.bool.isRequired,
@@ -93,7 +93,7 @@ export class Track extends React.Component {
   }
 
   getFullLink = () => {
-    return trackLink(this.props.src || this.props.href)
+    return trackLink(this.props.src)
   }
 
   removeTrack = () => {

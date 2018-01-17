@@ -146,7 +146,7 @@ function sortBy(by, pls, openTab, currentPl, pos) {
       newPl.sort((a, b) => a.duration.localeCompare(b.duration))
       break
     case types.BY_PATH:
-      newPl.sort((a, b) => (a.src || a.href).localeCompare(b.src || b.href))
+      newPl.sort((a, b) => (a.src).localeCompare(b.src))
       break
     case types.SHUFFLE:
       let j, temp
