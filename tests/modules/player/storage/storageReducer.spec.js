@@ -43,23 +43,25 @@ describe('modules/playerStorage - Reducer', () => {
 
     it('STORAGE_OPEN_PLAYLIST_SUCCESS', () => {
       const nextState = reducer({
-        tabs: [],
-        pls: {}
+        tabs: []
       }, {
         type: types.STORAGE_OPEN_PLAYLIST_SUCCESS,
         filename: 'Johann Strauss',
         playlist: [{
-          title: 'Emperor Waltz'
+          name: 'Johann Strauss',
+          tracks: [{
+            title: 'Emperor Waltz'
+          }]
         }]
       })
 
       expect(nextState).to.deep.equal({
-        tabs: ['Johann Strauss'],
-        pls: {
-          'Johann Strauss': [{
+        tabs: [{
+          name: 'Johann Strauss',
+          tracks: [{
             title: 'Emperor Waltz'
           }]
-        },
+        }],
         openTab: 'Johann Strauss'
       })
     })

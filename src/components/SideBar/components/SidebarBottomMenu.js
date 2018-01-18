@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import OpenPlaylistDialog from '../../OpenPlaylistDialog'
-import {getPlIndexByName} from '../../../modules/player/playerReducer'
+import {getTabIndexByName} from '../../../modules/player/playerReducer'
 
 export class SidebarBottomMenu extends React.Component {
   static propTypes = {
     openTab: PropTypes.string.isRequired,
-    pls: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.object).isRequired,
     popups: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
 
@@ -135,8 +135,8 @@ export class SidebarBottomMenu extends React.Component {
 
   render() {
     let openTab = this.props.openTab
-    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
-    const tracks = this.props.pls[openTabIndex].tracks
+    const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
+    const tracks = this.props.tabs[openTabIndex].tracks
 
     return (
       <div className='playmenu__bottom dropdown'>

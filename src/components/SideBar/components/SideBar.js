@@ -6,14 +6,14 @@ import TrackList from '../../TrackList'
 import SidebarTopMenu from './SideBarTopMenu'
 import SidebarTabs from './SideBarTabs'
 import SidebarBottomMenu from './SideBarBottomMenu'
-import {getPlIndexByName} from '../../../modules/player/playerReducer'
+import {getTabIndexByName} from '../../../modules/player/playerReducer'
 
 export class Sidebar extends React.Component {
   static propTypes = {
     popups: PropTypes.object.isRequired,
-    pls: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.object).isRequired,
     openTab: PropTypes.string.isRequired,
-    currentPl: PropTypes.string.isRequired,
+    currentTab: PropTypes.string.isRequired,
     scrolledTabs: PropTypes.number.isRequired,
     errors: PropTypes.object.isRequired,
     muted: PropTypes.bool.isRequired,
@@ -38,8 +38,8 @@ export class Sidebar extends React.Component {
   drop = (e) => {
     e.preventDefault()
     let track = JSON.parse(e.dataTransfer.getData('track'))
-    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
-    let playlistLength = this.props.pls[openTabIndex].tracks.length
+    const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
+    let playlistLength = this.props.tabs[openTabIndex].tracks.length
     if (track.immutable) {
       this.props.moveTrack(track, null, null, this.props.openTab, playlistLength)
     } else {
@@ -55,8 +55,8 @@ export class Sidebar extends React.Component {
 
   render() {
     console.log(`SideBar.render`)
-    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
-    let songs = this.props.pls[openTabIndex].tracks
+    const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
+    let songs = this.props.tabs[openTabIndex].tracks
     return (
       <div className='sidebar__widget'>
         <div className='playmenu'>
@@ -67,7 +67,7 @@ export class Sidebar extends React.Component {
           />
 
           <SidebarTabs
-            pls={this.props.pls}
+            tabs={this.props.tabs}
             openTab={this.props.openTab}
             scrolledTabs={this.props.scrolledTabs}
             popups={this.props.popups}
@@ -83,13 +83,13 @@ export class Sidebar extends React.Component {
 
           <div className='playmenu__status'>
             Open: <b>{this.props.openTab}</b><br />
-            Playing: <b>{this.props.currentPl}</b>
+            Playing: <b>{this.props.currentTab}</b>
           </div>
 
           <SidebarBottomMenu
             popups={this.props.popups}
             openTab={this.props.openTab}
-            pls={this.props.pls}
+            tabs={this.props.tabs}
             errors={this.props.errors}
 
             closeOpenPlaylist={this.props.closeOpenPlaylist}

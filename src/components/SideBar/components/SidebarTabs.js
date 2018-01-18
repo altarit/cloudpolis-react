@@ -5,7 +5,7 @@ import './SideBarTabs.scss'
 
 export class SidebarTabs extends React.Component {
   static propTypes = {
-    pls: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.object).isRequired,
     openTab: PropTypes.string.isRequired,
     scrolledTabs: PropTypes.number.isRequired,
     popups: PropTypes.object.isRequired,
@@ -16,7 +16,7 @@ export class SidebarTabs extends React.Component {
   }
 
   getTabs = () => {
-    return this.props.pls.map(pl => (
+    return this.props.tabs.map(pl => (
       <li key={pl.name} className='nav-item option' onClick={e => {
         this.props.selectTab(pl.name)
       }}>

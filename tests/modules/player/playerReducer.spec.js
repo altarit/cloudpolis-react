@@ -60,7 +60,7 @@ describe('modules/player - Reducer', () => {
 
       expect(nextState.pos).to.equal(7)
       expect(nextState.isPlaying).to.be.true()
-      expect(nextState.currentPl).to.equal('Romance')
+      expect(nextState.currentTab).to.equal('Romance')
       expect(nextState.track).to.deep.equal({
         title: 'Ave Maria',
         artist: 'Schubert',
@@ -73,14 +73,14 @@ describe('modules/player - Reducer', () => {
   describe('[tracks]', () => {
     const previousState = {
       tabs: ['Concerts'],
-      pls: {
+      tabs: {
         'Concerts': [
           {title: 'Morning from Peer Gynt'},
           {title: 'Eine kleine Nachtmusik'},
           {title: 'Minuet'}
         ]
       },
-      currentPl: 'Concerts',
+      currentTab: 'Concerts',
       pos: 1,
       isPlaying: true,
       track: {title: 'Eine kleine Nachtmusik'}
@@ -171,7 +171,7 @@ describe('modules/player - Reducer', () => {
     it('CREATE_PLAYLIST', () => {
       const nextState = reducer({
         tabs: ['Default', 'Music'],
-        pls: {
+        tabs: {
           'Default': [],
           'Music': []
         },
@@ -181,14 +181,14 @@ describe('modules/player - Reducer', () => {
         name: 'Favorite'
       })
       expect(nextState.tabs).to.deep.equal(['Default', 'Music', 'Favorite'])
-      expect(nextState.pls['Favorite']).to.deep.equal([])
+      expect(nextState.tabs['Favorite']).to.deep.equal([])
       expect(nextState.openTab).to.equal('Favorite')
     })
 
     it('CREATE_PLAYLIST already exists', () => {
       const nextState = reducer({
         tabs: ['Default', 'Music'],
-        pls: {
+        tabs: {
           'Default': [],
           'Music': []
         },
@@ -198,7 +198,7 @@ describe('modules/player - Reducer', () => {
         name: 'Music'
       })
       expect(nextState.tabs).to.deep.equal(['Default', 'Music'])
-      expect(nextState.pls['Favorite']).to.equal(undefined)
+      expect(nextState.tabs['Favorite']).to.equal(undefined)
       expect(nextState.openTab).to.equal('Default')
       expect(nextState.errors.createPlaylist).to.equal('Playlist Music already exists')
     })
@@ -206,7 +206,7 @@ describe('modules/player - Reducer', () => {
     it('CLOSE_OPEN_PLAYLIST', () => {
       const nextState = reducer({
         tabs: ['Music', 'Favorites'],
-        pls: {
+        tabs: {
           'Music': [],
           'Favorites': []
         },
@@ -215,14 +215,14 @@ describe('modules/player - Reducer', () => {
         type: types.CLOSE_OPEN_PLAYLIST
       })
       expect(nextState.tabs).to.deep.equal(['Music'])
-      expect(nextState.pls['Favorite']).to.equal(undefined)
+      expect(nextState.tabs['Favorite']).to.equal(undefined)
       expect(nextState.openTab).to.equal('Music')
     })
 
     it('CLOSE_OPEN_PLAYLIST when it is the last', () => {
       const nextState = reducer({
         tabs: ['Favorites'],
-        pls: {
+        tabs: {
           'Favorites': []
         },
         openTab: 'Favorites'
@@ -230,14 +230,14 @@ describe('modules/player - Reducer', () => {
         type: types.CLOSE_OPEN_PLAYLIST
       })
       expect(nextState.tabs).to.deep.equal(['Default'])
-      expect(nextState.pls['Favorite']).to.equal(undefined)
+      expect(nextState.tabs['Favorite']).to.equal(undefined)
       expect(nextState.openTab).to.equal('Default')
     })
 
     it('CLOSE_OTHER_PLAYLISTS', () => {
       const nextState = reducer({
         tabs: ['Default', 'Favorites', 'Random'],
-        pls: {
+        tabs: {
           'Default': [],
           'Favorites': [],
           'Random': []
@@ -247,7 +247,7 @@ describe('modules/player - Reducer', () => {
         type: types.CLOSE_OTHER_PLAYLISTS
       })
       expect(nextState.tabs).to.deep.equal(['Favorites'])
-      expect(nextState.pls).to.deep.equal({'Favorites': []})
+      expect(nextState.tabs).to.deep.equal({'Favorites': []})
       expect(nextState.openTab).to.equal('Favorites')
       expect(nextState.scrolledTabs).to.equal(0)
     })
@@ -256,7 +256,7 @@ describe('modules/player - Reducer', () => {
   describe('[editing a playlist]', () => {
     const previousState = {
       tabs: ['Favorite', 'Music'],
-      pls: {
+      tabs: {
         'Music': [{
           title: 'The Four Seasons'
         }, {
@@ -273,23 +273,23 @@ describe('modules/player - Reducer', () => {
         }]
       },
       pos: 2,
-      currentPl: 'Music',
+      currentTab: 'Music',
       track: {
         title: 'Ave Maria'
       }
     }
 
     it('REMOVE_TRACK does not affect previous state', () => {
-      const oldPls = previousState.pls
-      const oldMusic = previousState.pls['Music']
+      const oldPls = previousState.tabs
+      const oldMusic = previousState.tabs['Music']
 
       const nextState = reducer(previousState, {
         type: types.REMOVE_TRACK,
         plName: 'Music',
         pos: 1
       })
-      expect(nextState.pls).to.not.equal(oldPls)
-      expect(nextState.pls['Music']).to.not.equal(oldMusic)
+      expect(nextState.tabs).to.not.equal(oldPls)
+      expect(nextState.tabs['Music']).to.not.equal(oldMusic)
     })
 
     it('REMOVE_TRACK remove from previous', () => {
@@ -298,8 +298,8 @@ describe('modules/player - Reducer', () => {
         plName: 'Music',
         pos: 1
       })
-      expect(nextState.pls['Music'].length).to.equal(2)
-      expect(nextState.pls['Music'][1].title).to.equal('Ave Maria')
+      expect(nextState.tabs['Music'].length).to.equal(2)
+      expect(nextState.tabs['Music'][1].title).to.equal('Ave Maria')
       expect(nextState.pos).to.equal(1)
       expect(nextState.track.title).to.equal('Ave Maria')
     })
@@ -310,8 +310,8 @@ describe('modules/player - Reducer', () => {
         plName: 'Music',
         pos: 2
       })
-      expect(nextState.pls['Music'].length).to.equal(2)
-      expect(nextState.pls['Music'][1].title).to.equal('Symphony N9')
+      expect(nextState.tabs['Music'].length).to.equal(2)
+      expect(nextState.tabs['Music'][1].title).to.equal('Symphony N9')
       expect(nextState.pos).to.equal(1)
       expect(nextState.track.title).to.equal('Symphony N9')
     })
@@ -326,18 +326,18 @@ describe('modules/player - Reducer', () => {
         plName: 'Music',
         pos: 2
       })
-      expect(nextState.pls['Music'].length).to.equal(2)
-      expect(nextState.pls['Music'][1].title).to.equal('Symphony N9')
+      expect(nextState.tabs['Music'].length).to.equal(2)
+      expect(nextState.tabs['Music'][1].title).to.equal('Symphony N9')
       expect(nextState.pos).to.equal(1)
       expect(nextState.track.title).to.equal('Symphony N9')
     })
 
     it('MOVE_TRACK does not affect previous state', () => {
-      const oldPls = previousState.pls
-      const oldMusic = previousState.pls['Music']
-      const oldFavorite = previousState.pls['Favorite']
-      const oldMovedTrack = previousState.pls['Music'][0]
-      const oldAnotherTrack = previousState.pls['Music'][1]
+      const oldPls = previousState.tabs
+      const oldMusic = previousState.tabs['Music']
+      const oldFavorite = previousState.tabs['Favorite']
+      const oldMovedTrack = previousState.tabs['Music'][0]
+      const oldAnotherTrack = previousState.tabs['Music'][1]
 
       const nextState = reducer(previousState, {
         type: types.MOVE_TRACK,
@@ -347,11 +347,11 @@ describe('modules/player - Reducer', () => {
         plTo: 'Favorite',
         posTo: 0
       })
-      expect(nextState.pls).to.not.equal(oldPls)
-      expect(nextState.pls['Music']).to.not.equal(oldMusic)
-      expect(nextState.pls['Favorite']).to.not.equal(oldFavorite)
-      expect(nextState.pls['Music'][0]).to.not.equal(oldMovedTrack)
-      expect(nextState.pls['Music'][0]).to.equal(oldAnotherTrack)
+      expect(nextState.tabs).to.not.equal(oldPls)
+      expect(nextState.tabs['Music']).to.not.equal(oldMusic)
+      expect(nextState.tabs['Favorite']).to.not.equal(oldFavorite)
+      expect(nextState.tabs['Music'][0]).to.not.equal(oldMovedTrack)
+      expect(nextState.tabs['Music'][0]).to.equal(oldAnotherTrack)
     })
 
     it('MOVE_TRACK from prev position to the beginning of another list', () => {
@@ -363,11 +363,11 @@ describe('modules/player - Reducer', () => {
         plTo: 'Favorite',
         posTo: 0
       })
-      expect(nextState.pls['Music'].length).to.equal(2)
-      expect(nextState.pls['Music'][0].title).to.equal('Symphony N9')
-      expect(nextState.pls['Favorite'].length).to.equal(4)
-      expect(nextState.pls['Favorite'][0].title).to.equal('The Four Seasons')
-      expect(nextState.pls['Favorite'][1].title).to.equal('Canon')
+      expect(nextState.tabs['Music'].length).to.equal(2)
+      expect(nextState.tabs['Music'][0].title).to.equal('Symphony N9')
+      expect(nextState.tabs['Favorite'].length).to.equal(4)
+      expect(nextState.tabs['Favorite'][0].title).to.equal('The Four Seasons')
+      expect(nextState.tabs['Favorite'][1].title).to.equal('Canon')
       expect(nextState.pos).to.equal(1)
       expect(nextState.track.title).to.equal('Ave Maria')
     })
@@ -381,8 +381,8 @@ describe('modules/player - Reducer', () => {
         plTo: 'Music',
         posTo: 3
       })
-      expect(nextState.pls['Music'][1].title).to.equal('Ave Maria')
-      expect(nextState.pls['Music'][2].title).to.equal('Symphony N9')
+      expect(nextState.tabs['Music'][1].title).to.equal('Ave Maria')
+      expect(nextState.tabs['Music'][2].title).to.equal('Symphony N9')
       expect(nextState.track.title).to.equal('Ave Maria')
       expect(nextState.pos).to.equal(1)
     })
@@ -396,8 +396,8 @@ describe('modules/player - Reducer', () => {
         plTo: 'Music',
         posTo: 1
       })
-      expect(nextState.pls['Music'][1].title).to.equal('Ave Maria')
-      expect(nextState.pls['Music'][2].title).to.equal('Symphony N9')
+      expect(nextState.tabs['Music'][1].title).to.equal('Ave Maria')
+      expect(nextState.tabs['Music'][2].title).to.equal('Symphony N9')
       expect(nextState.track.title).to.equal('Ave Maria')
       expect(nextState.pos).to.equal(1)
     })
@@ -411,8 +411,8 @@ describe('modules/player - Reducer', () => {
         plTo: 'Music',
         posTo: 2
       })
-      expect(nextState.pls['Music'][2].title).to.equal('Canon')
-      expect(nextState.pls['Music'][3].title).to.equal('Ave Maria')
+      expect(nextState.tabs['Music'][2].title).to.equal('Canon')
+      expect(nextState.tabs['Music'][3].title).to.equal('Ave Maria')
       expect(nextState.track.title).to.equal('Ave Maria')
       expect(nextState.pos).to.equal(3)
     })
@@ -422,7 +422,7 @@ describe('modules/player - Reducer', () => {
     const previousState = {
       tabs: ['Music'],
       openTab: 'Music',
-      pls: {
+      tabs: {
         'Music': [{
           title: 'Largo from Serse',
           artist: 'Handel',
@@ -441,7 +441,7 @@ describe('modules/player - Reducer', () => {
         }]
       },
       pos: 2,
-      currentPl: 'Music'
+      currentTab: 'Music'
     }
 
     it('SORT_PLAYLIST BY_TITLE', () => {
@@ -449,7 +449,7 @@ describe('modules/player - Reducer', () => {
         type: types.SORT_PLAYLIST,
         by: types.BY_TITLE
       })
-      const pl = nextState.pls[nextState.openTab]
+      const pl = nextState.tabs[nextState.openTab]
       expect(pl[0].title).to.equal('Concerto Grosso in A Minor')
       expect(pl[1].title).to.equal('Double Concerto in D Minor')
       expect(pl[2].title).to.equal('Largo from Serse')
@@ -461,7 +461,7 @@ describe('modules/player - Reducer', () => {
         type: types.SORT_PLAYLIST,
         by: types.BY_ARTIST
       })
-      const pl = nextState.pls[nextState.openTab]
+      const pl = nextState.tabs[nextState.openTab]
       expect(pl[0].title).to.equal('Double Concerto in D Minor')
       expect(pl[1].title).to.equal('Concerto Grosso in A Minor')
       expect(pl[2].title).to.equal('Largo from Serse')
@@ -473,7 +473,7 @@ describe('modules/player - Reducer', () => {
         type: types.SORT_PLAYLIST,
         by: types.BY_DURATION
       })
-      const pl = nextState.pls[nextState.openTab]
+      const pl = nextState.tabs[nextState.openTab]
       expect(pl[0].title).to.equal('Double Concerto in D Minor')
       expect(pl[1].title).to.equal('Largo from Serse')
       expect(pl[2].title).to.equal('Concerto Grosso in A Minor')
@@ -485,7 +485,7 @@ describe('modules/player - Reducer', () => {
         type: types.SORT_PLAYLIST,
         by: types.BY_PATH
       })
-      const pl = nextState.pls[nextState.openTab]
+      const pl = nextState.tabs[nextState.openTab]
       expect(pl[0].title).to.equal('Concerto Grosso in A Minor')
       expect(pl[1].title).to.equal('Double Concerto in D Minor')
       expect(pl[2].title).to.equal('Largo from Serse')
@@ -499,7 +499,7 @@ describe('modules/player - Reducer', () => {
         type: types.SORT_PLAYLIST,
         by: types.REVERSE
       })
-      const pl = nextState.pls[nextState.openTab]
+      const pl = nextState.tabs[nextState.openTab]
       expect(pl[0].title).to.equal('Concerto Grosso in A Minor')
       expect(pl[1].title).to.equal('Double Concerto in D Minor')
       expect(pl[2].title).to.equal('Largo from Serse')

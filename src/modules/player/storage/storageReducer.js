@@ -12,9 +12,9 @@ const ACTION_HANDLERS = {
     return {...state, safePlaylists: action.safePlaylists}
   },
   [types.STORAGE_OPEN_PLAYLIST_SUCCESS]: (state, action) => {
-    let nextPls = {...state.pls, [action.filename]: action.playlist}
+    let nextPls = {...state.tabs, [action.filename]: action.playlist}
     let nextTabs = ~state.tabs.indexOf(action.filename) ? state.tabs : [...state.tabs, action.filename]
-    return {...state, pls: nextPls, tabs: nextTabs, openTab: action.filename}
+    return {...state, tabs: nextPls, tabs: nextTabs, openTab: action.filename}
   },
   [types.STORAGE_DELETE_PLAYLIST_SUCCESS]: (state, action) => {
     return {...state, safePlaylists: action.safePlaylists}
@@ -22,9 +22,9 @@ const ACTION_HANDLERS = {
   // server ones
   [types.STORAGE_SERVER_OPEN_PLAYLIST]: (state, action) => {
     let serverPlIndex = state.serverPlaylists.find(el => el.name === action.name)
-    let nextPls = {...state.pls, [action.name]: serverPlIndex.tracks}
+    let nextPls = {...state.tabs, [action.name]: serverPlIndex.tracks}
     let nextTabs = ~state.tabs.indexOf(action.name) ? state.tabs : [...state.tabs, action.name]
-    return {...state, pls: nextPls, tabs: nextTabs, openTab: action.name}
+    return {...state, tabs: nextPls, tabs: nextTabs, openTab: action.name}
   },
   [types.GET_SERVER_PLAYLISTS_REQUEST]: (state, action) => {
     return {...state}

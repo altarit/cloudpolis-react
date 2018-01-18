@@ -93,21 +93,21 @@ export function closeOtherPlaylists() {
 // Playlist changes
 // --------------------------------
 
-export function moveTrack(track, plFrom, posFrom, plTo, posTo) {
+export function moveTrack(track, tabFrom, posFrom, tabTo, posTo) {
   return {
     type: types.MOVE_TRACK,
     track,
-    plFrom,
+    tabFrom,
     posFrom,
-    plTo,
+    tabTo,
     posTo
   }
 }
 
-export function removeTrack(plName, pos) {
+export function removeTrack(tabName, pos) {
   return {
     type: types.REMOVE_TRACK,
-    plName,
+    tabName,
     pos
   }
 }
@@ -166,10 +166,10 @@ export function reverse() {
 // Tabs
 // --------------------------------
 
-export function selectTab(playlistName) {
+export function selectTab(tabName) {
   return {
     type: types.SELECT_TAB,
-    tabName: playlistName
+    tabName
   }
 }
 

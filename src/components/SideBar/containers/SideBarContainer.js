@@ -39,8 +39,8 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   scrolledTabs: state.player.scrolledTabs,
   openTab: state.player.openTab,
-  pls: state.player.pls,
-  currentPl: state.player.currentPl,
+  tabs: state.player.tabs,
+  currentTab: state.player.currentTab,
   track: state.player.track,
   popups: state.popups,
   errors: state.player.errors,

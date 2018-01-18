@@ -8,7 +8,7 @@ export class TrackList extends React.Component {
     songs: PropTypes.arrayOf(PropTypes.object).isRequired,
     track: PropTypes.object,
     pos: PropTypes.number,
-    currentPl: PropTypes.string,
+    currentTab: PropTypes.string,
     pl: PropTypes.string.isRequired,
     plName: PropTypes.string,
     className: PropTypes.string,
@@ -24,7 +24,7 @@ export class TrackList extends React.Component {
     if (current) {
       let currentSrc = this.props.track && this.props.track.src
       let i = 0
-      let isCurrentPl = this.props.currentPl === this.props.pl
+      let isCurrentPl = this.props.currentTab === this.props.pl
       return current.map(track => (
         <Track
           {...track}

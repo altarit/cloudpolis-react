@@ -2,8 +2,8 @@ import * as types from './playerConstants'
 import {cloneTrack, setTitle} from './playerUtils'
 import playerLocalStorageReducer from './storage/storageReducer'
 
-export function getPlIndexByName(pls, plName) {
-  const result = pls.findIndex(pl => pl.name === plName)
+export function getTabIndexByName(tabs, tabName) {
+  const result = tabs.findIndex(tab => tab.name === tabName)
   return result === undefined ? -1 : result
 }
 
@@ -17,14 +17,14 @@ function getNextIndexByType(currentIndex, type) {
   }
 }
 
-function selectNextTrack(pl, pos, type) {
-  if (!pl) return {}
+function selectNextTrack(tab, pos, type) {
+  if (!tab) return {}
 
   let currentIndex = pos
   if (currentIndex < 0) return {isPlaying: type !== types.TRACK_ENDS}
 
   let nextIndex = getNextIndexByType(currentIndex, type)
-  let track = pl.tracks[nextIndex]
+  let track = tab.tracks[nextIndex]
   if (!track) return {isPlaying: type !== types.TRACK_ENDS}
 
   return {
@@ -34,118 +34,119 @@ function selectNextTrack(pl, pos, type) {
   }
 }
 
-function addPlaylist(name, pls) {
+function addPlaylist(name, tabs) {
   if (!name) {
     return {error: 'Type something'}
   }
   if (name.length > 32) {
     return {error: 'Too long'}
   }
-  const index = getPlIndexByName(pls, name)
+  const index = getTabIndexByName(tabs, name)
   if (~index) {
     return {error: `Playlist ${name} already exists`}
   }
-  if (pls.length >= 20) {
+  if (tabs.length >= 20) {
     return {error: `Too many playlists`}
   }
 
   return {
-    pls: [...pls, {name: name, content: []}],
+    tabs: [...tabs, {name: name, content: []}],
     openTab: name
   }
 }
 
-function excludeOpenPlaylust(openTab, pls) {
-  let index = getPlIndexByName(pls, openTab)
+function excludeOpenPlaylust(openTab, tabs) {
+  let index = getTabIndexByName(tabs, openTab)
   if (!~index) return
 
-  let nextPls = [...pls]
-  nextPls.splice(index, 1)
-  if (!nextPls.length) {
-    nextPls.push({name: types.DEFAULT_PL, tracks: []})
+  let nextTabs = [...tabs]
+  nextTabs.splice(index, 1)
+  if (!nextTabs.length) {
+    nextTabs.push({name: types.DEFAULT_PL, tracks: []})
   }
-  let nextOpenTab = index < nextPls.length ? nextPls[index] : nextPls[index - 1]
+  let nextOpenTab = index < nextTabs.length ? nextTabs[index].name : nextTabs[index - 1].name
   return {
-    pls: nextPls,
+    tabs: nextTabs,
     openTab: nextOpenTab
   }
 }
 
-function moveTrack(statePls, stateCurrentPl, statePos, oldTrack, plFromName, posFrom, plToName, posTo) {
-  console.log(`moveTrack: ${plFromName}:${posFrom} -> ${plToName}:${posTo}`)
+function moveTrack(stateTabs, stateCurrentTab, statePos, oldTrack, tabFromName, posFrom, tabToName, posTo) {
+  console.log(`moveTrack: ${tabFromName}:${posFrom} -> ${tabToName}:${posTo}`)
   let track = cloneTrack(oldTrack)
   console.log(`${track.title}`)
-  const nextPls = [...statePls]
-  if (plFromName) {
-    const plFromIndex = getPlIndexByName(nextPls, plFromName)
-    if (!~plFromIndex) {
-      throw Error(`Tab with name ${plFromName} not found`)
+  const nextTabs = [...stateTabs]
+  if (tabFromName) {
+    const tabFromIndex = getTabIndexByName(nextTabs, tabFromName)
+    if (!~tabFromIndex) {
+      throw Error(`Tab with name ${tabFromName} not found`)
     }
-    const plFrom = {...nextPls[plFromIndex]}
-    if (plFrom) {
-      plFrom.tracks = [...plFrom.tracks]
-      plFrom.tracks.splice(posFrom, 1)
-      nextPls[plFromIndex] = plFrom
+    const tabFrom = {...nextTabs[tabFromIndex]}
+    if (tabFrom) {
+      tabFrom.tracks = [...tabFrom.tracks]
+      tabFrom.tracks.splice(posFrom, 1)
+      nextTabs[tabFromIndex] = tabFrom
     }
   }
-  // let track = plFrom.splice(posFrom, 1)
-  const plToIndex = getPlIndexByName(nextPls, plToName)
-  const plTo = {...nextPls[plToIndex]}
-  plTo.tracks = [...plTo.tracks]
-  nextPls[plToIndex] = plTo
+
+  const tabToIndex = getTabIndexByName(nextTabs, tabToName)
+  const tabTo = {...nextTabs[tabToIndex]}
+  tabTo.tracks = [...tabTo.tracks]
+  nextTabs[tabToIndex] = tabTo
   if (posTo === null || posTo === undefined) {
-    posTo = plTo.tracks.length
+    posTo = tabTo.tracks.length
   }
-  let offset = (plFromName === plToName && posFrom < posTo) ? -1 : 0
-  plTo.tracks.splice(posTo + offset, 0, track)
+  let offset = (tabFromName === tabToName && posFrom < posTo) ? -1 : 0
+  tabTo.tracks.splice(posTo + offset, 0, track)
 
   // move current track marker
   let currentIndex = statePos
   let offsetPos = 0
-  if (stateCurrentPl === plFromName && statePos >= posFrom) {
+  if (stateCurrentTab === tabFromName && statePos >= posFrom) {
     offsetPos--
   }
-  if (stateCurrentPl === plToName && statePos >= posTo) {
+  if (stateCurrentTab === tabToName && statePos >= posTo) {
     offsetPos++
   }
   let nextIndex = currentIndex + offsetPos
-  if (stateCurrentPl === plFromName && statePos === posFrom) {
+  if (stateCurrentTab === tabFromName && statePos === posFrom) {
     nextIndex = posTo + offsetPos
   }
 
-  return {pls: nextPls, pos: nextIndex}
+  return {tabs: nextTabs, pos: nextIndex}
 }
 
-function removeTrack(statePls, currentPl, statePos, remPl, remPos) {
-  console.log(`removeTrack: ${remPl}:${remPos}`)
-  const plIndex = getPlIndexByName(statePls, remPl)
-  let nextPls = [...statePls]
-  let nextPl = {...nextPls[plIndex]}
-  let nextTracks = [...nextPl.tracks]
-  nextPl.tracks = nextTracks
-  nextPls[plIndex] = nextPl
+function removeTrack(stateTabs, currentTab, statePos, remTab, remPos) {
+  console.log(`removeTrack: ${remTab}:${remPos}`)
+  const tabIndex = getTabIndexByName(stateTabs, remTab)
+  let nextTabs = [...stateTabs]
+  let nextTab = {...nextTabs[tabIndex]}
+  let nextTracks = [...nextTab.tracks]
+  nextTab.tracks = nextTracks
+  nextTabs[tabIndex] = nextTab
+  const oldTrack = nextTracks[statePos]
 
   nextTracks.splice(remPos, 1)
-  if (currentPl === remPl) {
+  if (currentTab === remTab) {
     if (remPos < statePos) {
-      return {pls: nextPls, pos: statePos - 1, track: nextTracks[statePos - 1]}
+      return {tabs: nextTabs, pos: statePos - 1, track: nextTracks[statePos - 1]}
     } else if (remPos === statePos && nextTracks.length > 0) {
       let nextPos = nextTracks.length === statePos ? statePos - 1 : statePos
-      return {pls: nextPls, pos: nextPos, track: nextTracks[nextPos]}
+      return {tabs: nextTabs, pos: nextPos, track: nextTracks[nextPos]}
     }
   }
-  return {pls: nextPls, pos: statePos, track: nextPls[plIndex].tracks[statePos]}
+  return {tabs: nextTabs, pos: statePos, track: nextTracks[statePos] || oldTrack}
 }
 
-function sortBy(by, pls, openTab, currentPl, pos) {
-  let newPls = [...pls]
-  const plIndex = getPlIndexByName(newPls, openTab)
-  let newPl = {...newPls[plIndex]}
-  const nextTracks = [...newPl.tracks]
-  newPl.tracks = nextTracks
+function sortBy(by, tabs, openTab, currentTab, pos) {
+  let nextTabs = [...tabs]
+  const tabIndex = getTabIndexByName(nextTabs, openTab)
+  let newTab = {...nextTabs[tabIndex]}
+  const nextTracks = [...newTab.tracks]
+  newTab.tracks = nextTracks
 
   let currentTrack
-  if (currentPl === openTab) {
+  if (currentTab === openTab) {
     currentTrack = nextTracks[pos]
   }
 
@@ -175,11 +176,11 @@ function sortBy(by, pls, openTab, currentPl, pos) {
       nextTracks.reverse()
       break
   }
-  newPls[openTab] = newPl
+  nextTabs[openTab] = newTab
 
   // change current pos
   let newPos
-  if (currentPl === openTab) {
+  if (currentTab === openTab) {
     for (let i = 0; i < nextTracks.length; i++) {
       if (currentTrack === nextTracks[i]) {
         newPos = i
@@ -190,11 +191,11 @@ function sortBy(by, pls, openTab, currentPl, pos) {
     }
   }
 
-  return {pls: newPls, pos: newPos}
+  return {tabs: nextTabs, pos: newPos}
 }
 
-function getNextScrolledTabs(pls, tabName, scrolledTabs) {
-  let currentTabIndex = getPlIndexByName(pls, tabName)
+function getNextScrolledTabs(tabs, tabName, scrolledTabs) {
+  let currentTabIndex = getTabIndexByName(tabs, tabName)
   let nextScrolledTabs = scrolledTabs
   if (nextScrolledTabs > currentTabIndex) nextScrolledTabs = currentTabIndex
   if (nextScrolledTabs < currentTabIndex - 2) nextScrolledTabs = currentTabIndex - 2
@@ -213,11 +214,11 @@ const initialState = {
   },
   pos: -1,
 
-  pls: [{
+  tabs: [{
     name: types.DEFAULT_PL,
     tracks: []
   }],
-  currentPl: types.DEFAULT_PL,
+  currentTab: types.DEFAULT_PL,
   openTab: types.DEFAULT_PL,
   scrolledTabs: 0,
 
@@ -228,8 +229,8 @@ const initialState = {
 }
 
 function returnNextTrackState(state, action) {
-  const currentPlIndex = getPlIndexByName(state.pls, state.currentPl)
-  let nextUpdates = selectNextTrack(state.pls[currentPlIndex], state.pos, action.type)
+  const currentTabIndex = getTabIndexByName(state.tabs, state.currentTab)
+  let nextUpdates = selectNextTrack(state.tabs[currentTabIndex], state.pos, action.type)
   // return {...state, track: nextUpdates.track, pos: nextUpdates.pos, isPlaying: nextUpdates.isPlaying}
   setTitle(nextUpdates.track)
   return {...state, ...nextUpdates}
@@ -246,7 +247,7 @@ const ACTION_HANDLERS = {
   },
   [types.SET_TRACK]: (state, action) => {
     setTitle(action.track)
-    return {...state, track: action.track, currentPl: action.track.pl, isPlaying: true, pos: action.track.pos}
+    return {...state, track: action.track, currentTab: action.track.pl, isPlaying: true, pos: action.track.pos}
   },
   [types.PLAYER_NEXT]: returnNextTrackState,
   [types.PLAYER_PREV]: returnNextTrackState,
@@ -260,67 +261,67 @@ const ACTION_HANDLERS = {
   },
   // management of lists
   [types.UPDATE_PLAYLIST]: (state, action) => {
-    let index = state.pls.findIndex(pl => pl.name === action.name)
+    let index = state.tabs.findIndex(tab => tab.name === action.name)
     if (!~index) {
-      index = state.pls.length
+      index = state.tabs.length
     }
-    const plsCopy = [...state.pls]
-    plsCopy[index] = {name: action.name, tracks: action.content}
-    return {...state, pls: plsCopy}
+    const nextTabs = [...state.tabs]
+    nextTabs[index] = {name: action.name, tracks: action.content}
+    return {...state, tabs: nextTabs}
   },
   [types.CREATE_PLAYLIST]: (state, action) => {
-    let createPlUpdates = addPlaylist(action.name, state.pls)
-    if (createPlUpdates.error) {
-      return {...state, errors: {createPlaylist: createPlUpdates.error}}
+    let createTabUpdates = addPlaylist(action.name, state.tabs)
+    if (createTabUpdates.error) {
+      return {...state, errors: {createPlaylist: createTabUpdates.error}}
     }
     return {
       ...state,
-      pls: createPlUpdates.pls,
-      openTab: createPlUpdates.openTab,
+      tabs: createTabUpdates.tabs,
+      openTab: createTabUpdates.openTab,
       errors: {}
     }
   },
   [types.CLOSE_OPEN_PLAYLIST]: (state, action) => {
-    let closePlUpdates = excludeOpenPlaylust(state.openTab, state.pls)
-    return {...state, pls: closePlUpdates.pls, openTab: closePlUpdates.openTab}
+    let closeTabUpdates = excludeOpenPlaylust(state.openTab, state.tabs)
+    return {...state, tabs: closeTabUpdates.tabs, openTab: closeTabUpdates.openTab}
   },
   [types.CLOSE_OTHER_PLAYLISTS]: (state, action) => {
     return {
       ...state,
-      pls: [{name: state.openTab, tracks: state.pls[state.openTab]}],
+      tabs: [{name: state.openTab, tracks: state.tabs[state.openTab]}],
       openTab: state.openTab,
       scrolledTabs: 0
     }
   },
   // editing a playlist
   [types.MOVE_TRACK]: (state, action) => {
-    let moveUpdates = moveTrack(state.pls, state.currentPl, state.pos,
-      action.track, action.plFrom, action.posFrom, action.plTo, action.posTo)
-    return {...state, pls: moveUpdates.pls, pos: moveUpdates.pos}
+    let moveUpdates = moveTrack(state.tabs, state.currentTab, state.pos,
+      action.track, action.tabFrom, action.posFrom, action.tabTo, action.posTo)
+    return {...state, tabs: moveUpdates.tabs, pos: moveUpdates.pos}
   },
   [types.REMOVE_TRACK]: (state, action) => {
-    let removeUpdates = removeTrack(state.pls, state.currentPl, state.pos, action.plName, action.pos)
+    let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos, action.tabName, action.pos)
     setTitle(removeUpdates.track)
-    return {...state, pls: removeUpdates.pls, pos: removeUpdates.pos, track: removeUpdates.track}
+    return {...state, tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track}
   },
   [types.ADD_TO_PLAYLIST]: (state, action) => {
     let addToPlaylistUpdates = moveTrack(
-      state.pls, state.currentPl, state.pos, action.track,
+      state.tabs, state.currentTab, state.pos, action.track,
       null, null, action.listTo, action.addNext ? state.pos + 1 : null
     )
-    return {...state, pls: addToPlaylistUpdates.pls}
+    return {...state, tabs: addToPlaylistUpdates.tabs}
   },
   // sort
   [types.SORT_PLAYLIST]: (state, action) => {
-    let sortUpdates = sortBy(action.by, state.pls, state.openTab, state.currentPl, state.pos)
-    return {...state, pls: sortUpdates.pls, pos: sortUpdates.pos}
+    let sortUpdates = sortBy(action.by, state.tabs, state.openTab, state.currentTab, state.pos)
+    return {...state, tabs: sortUpdates.tabs, pos: sortUpdates.pos}
   },
   // tabs
   [types.SELECT_TAB]: (state, action) => {
     return {
       ...state,
       openTab: action.tabName,
-      scrolledTabs: getNextScrolledTabs(state.pls, action.tabName, state.scrolledTabs)
+      scrolledTabs: getNextScrolledTabs(state.tabs, action.tabName, state.scrolledTabs)
     }
   },
   [types.SCROLL_LEFT]: (state, action) => {

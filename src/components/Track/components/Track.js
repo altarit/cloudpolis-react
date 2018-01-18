@@ -10,7 +10,7 @@ export class Track extends React.Component {
     title: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     library: PropTypes.string.isRequired,
-    compilation: PropTypes.string.isRequired,
+    // compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     href: PropTypes.string,
     // duration: PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ export class Track extends React.Component {
     isCurrent: PropTypes.bool.isRequired,
     pos: PropTypes.number.isRequired,
     immutable: PropTypes.bool.isRequired,
-    currentPl: PropTypes.string.isRequired,
+    currentTab: PropTypes.string.isRequired,
     openTab: PropTypes.string.isRequired,
     pl: PropTypes.string,
 
@@ -101,11 +101,11 @@ export class Track extends React.Component {
   }
 
   playNext = () => {
-    this.props.addToPlaylist(this.props, this.props.currentPl, true)
+    this.props.addToPlaylist(this.props, this.props.currentTab, true)
   }
 
   playLater = () => {
-    this.props.addToPlaylist(this.props, this.props.currentPl)
+    this.props.addToPlaylist(this.props, this.props.currentTab)
   }
 
   addToOpenTab = () => {

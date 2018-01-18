@@ -8,7 +8,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  currentPl: state.player.currentPl,
+  currentTab: state.player.currentTab,
   track: state.player.track,
   pos: state.player.pos
 })
