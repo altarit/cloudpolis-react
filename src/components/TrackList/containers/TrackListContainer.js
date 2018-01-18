@@ -1,10 +1,10 @@
 import {connect} from 'react-redux'
 
 import TrackList from '../components/TrackList'
-import {updatePlaylist} from '../../../modules/player/playerActions'
+import {updatePlaylist} from "../../../modules/player/playerActions"
 
 const mapDispatchToProps = {
-  updatePlaylist
+  updateAnotherPlaylist: updatePlaylist
 }
 
 const mapStateToProps = (state) => ({

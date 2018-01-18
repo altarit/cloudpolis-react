@@ -18,8 +18,7 @@ export function hi() {
     return fetchGet('/hi/')
       .then(json => {
         dispatch({
-          type: types.AUTH_HI_SUCCESS,
-          name: json.data
+          type: types.AUTH_HI_SUCCESS
         })
       })
       .catch(ex => {
@@ -44,6 +43,7 @@ export function login(username, password) {
     return fetchPost('/login/', params)
       .then(json => {
         console.log('Successful request')
+
         dispatch({
           type: types.AUTH_LOGIN_SUCCESS,
           name: json.data
@@ -91,6 +91,7 @@ export function signup(username, password, email) {
 
 export function logout() {
   return dispatch => {
+    localStorage.removeItem('auth')
     dispatch({
       type: types.AUTH_LOGOUT_REQUEST
     })
@@ -108,5 +109,12 @@ export function logout() {
           errorText: ex.message
         })
       })
+  }
+}
+
+export function setUser(user) {
+  return {
+    type: types.AUTH_SET_USER,
+    name: user.username
   }
 }

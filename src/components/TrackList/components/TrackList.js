@@ -15,20 +15,21 @@ export class TrackList extends React.Component {
     immutable: PropTypes.bool.isRequired,
     controls: PropTypes.bool,
 
-    updatePlaylist: PropTypes.func
+    updatePlaylist: PropTypes.func,
+    updateAnotherPlaylist: PropTypes.func,
   }
 
   getPlaylist = () => {
     let current = this.props.songs
     if (current) {
-      let currentSrc = this.props.track && (this.props.track.href || this.props.track.src)
+      let currentSrc = this.props.track && this.props.track.src
       let i = 0
       let isCurrentPl = this.props.currentPl === this.props.pl
       return current.map(track => (
         <Track
           {...track}
           key={i}
-          isCurrent={isCurrentPl && !!currentSrc && this.props.pos === i && (track.src || track.href) === currentSrc}
+          isCurrent={isCurrentPl && !!currentSrc && this.props.pos === i && track.src === currentSrc}
           pl={this.props.pl}
           pos={i++}
           immutable={this.props.immutable}
@@ -41,7 +42,7 @@ export class TrackList extends React.Component {
   }
 
   openInPlaylist = () => {
-    this.props.updatePlaylist(this.props.plName || this.props.pl, this.props.songs)
+    this.props.updateAnotherPlaylist(this.props.plName || this.props.pl, this.props.songs)
   }
 
   render() {
@@ -51,10 +52,10 @@ export class TrackList extends React.Component {
           <div className='d-flex justify-content-between'>
             <div className='d-flex'>
               <button className='btn btn-outline-secondary mr-2' onClick={this.openInPlaylist}>
-                Listen All
+                Open New Tab
               </button>
               <button className='btn btn-outline-secondary'>
-                Add to Playlist
+                Add To Tab ...
               </button>
             </div>
             <div className='d-flex' />

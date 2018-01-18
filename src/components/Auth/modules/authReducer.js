@@ -10,7 +10,7 @@ const ACTION_HANDLERS = {
     return {...state}
   },
   [types.AUTH_HI_SUCCESS]: (state, action) => {
-    return {...state, name: action.name}
+    return {...state}
   },
   [types.AUTH_HI_FAILURE]: (state, action) => {
     return {...state}
@@ -42,6 +42,9 @@ const ACTION_HANDLERS = {
   [types.AUTH_LOGOUT_FAILURE]: (state, action) => {
     return {...state, fetching: false, errorText: action.errorText}
   },
+  [types.AUTH_SET_USER]: (state, action) => {
+    return {...state, name: action.name}
+  }
 }
 
 export default function authReducer(state = initialState, action) {

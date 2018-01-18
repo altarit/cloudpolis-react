@@ -22,7 +22,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state, props) => ({
   isPlaying: state.player.isPlaying,
   trackAdd: state.popups.trackAdd,
-  src: props.src || props.href,
+  src: props.src,
   currentPl: state.player.currentPl,
   openTab: state.player.openTab,
 })

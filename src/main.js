@@ -4,10 +4,12 @@ import './styles/main.scss'
 import createStore from './store/createStore'
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'
+import {setStore} from './modules/apiUtils'
 
 // Store Initialization
 // ------------------------------------
 const {store, history} = createStore(window.__INITIAL_STATE__)
+setStore(store)
 
 // Render Setup
 // ------------------------------------
@@ -20,7 +22,7 @@ let render = () => {
   ReactDOM.render(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <App store={store} routes={routes}></App>
+        <App store={store} routes={routes} />
       </ConnectedRouter>
     </Provider>,
     MOUNT_NODE

@@ -3,7 +3,7 @@ export function cloneTrack(track) {
     title: track.title,
     library: track.library,
     artist: track.artist,
-    src: (track.src || track.href),
+    src: track.src,
     duration: track.duration,
     compilation: track.compilation
   }

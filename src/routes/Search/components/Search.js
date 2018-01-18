@@ -25,6 +25,7 @@ export class Search extends React.Component {
     return (
       <div className='container'>
         <h2>Search</h2>
+        regexp is supported ^_^
         <Input onChange={this.changeFilter} />
         <div>
           {!this.props.songs ? (
