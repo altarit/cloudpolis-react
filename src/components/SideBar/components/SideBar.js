@@ -6,12 +6,12 @@ import TrackList from '../../TrackList'
 import SidebarTopMenu from './SideBarTopMenu'
 import SidebarTabs from './SideBarTabs'
 import SidebarBottomMenu from './SideBarBottomMenu'
+import {getPlIndexByName} from '../../../modules/player/playerReducer'
 
 export class Sidebar extends React.Component {
   static propTypes = {
     popups: PropTypes.object.isRequired,
-    tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
-    pls: PropTypes.object.isRequired,
+    pls: PropTypes.arrayOf(PropTypes.object).isRequired,
     openTab: PropTypes.string.isRequired,
     currentPl: PropTypes.string.isRequired,
     scrolledTabs: PropTypes.number.isRequired,
@@ -38,7 +38,8 @@ export class Sidebar extends React.Component {
   drop = (e) => {
     e.preventDefault()
     let track = JSON.parse(e.dataTransfer.getData('track'))
-    let playlistLength = this.props.pls[this.props.openTab].length
+    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
+    let playlistLength = this.props.pls[openTabIndex].tracks.length
     if (track.immutable) {
       this.props.moveTrack(track, null, null, this.props.openTab, playlistLength)
     } else {
@@ -54,7 +55,8 @@ export class Sidebar extends React.Component {
 
   render() {
     console.log(`SideBar.render`)
-    let songs = this.props.pls[this.props.openTab]
+    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
+    let songs = this.props.pls[openTabIndex].tracks
     return (
       <div className='sidebar__widget'>
         <div className='playmenu'>
@@ -65,7 +67,7 @@ export class Sidebar extends React.Component {
           />
 
           <SidebarTabs
-            tabs={this.props.tabs}
+            pls={this.props.pls}
             openTab={this.props.openTab}
             scrolledTabs={this.props.scrolledTabs}
             popups={this.props.popups}

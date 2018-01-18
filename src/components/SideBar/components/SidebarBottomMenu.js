@@ -2,11 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import OpenPlaylistDialog from '../../OpenPlaylistDialog'
+import {getPlIndexByName} from '../../../modules/player/playerReducer'
 
 export class SidebarBottomMenu extends React.Component {
   static propTypes = {
     openTab: PropTypes.string.isRequired,
-    pls: PropTypes.number.isRequired,
+    pls: PropTypes.arrayOf(PropTypes.object).isRequired,
     popups: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
 
@@ -134,6 +135,8 @@ export class SidebarBottomMenu extends React.Component {
 
   render() {
     let openTab = this.props.openTab
+    const openTabIndex = getPlIndexByName(this.props.pls, this.props.openTab)
+    const tracks = this.props.pls[openTabIndex].tracks
 
     return (
       <div className='playmenu__bottom dropdown'>
@@ -158,25 +161,15 @@ export class SidebarBottomMenu extends React.Component {
         {this.renderPlaylistCreationPopup()}
 
         {this.props.popups.openPlaylistDialog ? (
-          <OpenPlaylistDialog playlist={this.props.pls[openTab]} />
+          <OpenPlaylistDialog playlist={tracks} />
         ) : null }
 
         {this.props.popups.savePlaylistDialog ? (
-          <OpenPlaylistDialog playlist={this.props.pls[openTab]} forSave='true' filename={openTab} />
+          <OpenPlaylistDialog playlist={tracks} forSave='true' filename={openTab} />
         ) : null }
       </div>
     )
   }
-}
-
-SidebarBottomMenu.propTypes = {
-  popups: PropTypes.object.isRequired,
-  openTab: PropTypes.string.isRequired,
-  pls: PropTypes.object.isRequired,
-
-  closeOpenPlaylist: PropTypes.func.isRequired,
-  closeOtherPlaylists: PropTypes.func.isRequired,
-  createPlaylist: PropTypes.func.isRequired,
 }
 
 export default SidebarBottomMenu
