@@ -21,6 +21,7 @@
     "compression": "^1.7.1",
     "express": "^4.16.2",
     "history": "^4.7.2",
+    "jwt-decode": "^2.2.0",
     "object-assign": "^4.1.1",
     "promise": "^8.0.1",
     "prop-types": "^15.6.0",

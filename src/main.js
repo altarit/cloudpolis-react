@@ -4,10 +4,12 @@ import './styles/main.scss'
 import createStore from './store/createStore'
 import {Provider} from 'react-redux'
 import {ConnectedRouter} from 'react-router-redux'
+import {setStore} from './modules/apiUtils'
 
 // Store Initialization
 // ------------------------------------
 const {store, history} = createStore(window.__INITIAL_STATE__)
+setStore(store)
 
 // Render Setup
 // ------------------------------------

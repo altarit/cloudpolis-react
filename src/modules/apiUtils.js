@@ -1,4 +1,6 @@
 import {apiLink} from './formatUtils'
+import {setUser} from '../components/Auth/modules/authActions'
+import jwtDecode from 'jwt-decode'
 
 const defaultHeaders = {
   'Content-Type': 'application/json'
@@ -39,6 +41,13 @@ function secureFetch(url, options) {
   return fetch(url, options)
 }
 
+const props = {
+  store: null
+}
+export function setStore(store) {
+  props.store = store
+}
+
 export function fetchGet(url, options = {}) {
   return secureFetch(apiLink(url), {
     ...defaultGetOptions,
@@ -69,11 +78,24 @@ export function fetchDelete(url, options = {}) {
 
 export function handleResponse(response) {
   return new Promise((resolve, reject) => {
-    console.log('handle response')
-    console.dir(response)
+    if (response.status === 401) {
+      console.error('Forbidden 401. Remove token.')
+      localStorage.removeItem('auth')
+      props.store.dispatch(setUser({}))
+    }
     const token = response.headers.get('Auth')
     if (token) {
-      localStorage.setItem('auth', token)
+      try {
+        const user = jwtDecode(token)
+        console.log('Received auth token. Save in storage.')
+        console.log(user)
+        localStorage.setItem('auth', token)
+        props.store.dispatch(setUser(user))
+      } catch (e) {
+        console.error('Invalid token.', e)
+        localStorage.removeItem('auth')
+        props.store.dispatch(setUser({}))
+      }
     }
     return response.json()
       .then(json => {
