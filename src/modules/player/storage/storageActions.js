@@ -1,6 +1,7 @@
 import * as types from './storageConstants'
 import {fetchGet, fetchPut, fetchDelete} from '../../apiUtils'
 import {cloneTrack} from '../playerUtils'
+import {getTabIndexByName} from '../playerReducer'
 
 // Local Storage
 
@@ -13,12 +14,12 @@ export function selectOpenDialogLocalTab(isLocal) {
 
 export function loadPlaylistsFromStorage() {
   return dispatch => {
-    let safePlaylists = {}
+    let safePlaylists = []
     try {
-      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || []
     } catch (e) {
       console.warn(`Local storage 'safePlaylists' cannot be read`)
-      safePlaylists = {}
+      safePlaylists = []
     }
     dispatch({
       type: types.STORAGE_LOAD_PLAYLISTS_SUCCESS,
@@ -29,13 +30,13 @@ export function loadPlaylistsFromStorage() {
 
 export function savePlaylistToStorage(filename, playlist) {
   return dispatch => {
-    let safePlaylists = {}
+    let safePlaylists = []
     try {
-      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || []
     } catch (e) {
       console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
-    let nextPlaylists = {...safePlaylists, [filename]: playlist.map(cloneTrack)}
+    let nextPlaylists = [...safePlaylists, {name: filename, tracks: playlist.tracks.map(cloneTrack)}]
     localStorage.setItem('safePlaylists', JSON.stringify(nextPlaylists))
     dispatch({
       type: types.STORAGE_SAVE_PLAYLIST_SUCCESS,
@@ -46,17 +47,19 @@ export function savePlaylistToStorage(filename, playlist) {
 
 export function openPlaylistFromStorage(filename) {
   return dispatch => {
-    let safePlaylists = {}
+    let safePlaylists = []
     try {
       safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
     } catch (e) {
       console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
-    let playlist = safePlaylists[filename]
+
+    const index = getTabIndexByName(safePlaylists, filename)
+    let playlist = safePlaylists[index]
+    playlist.tracks = playlist.tracks.map(cloneTrack)
     if (playlist) {
       dispatch({
         type: types.STORAGE_OPEN_PLAYLIST_SUCCESS,
-        filename,
         playlist
       })
     } else {
@@ -67,15 +70,16 @@ export function openPlaylistFromStorage(filename) {
 
 export function deletePlaylistFromStorage(filename) {
   return dispatch => {
-    let safePlaylists = {}
+    let safePlaylists = []
     try {
-      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || {}
+      safePlaylists = JSON.parse(localStorage.getItem('safePlaylists')) || []
     } catch (e) {
       console.warn(`Local storage 'safePlaylists' cannot be read`)
     }
-    let playlist = safePlaylists[filename]
+    const index = getTabIndexByName(safePlaylists, filename)
+    let playlist = safePlaylists[index]
     if (playlist) {
-      delete safePlaylists[filename]
+      safePlaylists.splice(index, 1)
       localStorage.setItem('safePlaylists', JSON.stringify(safePlaylists))
       dispatch({
         type: types.STORAGE_DELETE_PLAYLIST_SUCCESS,
@@ -92,7 +96,7 @@ export function deletePlaylistFromStorage(filename) {
 export function openServerPlaylist(playlistName) {
   return {
     type: types.STORAGE_SERVER_OPEN_PLAYLIST,
-    name: playlistName
+    filename: playlistName
   }
 }
 
@@ -106,42 +110,46 @@ export function getServerPlaylists(userName) {
       .then(response => {
         dispatch({
           type: types.GET_SERVER_PLAYLISTS_SUCCESS,
-          playlists: response.data.playlists
+          playlists: response.data.playlists.map(playlist => ({
+            name: playlist.name,
+            tracks: playlist.tracks.map(cloneTrack)
+          }))
         })
       })
   }
 }
 
-export function putServerPlaylist(userName, playlistName, tracks) {
+export function putServerPlaylist(userName, filename, playlist) {
   return (dispatch) => {
     dispatch({
       type: types.PUT_SERVER_PLAYLIST_REQUEST
     })
 
     let params = {
-      body: JSON.stringify({tracks: tracks})
+      body: JSON.stringify({playlist: playlist})
     }
-    return fetchPut(`/music/playlists/${userName}/${playlistName}`, params)
+    return fetchPut(`/music/playlists/${userName}/${filename}`, params)
       .then(response => {
         dispatch({
           type: types.PUT_SERVER_PLAYLIST_SUCCESS,
-          playlists: response.data.playlists
+          playlist: {...playlist, name: filename},
+          filename: filename
         })
       })
   }
 }
 
-export function deleteServerPlaylist(userName, playlistName) {
+export function deleteServerPlaylist(userName, filename) {
   return (dispatch) => {
     dispatch({
       type: types.DELETE_SERVER_PLAYLIST_REQUEST
     })
 
-    return fetchDelete(`/music/playlists/${userName}/${playlistName}`)
+    return fetchDelete(`/music/playlists/${userName}/${filename}`)
       .then(response => {
         dispatch({
           type: types.DELETE_SERVER_PLAYLIST_SUCCESS,
-          playlistName: playlistName
+          filename: filename
         })
       })
   }

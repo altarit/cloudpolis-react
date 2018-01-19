@@ -5,13 +5,13 @@ import './OpenPlaylistDialog.scss'
 
 export class OpenPlaylistDialog extends React.Component {
   static propTypes = {
-    safePlaylists: PropTypes.arrayOf(PropTypes.string).isRequired,
-    serverPlaylists: PropTypes.arrayOf(PropTypes.string).isRequired,
-    playlist: PropTypes.object.isRequired,
+    safePlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
+    serverPlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tab: PropTypes.object.isRequired,
     forSave: PropTypes.bool.isRequired,
     filename: PropTypes.string,
     userName: PropTypes.string,
-    isLocal: PropTypes.string,
+    isLocal: PropTypes.bool.isRequired,
 
     loadPlaylistsFromStorage: PropTypes.func.isRequired,
     savePlaylistToStorage: PropTypes.func.isRequired,
@@ -26,7 +26,7 @@ export class OpenPlaylistDialog extends React.Component {
 
   componentDidMount() {
     this.props.loadPlaylistsFromStorage()
-    this.refs.filename.value = this.props.filename || ''
+    this.refs.filename.value = this.props.tab.name
     this.props.getServerPlaylists(this.props.userName || 'none')
   }
 
@@ -34,16 +34,16 @@ export class OpenPlaylistDialog extends React.Component {
     e.preventDefault()
 
     let filename = this.refs.filename.value
-    let playlist = this.props.playlist
+    let tab = this.props.tab
     if (this.props.isLocal) {
       if (this.props.forSave) {
-        this.props.savePlaylistToStorage(filename, playlist)
+        this.props.savePlaylistToStorage(filename, tab)
       } else {
         this.props.openPlaylistFromStorage(filename)
       }
     } else {
       if (this.props.forSave) {
-        this.props.putServerPlaylist(this.props.userName, filename, playlist)
+        this.props.putServerPlaylist(this.props.userName, filename, tab)
       } else {
         this.props.openServerPlaylist(filename)
       }
@@ -90,9 +90,9 @@ export class OpenPlaylistDialog extends React.Component {
         </div>
         <ul className='filedialog__list'>
           {this.props.isLocal
-            ? Object.keys(this.props.safePlaylists).map(pl => (
-              <li key={pl}>
-                <span onClick={this.selectFile} onDoubleClick={this.openFile}>{pl}</span>
+            ? this.props.safePlaylists.map(pl => (
+              <li key={pl.name}>
+                <span onClick={this.selectFile} onDoubleClick={this.openFile}>{pl.name}</span>
                 <a className='fa fa-trash-o' onClick={this.deleteFile} />
               </li>
             ))

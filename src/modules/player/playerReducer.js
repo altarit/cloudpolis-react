@@ -222,7 +222,7 @@ const initialState = {
   openTab: types.DEFAULT_PL,
   scrolledTabs: 0,
 
-  safePlaylists: {},
+  safePlaylists: [],
   serverPlaylists: [],
   isLocal: true,
   errors: {}

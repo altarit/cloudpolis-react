@@ -1,4 +1,5 @@
 import * as types from './storageConstants'
+import {getTabIndexByName} from '../playerReducer'
 
 const ACTION_HANDLERS = {
   // local ones
@@ -12,19 +13,27 @@ const ACTION_HANDLERS = {
     return {...state, safePlaylists: action.safePlaylists}
   },
   [types.STORAGE_OPEN_PLAYLIST_SUCCESS]: (state, action) => {
-    let nextPls = {...state.tabs, [action.filename]: action.playlist}
-    let nextTabs = ~state.tabs.indexOf(action.filename) ? state.tabs : [...state.tabs, action.filename]
-    return {...state, tabs: nextPls, tabs: nextTabs, openTab: action.filename}
+    let nextTabs = [...state.tabs]
+    let index = getTabIndexByName(nextTabs, action.playlist.name)
+    if (!~index) {
+      index = nextTabs.length
+    }
+    nextTabs[index] = action.playlist
+    return {...state, tabs: nextTabs, openTab: action.playlist.name}
   },
   [types.STORAGE_DELETE_PLAYLIST_SUCCESS]: (state, action) => {
     return {...state, safePlaylists: action.safePlaylists}
   },
   // server ones
   [types.STORAGE_SERVER_OPEN_PLAYLIST]: (state, action) => {
-    let serverPlIndex = state.serverPlaylists.find(el => el.name === action.name)
-    let nextPls = {...state.tabs, [action.name]: serverPlIndex.tracks}
-    let nextTabs = ~state.tabs.indexOf(action.name) ? state.tabs : [...state.tabs, action.name]
-    return {...state, tabs: nextPls, tabs: nextTabs, openTab: action.name}
+    let serverIndex = getTabIndexByName(state.serverPlaylists, action.filename)
+    let tabIndex = getTabIndexByName(state.tabs, action.filename)
+    if (!~tabIndex) {
+      tabIndex = state.tabs.length
+    }
+    let nextTabs = [...state.tabs]
+    nextTabs[tabIndex] = state.serverPlaylists[serverIndex]
+    return {...state, tabs: nextTabs, openTab: action.filename}
   },
   [types.GET_SERVER_PLAYLISTS_REQUEST]: (state, action) => {
     return {...state}
@@ -40,12 +49,11 @@ const ACTION_HANDLERS = {
   },
   [types.PUT_SERVER_PLAYLIST_SUCCESS]: (state, action) => {
     let nextServerPlaylists = [...state.serverPlaylists]
-    let serverPlIndex = state.serverPlaylists.findIndex(el => el.name === action.name)
-    if (~serverPlIndex) {
-      nextServerPlaylists[serverPlIndex] = action.playlist
-    } else {
-      nextServerPlaylists.push(action.playlist)
+    let serverIndex = getTabIndexByName(nextServerPlaylists, action.filename)
+    if (!~serverIndex) {
+      serverIndex = nextServerPlaylists.length
     }
+    nextServerPlaylists[serverIndex] = action.playlist
     return {...state, serverPlaylists: nextServerPlaylists}
   },
   [types.PUT_SERVER_PLAYLIST_FAILED]: (state, action) => {
@@ -56,9 +64,9 @@ const ACTION_HANDLERS = {
   },
   [types.DELETE_SERVER_PLAYLIST_SUCCESS]: (state, action) => {
     let nextServerPlaylists = [...state.serverPlaylists]
-    let serverPlIndex = state.serverPlaylists.findIndex(el => el.name === action.name)
-    if (~serverPlIndex) {
-      nextServerPlaylists.splice(serverPlIndex, 1)
+    let serverIndex = getTabIndexByName(nextServerPlaylists, action.filename)
+    if (~serverIndex) {
+      nextServerPlaylists.splice(serverIndex, 1)
     }
     return {...state, serverPlaylists: nextServerPlaylists}
   },

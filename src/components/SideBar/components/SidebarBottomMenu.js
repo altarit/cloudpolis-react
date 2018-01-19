@@ -136,7 +136,7 @@ export class SidebarBottomMenu extends React.Component {
   render() {
     let openTab = this.props.openTab
     const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
-    const tracks = this.props.tabs[openTabIndex].tracks
+    const tab = this.props.tabs[openTabIndex]
 
     return (
       <div className='playmenu__bottom dropdown'>
@@ -161,11 +161,11 @@ export class SidebarBottomMenu extends React.Component {
         {this.renderPlaylistCreationPopup()}
 
         {this.props.popups.openPlaylistDialog ? (
-          <OpenPlaylistDialog playlist={tracks} />
+          <OpenPlaylistDialog tab={tab} forSave={false} />
         ) : null }
 
         {this.props.popups.savePlaylistDialog ? (
-          <OpenPlaylistDialog playlist={tracks} forSave='true' filename={openTab} />
+          <OpenPlaylistDialog tab={tab} forSave={true} filename={openTab} />
         ) : null }
       </div>
     )
