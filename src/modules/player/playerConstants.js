@@ -9,6 +9,7 @@ export const TRACK_ENDS = 'TRACK_ENDS'
 
 export const SET_VOLUME = 'SET_VOLUME'
 export const TOGGLE_MUTE = 'TOGGLE_MUTE'
+export const TOGGLE_REPEAT = 'TOGGLE_REPEAT'
 
 export const CREATE_PLAYLIST = 'CREATE_PLAYLIST'
 export const CLOSE_OPEN_PLAYLIST = 'CLOSE_OPEN_PLAYLIST'

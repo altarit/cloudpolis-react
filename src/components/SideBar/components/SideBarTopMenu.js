@@ -4,8 +4,10 @@ import PropTypes from 'prop-types'
 export class SidebarTopMenu extends React.Component {
   static propTypes = {
     muted: PropTypes.bool.isRequired,
+    repeated: PropTypes.bool.isRequired,
 
     toggleMute: PropTypes.func.isRequired,
+    toogleRepeat: PropTypes.func.isRequired,
     setVolume: PropTypes.func.isRequired,
   }
 
@@ -16,7 +18,11 @@ export class SidebarTopMenu extends React.Component {
   render() {
     return (
       <div className='playmenu__top'>
-        <button type='button' className='btn btn-def fa fa-retweet' />
+        <button
+          type='button'
+          className={'btn fa btn-def ' + (this.props.repeated ? 'btn-danger fa-retweet' : 'fa-retweet')}
+          onClick={this.props.toogleRepeat}
+        />
         <button type='button' className='btn btn-def fa fa-bell' />
         <div className='playmenu__top-empty' />
         <button

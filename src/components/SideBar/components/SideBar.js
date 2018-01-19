@@ -17,6 +17,7 @@ export class Sidebar extends React.Component {
     scrolledTabs: PropTypes.number.isRequired,
     errors: PropTypes.object.isRequired,
     muted: PropTypes.bool.isRequired,
+    repeated: PropTypes.bool.isRequired,
 
     scrollLeft: PropTypes.func.isRequired,
     scrollRight: PropTypes.func.isRequired,
@@ -24,6 +25,7 @@ export class Sidebar extends React.Component {
     setVolume: PropTypes.func.isRequired,
     moveTrack: PropTypes.func.isRequired,
     toggleMute: PropTypes.func.isRequired,
+    toogleRepeat: PropTypes.func.isRequired,
     sortByTitle: PropTypes.func.isRequired,
     sortByArtist: PropTypes.func.isRequired,
     sortByDuration: PropTypes.func.isRequired,
@@ -62,7 +64,9 @@ export class Sidebar extends React.Component {
         <div className='playmenu'>
           <SidebarTopMenu
             muted={this.props.muted}
+            repeated={this.props.repeated}
             toggleMute={this.props.toggleMute}
+            toogleRepeat={this.props.toogleRepeat}
             setVolume={this.props.setVolume}
           />
 

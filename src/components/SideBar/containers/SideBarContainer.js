@@ -7,6 +7,7 @@ import {selectTab,
   closeOtherPlaylists,
   setVolume,
   toggleMute,
+  toogleRepeat,
   moveTrack,
   sortByTitle,
   sortByArtist,
@@ -27,6 +28,7 @@ const mapDispatchToProps = {
   closeOtherPlaylists,
   setVolume,
   toggleMute,
+  toogleRepeat,
   moveTrack,
   sortByTitle,
   sortByArtist,
@@ -45,7 +47,8 @@ const mapStateToProps = (state) => ({
   popups: state.popups,
   errors: state.player.errors,
   pos: state.player.pos,
-  muted: state.player.muted
+  muted: state.player.muted,
+  repeated: state.player.repeated,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar)

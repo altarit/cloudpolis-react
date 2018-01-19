@@ -58,6 +58,12 @@ export function toggleMute() {
   }
 }
 
+export function toogleRepeat() {
+  return {
+    type: types.TOGGLE_REPEAT
+  }
+}
+
 // --------------------------------
 // Management of lists
 // --------------------------------

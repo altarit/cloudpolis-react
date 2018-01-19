@@ -7,23 +7,24 @@ export function getTabIndexByName(tabs, tabName) {
   return result === undefined ? -1 : result
 }
 
-function getNextIndexByType(currentIndex, type) {
+function getNextIndexByType(currentIndex, type, repeated) {
   switch (type) {
     case types.PLAYER_NEXT:
-    case types.TRACK_ENDS:
       return currentIndex + 1
+    case types.TRACK_ENDS:
+      return repeated ? currentIndex : currentIndex + 1
     case types.PLAYER_PREV:
       return currentIndex - 1
   }
 }
 
-function selectNextTrack(tab, pos, type) {
+function selectNextTrack(tab, pos, type, repeated) {
   if (!tab) return {}
 
   let currentIndex = pos
   if (currentIndex < 0) return {isPlaying: type !== types.TRACK_ENDS}
 
-  let nextIndex = getNextIndexByType(currentIndex, type)
+  let nextIndex = getNextIndexByType(currentIndex, type, repeated)
   let track = tab.tracks[nextIndex]
   if (!track) return {isPlaying: type !== types.TRACK_ENDS}
 
@@ -206,6 +207,7 @@ const initialState = {
   isPlaying: false,
   volume: 0.25,
   muted: false,
+  repeated: false,
   track: {
     title: '',
     artist: '',
@@ -230,7 +232,7 @@ const initialState = {
 
 function returnNextTrackState(state, action) {
   const currentTabIndex = getTabIndexByName(state.tabs, state.currentTab)
-  let nextUpdates = selectNextTrack(state.tabs[currentTabIndex], state.pos, action.type)
+  let nextUpdates = selectNextTrack(state.tabs[currentTabIndex], state.pos, action.type, state.repeated)
   // return {...state, track: nextUpdates.track, pos: nextUpdates.pos, isPlaying: nextUpdates.isPlaying}
   setTitle(nextUpdates.track)
   return {...state, ...nextUpdates}
@@ -258,6 +260,9 @@ const ACTION_HANDLERS = {
   },
   [types.TOGGLE_MUTE]: (state, action) => {
     return {...state, muted: !state.muted}
+  },
+  [types.TOGGLE_REPEAT]: (state, action) => {
+    return {...state, repeated: !state.repeated}
   },
   // management of lists
   [types.UPDATE_PLAYLIST]: (state, action) => {
