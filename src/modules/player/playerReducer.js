@@ -294,7 +294,7 @@ const ACTION_HANDLERS = {
   [types.CLOSE_OTHER_PLAYLISTS]: (state, action) => {
     return {
       ...state,
-      tabs: [{name: state.openTab, tracks: state.tabs[state.openTab]}],
+      tabs: [{name: state.openTab, tracks: state.tabs[state.openTab].tracks}],
       openTab: state.openTab,
       scrolledTabs: 0
     }

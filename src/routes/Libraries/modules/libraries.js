@@ -1,4 +1,5 @@
 import {fetchGet, fetchPost, fetchDelete} from '../../../modules/apiUtils'
+import {openConfirmation} from '../../../modules/popups'
 
 export const GET_LIBRARIES_REQUEST = 'GET_LIBRARIES_REQUEST'
 export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS'
@@ -48,7 +49,7 @@ export function createLibrary(name) {
 }
 
 export function deleteLibrary(name) {
-  return (dispatch) => {
+  const deleteAction = (dispatch) => {
     dispatch({
       type: DELETE_LIBRARY_REQUEST
     })
@@ -60,6 +61,8 @@ export function deleteLibrary(name) {
         })
       })
   }
+
+  return openConfirmation(`Do you really want to delete library '${name}'?`, 'Delete', 'Cancel', deleteAction)
 }
 
 const initialState = {

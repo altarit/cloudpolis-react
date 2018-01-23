@@ -7,6 +7,7 @@ export class SidebarTabs extends React.Component {
   static propTypes = {
     tabs: PropTypes.arrayOf(PropTypes.object).isRequired,
     openTab: PropTypes.string.isRequired,
+    currentTab: PropTypes.string.isRequired,
     scrolledTabs: PropTypes.number.isRequired,
     popups: PropTypes.object.isRequired,
 
@@ -21,7 +22,9 @@ export class SidebarTabs extends React.Component {
         this.props.selectTab(pl.name)
       }}>
         <a
-          className={'playmenu__tab nav-link' + (this.props.openTab === pl.name ? ' active' : '')}
+          className={'playmenu__tab nav-link' +
+          (this.props.openTab === pl.name ? ' active' : '')  +
+          (this.props.currentTab === pl.name ? ' current' : '')}
           draggable='true'
         >
           {pl.name}
@@ -31,7 +34,7 @@ export class SidebarTabs extends React.Component {
   }
 
   scrollRight = () => {
-    if (this.props.pl.length - this.props.scrolledTabs >= 2) {
+    if (this.props.tabs.length - this.props.scrolledTabs >= 2) {
       this.props.scrollRight()
     }
   }

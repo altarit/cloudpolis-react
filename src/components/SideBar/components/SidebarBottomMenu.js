@@ -13,8 +13,8 @@ export class SidebarBottomMenu extends React.Component {
 
     createPlaylist: PropTypes.func.isRequired,
     renamePlaylist: PropTypes.func.isRequired,
-    closeOpenPlaylist: PropTypes.func.isRequired,
-    closeOtherPlaylists: PropTypes.func.isRequired,
+    closePlaylist: PropTypes.func.isRequired,
+    closeOthersPlaylists: PropTypes.func.isRequired,
     sortByTitle: PropTypes.func.isRequired,
     sortByArtist: PropTypes.func.isRequired,
     sortByDuration: PropTypes.func.isRequired,
@@ -26,6 +26,14 @@ export class SidebarBottomMenu extends React.Component {
   createPlaylist = (e) => {
     e.preventDefault()
     this.props.createPlaylist(this.refs.menuPlCreationInput.value)
+  }
+
+  closeOpenPlaylist = () => {
+    this.props.closePlaylist(this.props.openTab)
+  }
+
+  closeOthersPlaylists = () => {
+    this.props.closeOthersPlaylists(this.props.openTab)
   }
 
   renderBottomAddPopup = () => {
@@ -99,10 +107,10 @@ export class SidebarBottomMenu extends React.Component {
         <li className='option' data-click='dropdown' data-for='savePlaylistDialog'>
           <span className='fa fa-fw fa-floppy-o' />Save playlist
         </li>
-        <li className='option' onClick={this.props.closeOpenPlaylist}>
+        <li className='option' onClick={this.closeOpenPlaylist} data-click='modal' >
           <span className='fa fa-fw fa-times' />Close playlist
         </li>
-        <li className='option' onClick={this.props.closeOtherPlaylists}>
+        <li className='option' onClick={this.closeOthersPlaylists} data-click='modal' >
           <span className='fa fa-fw fa-angle-double-down' />Close others
         </li>
         <li className='option' onClick={this.props.renamePlaylist}>

@@ -22,10 +22,11 @@ $tabActiveBackgroundColor: #f0f0f0;
   user-select: none;
   width: 70px;
   height: 42px;
-  padding: 0px 3px;
+  padding: 0px 1px;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
+  font-size: 14px;
   border-top: $tabBorder;
   border-left: $tabBorder;
   border-right: $tabBorder;
@@ -33,6 +34,10 @@ $tabActiveBackgroundColor: #f0f0f0;
 
 .nav-tabs .nav-item .playmenu__tab.active {
   background-color: $tabActiveBackgroundColor;
+}
+
+.playmenu__tab.current {
+  font-weight: bold;
 }
 
 .playmenu__tabs-control {

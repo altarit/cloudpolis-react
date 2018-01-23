@@ -1,4 +1,5 @@
 import * as types from './playerConstants'
+import {openConfirmation} from '../popups'
 
 // --------------------------------
 // General
@@ -83,16 +84,19 @@ export function createPlaylist(name) {
   }
 }
 
-export function closeOpenPlaylist() {
-  return {
+export function closePlaylist(name) {
+  const closeAction = {
     type: types.CLOSE_OPEN_PLAYLIST
   }
+
+  return openConfirmation(`Close ${name}?`, 'Yep', 'No, wait', closeAction)
 }
 
-export function closeOtherPlaylists() {
-  return {
+export function closeOthersPlaylists(name) {
+  const closeAction = {
     type: types.CLOSE_OTHER_PLAYLISTS
   }
+  return openConfirmation(`Close all but ${name}?`, 'All of them!', 'Cancel', closeAction)
 }
 
 // --------------------------------

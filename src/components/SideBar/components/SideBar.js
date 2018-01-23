@@ -32,8 +32,8 @@ export class Sidebar extends React.Component {
     sortByPath: PropTypes.func.isRequired,
     shuffle: PropTypes.func.isRequired,
     reverse: PropTypes.func.isRequired,
-    closeOpenPlaylist: PropTypes.func.isRequired,
-    closeOtherPlaylists: PropTypes.func.isRequired,
+    closePlaylist: PropTypes.func.isRequired,
+    closeOthersPlaylists: PropTypes.func.isRequired,
     createPlaylist: PropTypes.func.isRequired
   }
 
@@ -73,12 +73,14 @@ export class Sidebar extends React.Component {
           <SidebarTabs
             tabs={this.props.tabs}
             openTab={this.props.openTab}
+            currentTab={this.props.currentTab}
             scrolledTabs={this.props.scrolledTabs}
             popups={this.props.popups}
 
             selectTab={this.props.selectTab}
             scrollLeft={this.props.scrollLeft}
             scrollRight={this.props.scrollRight}
+            closeOpenPlaylist={this.props.closeOpenPlaylist}
           />
 
           <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
@@ -96,9 +98,9 @@ export class Sidebar extends React.Component {
             tabs={this.props.tabs}
             errors={this.props.errors}
 
-            closeOpenPlaylist={this.props.closeOpenPlaylist}
+            closePlaylist={this.props.closePlaylist}
             createPlaylist={this.props.createPlaylist}
-            closeOtherPlaylists={this.props.closeOtherPlaylists}
+            closeOthersPlaylists={this.props.closeOthersPlaylists}
 
             sortByTitle={this.props.sortByTitle}
             sortByArtist={this.props.sortByArtist}
