@@ -7,6 +7,7 @@ export class OpenPlaylistDialog extends React.Component {
   static propTypes = {
     safePlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
     serverPlaylists: PropTypes.arrayOf(PropTypes.object).isRequired,
+    tabs: PropTypes.arrayOf(PropTypes.object).isRequired,
     tab: PropTypes.object.isRequired,
     forSave: PropTypes.bool.isRequired,
     filename: PropTypes.string,
@@ -32,21 +33,10 @@ export class OpenPlaylistDialog extends React.Component {
 
   openOrSavePlaylist = (e) => {
     e.preventDefault()
-
-    let filename = this.refs.filename.value
-    let tab = this.props.tab
     if (this.props.isLocal) {
-      if (this.props.forSave) {
-        this.props.savePlaylistToStorage(filename, tab)
-      } else {
-        this.props.openPlaylistFromStorage(filename)
-      }
+      this.doLocalAction()
     } else {
-      if (this.props.forSave) {
-        this.props.putServerPlaylist(this.props.userName, filename, tab)
-      } else {
-        this.props.openServerPlaylist(filename)
-      }
+      this.doRemoteAction()
     }
   }
 
@@ -54,16 +44,8 @@ export class OpenPlaylistDialog extends React.Component {
     this.refs.filename.value = e.target.innerHTML
   }
 
-  openFile = (e) => {
-    this.props.openPlaylistFromStorage(e.target.innerHTML)
-  }
-
   deleteFile = (e) => {
     this.props.deletePlaylistFromStorage(e.target.parentNode.children[0].innerHTML)
-  }
-
-  openRemoteFile = (e) => {
-    this.props.openServerPlaylist(e.target.innerHTML)
   }
 
   deleteRemoteFile = (e) => {
@@ -78,45 +60,59 @@ export class OpenPlaylistDialog extends React.Component {
     this.props.selectOpenDialogLocalTab(false)
   }
 
+  doLocalAction = () => {
+    let filename = this.refs.filename.value
+    if (this.props.forSave) {
+      this.props.savePlaylistToStorage(filename, this.props.tab)
+    } else {
+      this.props.openPlaylistFromStorage(filename, this.props.tabs)
+    }
+  }
+
+  doRemoteAction = () => {
+    let filename = this.refs.filename.value
+    if (this.props.forSave) {
+      this.props.putServerPlaylist(this.props.userName, filename, this.props.tab)
+    } else {
+      this.props.openServerPlaylist(filename, this.props.tabs, this.props.serverPlaylists)
+    }
+  }
+
   render() {
     return (
       <div className='dropdown show dropdown-menu filedialog' data-click='none'>
         <div className='filedialog__top'>
           <h3>{this.props.forSave ? 'Save playlist' : 'Open playlist'}</h3>
           <button className={'btn ' + (this.props.isLocal ? 'btn-secondary' : 'btn-outline-secondary')}
-            onClick={this.openLocalTab}>Local storage</button>
+                  onClick={this.openLocalTab}>Local storage
+          </button>
           <button className={'btn ' + (!this.props.isLocal ? 'btn-secondary' : 'btn-outline-secondary')}
-            onClick={this.openRemoteTab}>Server storage</button>
+                  onClick={this.openRemoteTab}>Server storage
+          </button>
         </div>
         <ul className='filedialog__list'>
           {this.props.isLocal
             ? this.props.safePlaylists.map(pl => (
               <li key={pl.name}>
-                <span onClick={this.selectFile} onDoubleClick={this.openFile}>{pl.name}</span>
-                <a className='fa fa-trash-o' onClick={this.deleteFile} />
+                <span onClick={this.selectFile} onDoubleClick={this.doLocalAction}>{pl.name}</span>
+                <a className='fa fa-trash-o' onClick={this.deleteFile}/>
               </li>
             ))
             : this.props.serverPlaylists.map(pl => (
               <li key={pl.name}>
-                <span onClick={this.selectFile} onDoubleClick={this.openRemoteFile}>{pl.name}</span>
-                <a className='fa fa-trash-o' onClick={this.deleteRemoteFile} />
+                <span onClick={this.selectFile} onDoubleClick={this.doRemoteAction}>{pl.name}</span>
+                <a className='fa fa-trash-o' onClick={this.deleteRemoteFile}/>
               </li>
             ))}
         </ul>
         <form className='filedialog__bottom' onSubmit={this.openOrSavePlaylist}>
           <div className='form-group'>
             <label>Filename</label>
-            <input type='text' className='form-control' ref='filename' />
+            <input type='text' className='form-control' ref='filename'/>
           </div>
-          {this.props.forSave ? (
-            <div className='btn-group'>
-              <button type='submit' className='btn btn-primary'>Save</button>
-            </div>
-          ) : (
-            <div className='btn-group'>
-              <button type='submit' className='btn btn-primary'>Open</button>
-            </div>
-          )}
+          <div className='btn-group'>
+            <button type='submit' className='btn btn-primary'>{this.props.forSave ? 'Save' : 'Open'}</button>
+          </div>
           <div className='btn-group'>
             <button type='button' className='btn btn-primary' data-click='closeall'>Cancel</button>
           </div>

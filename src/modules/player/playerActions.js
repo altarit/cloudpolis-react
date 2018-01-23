@@ -96,7 +96,7 @@ export function closeOthersPlaylists(name) {
   const closeAction = {
     type: types.CLOSE_OTHER_PLAYLISTS
   }
-  return openConfirmation(`Close all but ${name}?`, 'All of them!', 'Cancel', closeAction)
+  return openConfirmation(`Close all except ${name}?`, 'All of them!', 'Cancel', closeAction)
 }
 
 // --------------------------------

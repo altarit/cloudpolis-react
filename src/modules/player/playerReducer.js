@@ -292,9 +292,10 @@ const ACTION_HANDLERS = {
     return {...state, tabs: closeTabUpdates.tabs, openTab: closeTabUpdates.openTab}
   },
   [types.CLOSE_OTHER_PLAYLISTS]: (state, action) => {
+    const index = getTabIndexByName(state.tabs, state.openTab)
     return {
       ...state,
-      tabs: [{name: state.openTab, tracks: state.tabs[state.openTab].tracks}],
+      tabs: [{name: state.openTab, tracks: state.tabs[index].tracks}],
       openTab: state.openTab,
       scrolledTabs: 0
     }

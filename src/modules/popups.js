@@ -46,6 +46,7 @@ export default function popupReducer(state = initialState, action) {
       }
     case POPUP_ASK_CONFIRMATION:
       return {
+        ...state,
         [CONFIRMATION_POPUP_NAME]: {
           open: true,
           title: action.title,

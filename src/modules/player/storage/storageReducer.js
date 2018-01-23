@@ -10,30 +10,19 @@ const ACTION_HANDLERS = {
     return {...state, safePlaylists: action.safePlaylists}
   },
   [types.STORAGE_SAVE_PLAYLIST_SUCCESS]: (state, action) => {
+    localStorage.setItem('safePlaylists', JSON.stringify(action.safePlaylists))
     return {...state, safePlaylists: action.safePlaylists}
   },
   [types.STORAGE_OPEN_PLAYLIST_SUCCESS]: (state, action) => {
-    let nextTabs = [...state.tabs]
-    let index = getTabIndexByName(nextTabs, action.playlist.name)
-    if (!~index) {
-      index = nextTabs.length
-    }
-    nextTabs[index] = action.playlist
-    return {...state, tabs: nextTabs, openTab: action.playlist.name}
+    return {...state, tabs: action.nextTabs, openTab: action.playlist.name}
   },
   [types.STORAGE_DELETE_PLAYLIST_SUCCESS]: (state, action) => {
+    localStorage.setItem('safePlaylists', JSON.stringify(action.safePlaylists))
     return {...state, safePlaylists: action.safePlaylists}
   },
   // server ones
   [types.STORAGE_SERVER_OPEN_PLAYLIST]: (state, action) => {
-    let serverIndex = getTabIndexByName(state.serverPlaylists, action.filename)
-    let tabIndex = getTabIndexByName(state.tabs, action.filename)
-    if (!~tabIndex) {
-      tabIndex = state.tabs.length
-    }
-    let nextTabs = [...state.tabs]
-    nextTabs[tabIndex] = state.serverPlaylists[serverIndex]
-    return {...state, tabs: nextTabs, openTab: action.filename}
+    return {...state, tabs: action.nextTabs, openTab: action.filename}
   },
   [types.GET_SERVER_PLAYLISTS_REQUEST]: (state, action) => {
     return {...state}

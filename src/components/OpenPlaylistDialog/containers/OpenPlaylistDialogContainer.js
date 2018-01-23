@@ -28,6 +28,7 @@ const mapDispatchToProps = {
 const mapStateToProps = (state) => ({
   safePlaylists: state.player.safePlaylists,
   serverPlaylists: state.player.serverPlaylists,
+  tabs: state.player.tabs,
   isLocal: state.player.isLocal,
   userName: state.auth.name,
 })

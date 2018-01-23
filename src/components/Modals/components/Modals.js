@@ -30,12 +30,12 @@ export class Modals extends React.Component {
               <button type='button' className='btn btn-outline-secondary' data-click='closeall'>
                 {this.props.confirmationPopup.rejectText}
               </button>
-              <button type='submit' className='btn btn-outline-secondary' onClick={this.executeConfirmationAction}>
+              <button type='submit' className='btn btn-outline-secondary' data-click='closeall'
+                      onClick={this.executeConfirmationAction}>
                 {this.props.confirmationPopup.confirmText}
               </button>
             </div>
           </div>
-
         ) : null}
       </nav>
     )
