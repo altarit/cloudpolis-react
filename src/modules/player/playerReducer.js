@@ -51,7 +51,7 @@ function addPlaylist(name, tabs) {
   }
 
   return {
-    tabs: [...tabs, {name: name, content: []}],
+    tabs: [...tabs, {name: name, tracks: []}],
     openTab: name
   }
 }
@@ -117,7 +117,7 @@ function moveTrack(stateTabs, stateCurrentTab, statePos, oldTrack, tabFromName, 
   return {tabs: nextTabs, pos: nextIndex}
 }
 
-function removeTrack(stateTabs, currentTab, statePos, remTab, remPos) {
+function removeTrack(stateTabs, currentTab, statePos, remTab, remPos, stateTrack) {
   console.log(`removeTrack: ${remTab}:${remPos}`)
   const tabIndex = getTabIndexByName(stateTabs, remTab)
   let nextTabs = [...stateTabs]
@@ -125,7 +125,6 @@ function removeTrack(stateTabs, currentTab, statePos, remTab, remPos) {
   let nextTracks = [...nextTab.tracks]
   nextTab.tracks = nextTracks
   nextTabs[tabIndex] = nextTab
-  const oldTrack = nextTracks[statePos]
 
   nextTracks.splice(remPos, 1)
   if (currentTab === remTab) {
@@ -135,8 +134,10 @@ function removeTrack(stateTabs, currentTab, statePos, remTab, remPos) {
       let nextPos = nextTracks.length === statePos ? statePos - 1 : statePos
       return {tabs: nextTabs, pos: nextPos, track: nextTracks[nextPos]}
     }
+    return {tabs: nextTabs, pos: statePos, track: nextTracks[statePos] || stateTrack}
+  } else {
+    return {tabs: nextTabs, pos: statePos, track: stateTrack}
   }
-  return {tabs: nextTabs, pos: statePos, track: nextTracks[statePos] || oldTrack}
 }
 
 function sortBy(by, tabs, openTab, currentTab, pos) {
@@ -305,7 +306,7 @@ const ACTION_HANDLERS = {
     return {...state, tabs: moveUpdates.tabs, pos: moveUpdates.pos}
   },
   [types.REMOVE_TRACK]: (state, action) => {
-    let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos, action.tabName, action.pos)
+    let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos, action.tabName, action.pos, state.track)
     setTitle(removeUpdates.track)
     return {...state, tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track}
   },
