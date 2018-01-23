@@ -5,6 +5,7 @@ import {resizedWindow} from '../SideBar/modules/sideBar'
 import {closeAllPopups, openPopup} from '../../modules/popups'
 import Sidebar from '../SideBar'
 import BottomBar from '../BottomBar'
+import Modals from '../Modals'
 import Header from '../Header'
 import './App.scss'
 import '../../styles/main.scss'
@@ -79,6 +80,7 @@ class App extends Component {
           <Sidebar />
         </div>
         <BottomBar />
+        <Modals />
       </div>
     )
   }
