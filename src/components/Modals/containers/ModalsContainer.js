@@ -8,6 +8,7 @@ const mapDispatchToProps = {
 
 const mapStateToProps = (state) => ({
   confirmationPopup: state.popups.confirmationPopup,
+  singleInputPopup: state.popups.singleInputPopup,
   shade: state.popups.shade,
   popups: state.popups
 })

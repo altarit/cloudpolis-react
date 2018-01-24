@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
-import CreateLibraryForm from './CreateLibraryForm'
 import './Libraries.scss'
 
 export class Libraries extends React.Component {
@@ -30,12 +29,16 @@ export class Libraries extends React.Component {
     this.props.createLibrary(values.name)
   }
 
+  deleteLibrary = () => {
+    this.props.deleteLibrary(this.props.moreLibrariesPopup.from)
+  }
+
   render() {
     return (
       <div className='libraries container'>
         <h2>Libraries</h2>
         <div className='btn-group card-body'>
-          <button className='btn btn-outline-secondary' data-click='dropdown' data-for='addLibraryPopup'>
+          <button className='btn btn-outline-secondary' onClick={this.createLibrary} data-click='custom'>
             Create Library
           </button>
           <button className='btn btn-outline-secondary' onClick={this.props.deleteCollections}>
@@ -47,9 +50,6 @@ export class Libraries extends React.Component {
           <button className='btn btn-outline-secondary' onClick={this.props.extractSongs}>
             Extract Songs
           </button>
-          {this.props.addLibraryPopup ? (
-            <CreateLibraryForm onSubmit={this.createLibrary}/>
-          ) : null}
         </div>
         <ul className='libraries-list list-group'>
           {this.props.libraries.map(el =>
@@ -73,28 +73,9 @@ export class Libraries extends React.Component {
                   top: this.props.moreLibrariesPopup.y - 10,
                   left: this.props.moreLibrariesPopup.x - 160,
                 }}>
-              <li onClick={() => {
-                this.props.deleteLibrary(this.props.moreLibrariesPopup.from)
-              }} data-click='custom'>
+              <li onClick={this.deleteLibrary} data-click='custom'>
                 <span className='option fa fa-trash-o'> Delete</span>
               </li>
-            </ul>
-          ) : null}
-          {this.props.deleteLibraryDialog ? (
-            <ul className='dropdown-menu show dropdown_fixed'
-                style={{
-                  top: this.props.deleteLibraryDialog.y - 20,
-                  left: this.props.deleteLibraryDialog.x - 50,
-                }}>
-              <h3>Delete {this.props.deleteLibraryDialog.from}?</h3>
-              <div className='btn-group'>
-                <button type='button' className='btn btn-outline-secondary' data-click='closeall'>Cancel</button>
-                <button type='submit' className='btn btn-outline-secondary'
-                        onClick={() => {
-                          this.props.deleteLibrary(this.props.deleteLibraryDialog.from)
-                        }}>Delete
-                </button>
-              </div>
             </ul>
           ) : null}
         </div>

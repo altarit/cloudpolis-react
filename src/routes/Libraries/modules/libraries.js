@@ -1,5 +1,5 @@
 import {fetchGet, fetchPost, fetchDelete} from '../../../modules/apiUtils'
-import {openConfirmation} from '../../../modules/popups'
+import {openConfirmation, openSingleInput} from '../../../modules/popups'
 
 export const GET_LIBRARIES_REQUEST = 'GET_LIBRARIES_REQUEST'
 export const GET_LIBRARIES_SUCCESS = 'GET_LIBRARIES_SUCCESS'
@@ -29,15 +29,15 @@ export function getLibraries() {
   }
 }
 
-export function createLibrary(name) {
-  return (dispatch) => {
+export function createLibrary(defaultValue) {
+  const createLibraryAction = result => dispatch => {
     dispatch({
       type: CREATE_LIBRARIES_REQUEST
     })
 
     fetchPost(`/music/libraries`, {
       body: JSON.stringify({
-        name: name,
+        name: result,
       })
     })
       .then(response => {
@@ -46,6 +46,8 @@ export function createLibrary(name) {
         })
       })
   }
+
+  return openSingleInput(`Library name:`, 'Create', createLibraryAction)
 }
 
 export function deleteLibrary(name) {

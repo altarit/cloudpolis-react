@@ -1,8 +1,10 @@
 export const POPUP_CLOSE_ALL = 'POPUP_CLOSE_ALL'
 export const POPUP_OPEN = 'POPUP_OPEN'
 export const POPUP_ASK_CONFIRMATION = 'POPUP_OPEN_CONFIRMATION'
+export const POPUP_OPEN_SINGLE_INPUT = 'POPUP_OPEN_SINGLE_INPUT'
 
 export const CONFIRMATION_POPUP_NAME = 'confirmationPopup'
+export const SINGLE_INPUT_POPUP_NAME = 'singleInputPopup'
 
 export function closeAllPopups() {
   return {
@@ -32,6 +34,15 @@ export function openConfirmation(title, confirmText = 'Yes', rejectText = 'Cance
   }
 }
 
+export function openSingleInput(title, confirmText = 'Yes', action) {
+  return {
+    type: POPUP_OPEN_SINGLE_INPUT,
+    title,
+    confirmText,
+    action
+  }
+}
+
 const initialState = {}
 export default function popupReducer(state = initialState, action) {
   switch (action.type) {
@@ -52,6 +63,17 @@ export default function popupReducer(state = initialState, action) {
           title: action.title,
           confirmText: action.confirmText,
           rejectText: action.rejectText,
+          action: action.action
+        },
+        shade: true
+      }
+    case POPUP_OPEN_SINGLE_INPUT:
+      return {
+        ...state,
+        [SINGLE_INPUT_POPUP_NAME]: {
+          open: true,
+          title: action.title,
+          confirmText: action.confirmText,
           action: action.action
         },
         shade: true

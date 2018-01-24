@@ -74,7 +74,8 @@ export class HomeView extends React.Component {
           <div className='col-lg-4'>
             <h3>More music?</h3>
             There's some more space on the server so I could add something. Either you can set up your own server.
-            Feel free to <Link to={'/contacts'}>contact me</Link>.
+            Fork the <a href='https://github.com/altarit/cloudpolis-koa' target='_blank'>server</a> or
+            the <a href='https://github.com/altarit/cloudpolis-react' target='_blank'>client</a>.
           </div>
         </div>
 
@@ -93,7 +94,7 @@ export class HomeView extends React.Component {
         <div className='row'>
           <div className='col-lg-12'>
             <h2>More</h2>
-            If you have any questions, please feel free to contact me at
+            If you have any questions, feel free to contact me at
             <a href='mailto:admin@cloudpolis.net'> admin@cloudpolis.net</a>
           </div>
         </div>
