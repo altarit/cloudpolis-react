@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Sidebar from '../components/SideBar'
 import {selectTab,
   createPlaylist,
+  renamePlaylist,
   closePlaylist,
   closeOthersPlaylists,
   setVolume,
@@ -24,6 +25,7 @@ const mapDispatchToProps = {
   scrollLeft,
   scrollRight,
   createPlaylist,
+  renamePlaylist,
   closePlaylist,
   closeOthersPlaylists,
   setVolume,

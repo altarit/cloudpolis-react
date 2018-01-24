@@ -112,6 +112,25 @@ export function createPlaylist(defaultValue, errorText) {
   return openSingleInput(`Playlist name:`, 'Create', defaultValue, errorText, createLibraryAction)
 }
 
+export function renamePlaylist(name, defaultValue, errorText) {
+  const renamePlaylistAction = result => (dispatch, getState) => {
+    const tabs = getState().player.tabs
+    const error = validatePlaylist(tabs, result)
+    if (error) {
+      dispatch(createPlaylist(result, error.error))
+    } else {
+      dispatch({
+        type: types.RENAME_PLAYLIST,
+        oldName: name,
+        newName: result
+      })
+      dispatch(closeAllPopups())
+    }
+  }
+
+  return openSingleInput(`Renaming ${name}:`, 'Rename', defaultValue, errorText, renamePlaylistAction)
+}
+
 export function closePlaylist(name) {
   const closeAction = {
     type: types.CLOSE_OPEN_PLAYLIST

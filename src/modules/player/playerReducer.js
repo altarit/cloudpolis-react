@@ -262,12 +262,19 @@ const ACTION_HANDLERS = {
     return {...state, tabs: nextTabs}
   },
   [types.CREATE_PLAYLIST]: (state, action) => {
-    let createTabUpdates = addPlaylist(action.name, state.tabs)
     return {
       ...state,
-      tabs: createTabUpdates.tabs,
-      openTab: createTabUpdates.openTab
+      tabs: [...state.tabs, {name: action.name, tracks: []}],
+      openTab: action.name
     }
+  },
+  [types.RENAME_PLAYLIST]: (state, action) => {
+    const index = getTabIndexByName(state.tabs, action.oldName)
+    const nextTabs = [...state.tabs]
+    nextTabs[index].name = action.newName
+    const nextOpenTab = state.openTab === action.oldName ? action.newName : state.openTab
+    const nextCurrentTab = state.currentTab === action.oldName ? action.newName : state.currentTab
+    return {...state, tabs: nextTabs, openTab: nextOpenTab, currentTab: nextCurrentTab}
   },
   [types.CLOSE_OPEN_PLAYLIST]: (state, action) => {
     let closeTabUpdates = excludeOpenPlaylust(state.openTab, state.tabs)

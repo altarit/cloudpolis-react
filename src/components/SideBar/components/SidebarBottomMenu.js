@@ -27,6 +27,10 @@ export class SidebarBottomMenu extends React.Component {
     this.props.createPlaylist(`New playlist`)
   }
 
+  renameOpenPlaylist = () => {
+    this.props.renamePlaylist(this.props.openTab, this.props.openTab)
+  }
+
   closeOpenPlaylist = () => {
     this.props.closePlaylist(this.props.openTab)
   }
@@ -106,13 +110,13 @@ export class SidebarBottomMenu extends React.Component {
         <li className='option' data-click='dropdown' data-for='savePlaylistDialog'>
           <span className='fa fa-fw fa-floppy-o' />Save playlist
         </li>
-        <li className='option' onClick={this.closeOpenPlaylist} data-click='modal' >
+        <li className='option' onClick={this.closeOpenPlaylist} data-click='custom' >
           <span className='fa fa-fw fa-times' />Close playlist
         </li>
-        <li className='option' onClick={this.closeOthersPlaylists} data-click='modal' >
+        <li className='option' onClick={this.closeOthersPlaylists} data-click='custom' >
           <span className='fa fa-fw fa-angle-double-down' />Close others
         </li>
-        <li className='option' onClick={this.props.renamePlaylist}>
+        <li className='option' onClick={this.renameOpenPlaylist} data-click='custom'>
           <span className='fa fa-fw fa-edit' />Rename
         </li>
       </ul>

@@ -34,7 +34,8 @@ export class Sidebar extends React.Component {
     reverse: PropTypes.func.isRequired,
     closePlaylist: PropTypes.func.isRequired,
     closeOthersPlaylists: PropTypes.func.isRequired,
-    createPlaylist: PropTypes.func.isRequired
+    createPlaylist: PropTypes.func.isRequired,
+    renamePlaylist: PropTypes.func.isRequired,
   }
 
   drop = (e) => {
@@ -100,6 +101,7 @@ export class Sidebar extends React.Component {
 
             closePlaylist={this.props.closePlaylist}
             createPlaylist={this.props.createPlaylist}
+            renamePlaylist={this.props.renamePlaylist}
             closeOthersPlaylists={this.props.closeOthersPlaylists}
 
             sortByTitle={this.props.sortByTitle}
