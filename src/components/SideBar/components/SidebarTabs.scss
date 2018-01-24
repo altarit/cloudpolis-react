@@ -30,6 +30,11 @@ $tabActiveBackgroundColor: #f0f0f0;
   border-top: $tabBorder;
   border-left: $tabBorder;
   border-right: $tabBorder;
+
+  &.playmenu__tab_short {
+    width: 30px;
+    line-height: 42px;
+  }
 }
 
 .nav-tabs .nav-item .playmenu__tab.active {

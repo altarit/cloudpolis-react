@@ -15,6 +15,11 @@ export class SidebarTabs extends React.Component {
     scrollLeft: PropTypes.func.isRequired,
     scrollRight: PropTypes.func.isRequired,
     closePlaylist: PropTypes.func.isRequired,
+    createPlaylist: PropTypes.func.isRequired,
+  }
+
+  createPlaylist = () => {
+    this.props.createPlaylist('New playlist')
   }
 
   getTabs = () => {
@@ -60,6 +65,10 @@ export class SidebarTabs extends React.Component {
               style={{marginLeft: -this.props.scrolledTabs * 70}}
               data-click='none'>
             {this.getTabs()}
+
+            <li key={'__create'} className='nav-item option' onClick={this.createPlaylist}>
+              <a className='playmenu__tab nav-link playmenu__tab_short fa fa-plus'></a>
+            </li>
           </ul>
         </div>
 

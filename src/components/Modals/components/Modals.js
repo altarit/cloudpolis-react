@@ -29,7 +29,7 @@ export class Modals extends React.Component {
         ) : null}
         {this.props.confirmationPopup ? (
           <div className='dropdown show dropdown-menu modal-confirmation' data-click='none'>
-            <div className="modal-text">
+            <div className="modal-text modal-top">
               {this.props.confirmationPopup.title}
             </div>
             <div className="modal-buttons">
@@ -47,13 +47,16 @@ export class Modals extends React.Component {
           <div className='dropdown show dropdown-menu modal-confirmation' data-click='none'>
 
             <form onSubmit={this.executeSingleInputAction}>
-              <div className="modal-text">
-                {this.props.singleInputPopup.title}
-                <div className='form-group'>
-                  <input name='name' type='text' className='form-control' ref='singleInput'
-                         defaultValue={this.props.singleInputPopup.defaultValue}/>
+              <div className="modal-top">
+                <div className="modal-text">
+                  {this.props.singleInputPopup.title}
                 </div>
-                <div>{this.props.singleInputPopup.errorText}</div>
+                <div className='form-group'>
+                  <input name='name' type='text' className='form-control' ref='singleInput' autoComplete='off'
+                         defaultValue={this.props.singleInputPopup.defaultValue}/>
+
+                  {this.props.singleInputPopup.errorText}
+                </div>
               </div>
 
               <div className="modal-buttons">

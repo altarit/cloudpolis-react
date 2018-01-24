@@ -45,10 +45,10 @@ export class SidebarBottomMenu extends React.Component {
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
         <li className='option'>
-          <span className='fa fa-fw fa-plus' />From tab...
+          <span className='fa fa-fw fa-plus' />Selected tracks to ...
         </li>
         <li className='option'>
-          <span className='fa fa-fw fa-plus' />10 random tracks
+          <span className='fa fa-fw fa-plus' />All tracks to ...
         </li>
       </ul>
     )
@@ -60,10 +60,13 @@ export class SidebarBottomMenu extends React.Component {
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
         <li className='option'>
-          <span className='fa fa-fw fa-minus' />Remove current track from playlist
+          <span className='fa fa-fw fa-minus' />Remove selected
         </li>
         <li className='option'>
-          <span className='fa fa-fw fa-minus' />Remove all in "{this.props.openTab}"
+          <span className='fa fa-fw fa-minus' />Remove all tracks
+        </li>
+        <li className='option'>
+          <span className='fa fa-fw fa-minus' />Remove duplicates
         </li>
       </ul>
     )
@@ -132,7 +135,7 @@ export class SidebarBottomMenu extends React.Component {
       <div className='playmenu__bottom dropdown'>
         <button type='button' className='btn btn-def fa fa-check' />
         <button type='button' className='btn btn-def fa fa-plus' data-click='dropdown' data-for='bottomAdd'>
-          <label>Add</label>
+          <label>Copy</label>
         </button>
         <button type='button' className='btn btn-def fa fa-minus' data-click='dropdown' data-for='bottomRemove'>
           <label>Remove</label>

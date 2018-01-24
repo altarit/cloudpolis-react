@@ -164,7 +164,7 @@ function sortBy(by, tabs, openTab, currentTab, pos) {
       nextTracks.reverse()
       break
   }
-  nextTabs[openTab] = newTab
+  nextTabs[tabIndex] = newTab
 
   // change current pos
   let newPos
