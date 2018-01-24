@@ -14,6 +14,7 @@ export class SidebarTabs extends React.Component {
     selectTab: PropTypes.func.isRequired,
     scrollLeft: PropTypes.func.isRequired,
     scrollRight: PropTypes.func.isRequired,
+    closePlaylist: PropTypes.func.isRequired,
   }
 
   getTabs = () => {
@@ -23,9 +24,10 @@ export class SidebarTabs extends React.Component {
       }}>
         <a
           className={'playmenu__tab nav-link' +
-          (this.props.openTab === pl.name ? ' active' : '')  +
+          (this.props.openTab === pl.name ? ' active' : '') +
           (this.props.currentTab === pl.name ? ' current' : '')}
           draggable='true'
+          onDoubleClick={() => this.props.closePlaylist(pl.name)}
         >
           {pl.name}
         </a>
@@ -54,7 +56,9 @@ export class SidebarTabs extends React.Component {
         />
 
         <div className='playmenu__tabs-center'>
-          <ul className='nav nav-tabs playmenu__tabs-list' style={{marginLeft: -this.props.scrolledTabs * 70}}>
+          <ul className='nav nav-tabs playmenu__tabs-list'
+              style={{marginLeft: -this.props.scrolledTabs * 70}}
+              data-click='none'>
             {this.getTabs()}
           </ul>
         </div>

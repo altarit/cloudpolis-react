@@ -50,7 +50,8 @@ export class Modals extends React.Component {
               <div className="modal-text">
                 {this.props.singleInputPopup.title}
                 <div className='form-group'>
-                  <input name='name' type='text' className='form-control' ref='singleInput'/>
+                  <input name='name' type='text' className='form-control' ref='singleInput'
+                         defaultValue={this.props.singleInputPopup.defaultValue}/>
                 </div>
                 <div>{this.props.singleInputPopup.errorText}</div>
               </div>
@@ -59,7 +60,7 @@ export class Modals extends React.Component {
                 <button type='button' className='btn btn-outline-secondary' data-click='closeall'>
                   Cancel
                 </button>
-                <button type='submit' className='btn btn-outline-secondary' data-click='closeall'
+                <button type='submit' className='btn btn-outline-secondary' data-click='custom'
                         onClick={this.executeSingleInputAction}>
                   {this.props.singleInputPopup.confirmText}
                 </button>

@@ -34,11 +34,13 @@ export function openConfirmation(title, confirmText = 'Yes', rejectText = 'Cance
   }
 }
 
-export function openSingleInput(title, confirmText = 'Yes', action) {
+export function openSingleInput(title, confirmText = 'Yes', defaultValue, errorText, action) {
   return {
     type: POPUP_OPEN_SINGLE_INPUT,
     title,
     confirmText,
+    defaultValue,
+    errorText,
     action
   }
 }
@@ -74,6 +76,8 @@ export default function popupReducer(state = initialState, action) {
           open: true,
           title: action.title,
           confirmText: action.confirmText,
+          defaultValue: action.defaultValue,
+          errorText: action.errorText,
           action: action.action
         },
         shade: true

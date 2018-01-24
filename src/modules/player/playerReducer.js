@@ -36,20 +36,6 @@ function selectNextTrack(tab, pos, type, repeated) {
 }
 
 function addPlaylist(name, tabs) {
-  if (!name) {
-    return {error: 'Type something'}
-  }
-  if (name.length > 32) {
-    return {error: 'Too long'}
-  }
-  const index = getTabIndexByName(tabs, name)
-  if (~index) {
-    return {error: `Playlist ${name} already exists`}
-  }
-  if (tabs.length >= 20) {
-    return {error: `Too many playlists`}
-  }
-
   return {
     tabs: [...tabs, {name: name, tracks: []}],
     openTab: name
@@ -277,14 +263,10 @@ const ACTION_HANDLERS = {
   },
   [types.CREATE_PLAYLIST]: (state, action) => {
     let createTabUpdates = addPlaylist(action.name, state.tabs)
-    if (createTabUpdates.error) {
-      return {...state, errors: {createPlaylist: createTabUpdates.error}}
-    }
     return {
       ...state,
       tabs: createTabUpdates.tabs,
-      openTab: createTabUpdates.openTab,
-      errors: {}
+      openTab: createTabUpdates.openTab
     }
   },
   [types.CLOSE_OPEN_PLAYLIST]: (state, action) => {

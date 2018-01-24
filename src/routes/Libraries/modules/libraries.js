@@ -47,7 +47,7 @@ export function createLibrary(defaultValue) {
       })
   }
 
-  return openSingleInput(`Library name:`, 'Create', createLibraryAction)
+  return openSingleInput(`Library name:`, 'Create', defaultValue, createLibraryAction)
 }
 
 export function deleteLibrary(name) {

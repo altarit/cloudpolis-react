@@ -80,7 +80,7 @@ export class Sidebar extends React.Component {
             selectTab={this.props.selectTab}
             scrollLeft={this.props.scrollLeft}
             scrollRight={this.props.scrollRight}
-            closeOpenPlaylist={this.props.closeOpenPlaylist}
+            closePlaylist={this.props.closePlaylist}
           />
 
           <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>

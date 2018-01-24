@@ -1,5 +1,6 @@
 import * as types from './playerConstants'
-import {openConfirmation} from '../popups'
+import {openConfirmation, openSingleInput, closeAllPopups} from '../popups'
+import {getTabIndexByName} from "./playerReducer"
 
 // --------------------------------
 // General
@@ -77,11 +78,38 @@ export function updatePlaylist(name, content) {
   }
 }
 
-export function createPlaylist(name) {
-  return {
-    type: types.CREATE_PLAYLIST,
-    name
+function validatePlaylist(tabs, name) {
+  if (!name) {
+    return {error: 'Type something'}
   }
+  if (name.length > 32) {
+    return {error: 'Too long'}
+  }
+  const index = getTabIndexByName(tabs, name)
+  if (~index) {
+    return {error: `Playlist already exists`}
+  }
+  if (tabs.length >= 20) {
+    return {error: `Too many playlists`}
+  }
+}
+
+export function createPlaylist(defaultValue, errorText) {
+  const createLibraryAction = result => (dispatch, getState) => {
+    const tabs = getState().player.tabs
+    const error = validatePlaylist(tabs, result)
+    if (error) {
+      dispatch(createPlaylist(result, error.error))
+    } else {
+      dispatch({
+        type: types.CREATE_PLAYLIST,
+        name: result
+      })
+      dispatch(closeAllPopups())
+    }
+  }
+
+  return openSingleInput(`Playlist name:`, 'Create', defaultValue, errorText, createLibraryAction)
 }
 
 export function closePlaylist(name) {
@@ -141,30 +169,35 @@ export function sortByTitle() {
     by: types.BY_TITLE
   }
 }
+
 export function sortByArtist() {
   return {
     type: types.SORT_PLAYLIST,
     by: types.BY_ARTIST
   }
 }
+
 export function sortByDuration() {
   return {
     type: types.SORT_PLAYLIST,
     by: types.BY_DURATION
   }
 }
+
 export function sortByPath() {
   return {
     type: types.SORT_PLAYLIST,
     by: types.BY_PATH
   }
 }
+
 export function shuffle() {
   return {
     type: types.SORT_PLAYLIST,
     by: types.SHUFFLE
   }
 }
+
 export function reverse() {
   return {
     type: types.SORT_PLAYLIST,

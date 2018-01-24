@@ -23,9 +23,8 @@ export class SidebarBottomMenu extends React.Component {
     reverse: PropTypes.func.isRequired,
   }
 
-  createPlaylist = (e) => {
-    e.preventDefault()
-    this.props.createPlaylist(this.refs.menuPlCreationInput.value)
+  createPlaylist = () => {
+    this.props.createPlaylist(`New playlist`)
   }
 
   closeOpenPlaylist = () => {
@@ -98,7 +97,7 @@ export class SidebarBottomMenu extends React.Component {
     let position = {bottom: this.props.popups.bottomPls.ry + 20, left: this.props.popups.bottomPls.x - 110}
     return (
       <ul className='dropdown-menu show dropdown_fixed' style={position}>
-        <li className='option' data-click='dropdown' data-for='playlistCreation'>
+        <li className='option' data-click='custom' onClick={this.createPlaylist}>
           <span className='fa fa-fw fa-file-o' />New playlist
         </li>
         <li className='option' data-click='dropdown' data-for='openPlaylistDialog'>
@@ -117,27 +116,6 @@ export class SidebarBottomMenu extends React.Component {
           <span className='fa fa-fw fa-edit' />Rename
         </li>
       </ul>
-    )
-  }
-
-  renderPlaylistCreationPopup = () => {
-    if (!this.props.popups.playlistCreation) return null
-    return (
-      <div className='dropdown-menu show' data-click='none'>
-        <form onSubmit={this.createPlaylist}>
-          <div className='form-group'>
-            <label htmlFor='artists-filter'>Playlist name</label>
-            <input type='text' className='form-control' ref='menuPlCreationInput' />
-            <span>{this.props.errors.createPlaylist}</span>
-          </div>
-          <div className='btn-group'>
-            <button type='submit' className='btn btn-primary'>Create</button>
-          </div>
-          <div className='btn-group'>
-            <button type='button' className='btn btn-primary' data-click='closeall'>Cancel</button>
-          </div>
-        </form>
-      </div>
     )
   }
 
@@ -166,7 +144,6 @@ export class SidebarBottomMenu extends React.Component {
         {this.renderBottomRemovePopup()}
         {this.renderBottomSortPopup()}
         {this.renderBottomPlaylistPopup()}
-        {this.renderPlaylistCreationPopup()}
 
         {this.props.popups.openPlaylistDialog ? (
           <OpenPlaylistDialog tab={tab} forSave={false} />
