@@ -2,11 +2,13 @@ import {connect} from 'react-redux'
 
 import AudioPlayer from '../components/AudioPlayer'
 import {play, pause, endTrack} from '../../../modules/player/playerActions'
+import {sendSingleStat} from '../../../modules/stats'
 
 const mapDispatchToProps = {
   play,
   pause,
-  endTrack
+  endTrack,
+  sendSingleStat
 }
 
 const mapStateProps = (state) => ({

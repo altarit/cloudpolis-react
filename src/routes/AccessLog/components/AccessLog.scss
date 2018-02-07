@@ -1,39 +1,59 @@
 /* Admin */
 
-div.onerow {
+.access__table {
   height: 60px;
 }
 
-.admin-access > div.form-head > div.onerow > div {
-  float: left;
+.access-filters {
+  width: 100%;
+
+  div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    white-space: nowrap;
+
+    label {
+      width: 80px;
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    div {
+      input {
+        width: 100%;
+
+      }
+    }
+  }
 }
 
-.admin-access > div.form-body > div.onerow > div {
-  float: left;
-  overflow: hidden;
-  white-space: nowrap;
-}
 
-.admin-access > div > div > div:nth-child(1) {
-  width: 10%;
-}
 
-.admin-access > div > div > div:nth-child(2) {
-  width: 90%;
-}
+.access-record {
+  div {
+    float: left;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 
-.admin-access > div > div > div:nth-child(3) {
-  width: 20%;
-}
+  &__url {
+    width: 100%;
+  }
 
-.admin-access > div > div > div:nth-child(4) {
-  width: 35%;
-}
+  &__user {
+    width: 35%;
+  }
 
-.admin-access > div > div > div:nth-child(5) {
-  width: 20%;
-}
+  &__ip {
+    width: 30%;
+  }
 
-.admin-access > div > div > div:nth-child(6) {
-  width: 25%;
+  &__created {
+    width: 35%;
+  }
+
+  &__clear-left {
+    clear: left;
+  }
 }

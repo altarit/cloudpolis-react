@@ -3,8 +3,8 @@ const BASE_URL = !__DEV__ ? '' : 'http://localhost'
 
 export function toMMSS(val) {
   if (!val) return ''
-  var minutes = Math.floor(val / 60)
-  var seconds = Math.floor(val - minutes * 60)
+  let minutes = Math.floor(val / 60)
+  let seconds = Math.floor(val - minutes * 60)
   return (seconds < 10)
     ? minutes + ':0' + seconds
     : minutes + ':' + seconds
@@ -17,4 +17,8 @@ export function apiLink(link) {
 export function trackLink(src) {
   if (!src) return null
   return BASE_URL + '/library' + src
+}
+
+export function lightEncode(text) {
+  return text.replace(/ /g,'+')
 }

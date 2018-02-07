@@ -23,12 +23,11 @@ export default class Input extends React.Component {
 
   render() {
     return (
-      <form className='form-horizontal form-search'>
-        <div className='btn-group input-search-component'>
-          <input type='search' className='form-control' onChange={this.changeFilter} ref='inputField' />
+        <div className='btn-group form-search input-search-component'>
+          <input type='search' className='form-control'
+                 defaultValue={this.props.defaultValue} onChange={this.changeFilter} ref='inputField' />
           <span className='fa fa-close input-search-icon' onClick={this.clearFilter} />
         </div>
-      </form>
     )
   }
 }
