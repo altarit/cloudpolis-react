@@ -10,6 +10,7 @@ export class Track extends React.Component {
     title: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     library: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     // compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     href: PropTypes.string,

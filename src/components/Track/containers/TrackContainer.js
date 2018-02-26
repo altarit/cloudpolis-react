@@ -23,6 +23,7 @@ const mapStateToProps = (state, props) => ({
   isPlaying: state.player.isPlaying,
   trackAdd: state.popups.trackAdd,
   src: props.src,
+  id: props.id,
   currentTab: state.player.currentTab,
   openTab: state.player.openTab,
 })
