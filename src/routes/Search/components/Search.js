@@ -26,7 +26,7 @@ export class Search extends React.Component {
       <div className='container'>
         <h2>Search</h2>
         regexp is supported ^_^
-        <Input onChange={this.changeFilter} />
+        <Input onChange={this.changeFilter} delay={300}/>
         <div>
           {!this.props.songs ? (
             <div>Loading...</div>

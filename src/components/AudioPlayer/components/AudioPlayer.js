@@ -9,6 +9,7 @@ export class AudioPlayer extends React.Component {
     artist: PropTypes.string,
     src: PropTypes.string,
     duration: PropTypes.string,
+    trackId: PropTypes.string,
 
     volume: PropTypes.number.isRequired,
     muted: PropTypes.bool.isRequired,
@@ -44,7 +45,7 @@ export class AudioPlayer extends React.Component {
 
     if (this.props.src !== nextProps.src) {
       console.log('changed src')
-      this.props.sendSingleStat(`lib`, nextProps.artist, nextProps.title)
+      this.props.sendSingleStat(`lib`, nextProps.artist, nextProps.title, nextProps.trackId)
       this.setState({
         ...this.state,
         time: 0,
