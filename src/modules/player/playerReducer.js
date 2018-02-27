@@ -186,7 +186,7 @@ function getNextScrolledTabs(tabs, tabName, scrolledTabs) {
   let currentTabIndex = getTabIndexByName(tabs, tabName)
   let nextScrolledTabs = scrolledTabs
   if (nextScrolledTabs > currentTabIndex) nextScrolledTabs = currentTabIndex
-  if (nextScrolledTabs < currentTabIndex - 2) nextScrolledTabs = currentTabIndex - 2
+  if (nextScrolledTabs < currentTabIndex - 3) nextScrolledTabs = currentTabIndex - 3
   return nextScrolledTabs
 }
 
@@ -206,6 +206,10 @@ const initialState = {
   tabs: [{
     name: types.DEFAULT_PL,
     tracks: []
+  }, {
+    name: 'Random',
+    type: 'R',
+    tracks: []
   }],
   currentTab: types.DEFAULT_PL,
   openTab: types.DEFAULT_PL,
@@ -214,6 +218,11 @@ const initialState = {
   safePlaylists: [],
   serverPlaylists: [],
   isLocal: true,
+  drag: {
+    isOn: false,
+    item: null,
+    mutable: false
+  },
   errors: {}
 }
 
@@ -325,6 +334,19 @@ const ACTION_HANDLERS = {
   },
   [types.SCROLL_RIGHT]: (state, action) => {
     return {...state, scrolledTabs: state.scrolledTabs + 1}
+  },
+  // drag and drop
+  [types.TRACK_DRAG_START]: (state, action) => {
+    return {...state, drag: {isOn: true, item: action.item, mutable: action.mutable}}
+  },
+  [types.TRACK_DRAG_END]: (state, action) => {
+    return {...state, drag: {...state.drag, isOn: false}}
+  },
+  [types.TRACK_DRAG_DROP]: (state, action) => {
+    let moveUpdates = moveTrack(state.tabs, state.currentTab, state.pos, state.drag.item.track,
+      state.drag.mutable ? state.drag.item.pl : null, state.drag.mutable ? state.drag.item.pos : null,
+      action.tabTo, action.posTo)
+    return {...state, drag: {isOn: false, item: null, mutable: false}, tabs: moveUpdates.tabs, pos: moveUpdates.pos}
   },
 }
 

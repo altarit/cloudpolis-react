@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import './SideBar.scss'
-import TrackList from '../../TrackList'
+import TrackListCustom from '../../TrackListCustom'
 import SidebarTopMenu from './SideBarTopMenu'
 import SidebarTabs from './SideBarTabs'
 import SidebarBottomMenu from './SideBarBottomMenu'
@@ -38,24 +38,6 @@ export class Sidebar extends React.Component {
     renamePlaylist: PropTypes.func.isRequired,
   }
 
-  drop = (e) => {
-    e.preventDefault()
-    let track = JSON.parse(e.dataTransfer.getData('track'))
-    const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
-    let playlistLength = this.props.tabs[openTabIndex].tracks.length
-    if (track.immutable) {
-      this.props.moveTrack(track, null, null, this.props.openTab, playlistLength)
-    } else {
-      let transferPlName = e.dataTransfer.getData('pl')
-      let transferTrackPos = +e.dataTransfer.getData('pos')
-      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.openTab, playlistLength)
-    }
-  }
-
-  dragOver = (e) => {
-    e.preventDefault()
-  }
-
   render() {
     console.log(`SideBar.render`)
     const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
@@ -85,12 +67,9 @@ export class Sidebar extends React.Component {
             createPlaylist={this.props.createPlaylist}
           />
 
-          <div className='playmenu__list' onDrop={this.drop} onDragOver={this.dragOver}>
-            <TrackList songs={songs} pl={this.props.openTab} immutable={false} className='tracklist_mini' />
-          </div>
+          <TrackListCustom songs={songs} pl={this.props.openTab} />
 
           <div className='playmenu__status'>
-            Open: <b>{this.props.openTab}</b><br />
             Playing: <b>{this.props.currentTab}</b>
           </div>
 

@@ -35,3 +35,7 @@ export const REVERSE = 'REVERSE'
 export const SELECT_TAB = 'SELECT_TAB'
 export const SCROLL_LEFT = 'SCROLL_LEFT'
 export const SCROLL_RIGHT = 'SCROLL_RIGHT'
+
+export const TRACK_DRAG_START = 'TRACK_DRAG_START'
+export const TRACK_DRAG_END = 'TRACK_DRAG_END'
+export const TRACK_DRAG_DROP = 'TRACK_DRAG_DROP'

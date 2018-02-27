@@ -7,6 +7,7 @@ import {
   moveTrack,
   removeTrack,
   addToPlaylist,
+  trackDragStart,
 } from '../../../modules/player/playerActions'
 import {openPopup} from '../../../modules/popups'
 
@@ -17,6 +18,7 @@ const mapDispatchToProps = {
   removeTrack,
   openPopup,
   addToPlaylist,
+  trackDragStart,
 }
 
 const mapStateToProps = (state, props) => ({

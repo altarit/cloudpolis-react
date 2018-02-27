@@ -248,5 +248,31 @@ export function scrollRight() {
 }
 
 // --------------------------------
+// Drag and Drop
+// --------------------------------
+
+export function trackDragStart(item, mutable) {
+  return {
+    type: types.TRACK_DRAG_START,
+    item: item,
+    mutable: mutable
+  }
+}
+
+export function trackDragEnd() {
+  return {
+    type: types.TRACK_DRAG_END,
+  }
+}
+
+export function dropTrack(pl, pos) {
+  return {
+    type: types.TRACK_DRAG_DROP,
+    tabTo: pl,
+    posTo: pos
+  }
+}
+
+// --------------------------------
 //
 // --------------------------------
