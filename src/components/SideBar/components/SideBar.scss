@@ -59,7 +59,10 @@ $panelBorder: 1px solid #7d7d7d;
 }
 
 .playmenu__list-header {
-  flex: 0 1 34px;
+  background-color: $playMenuStatusColor;
+  text-align: center;
+  line-height: 34px;
+  flex: 0 0 34px;
 }
 
 .playmenu__list {
@@ -68,6 +71,7 @@ $panelBorder: 1px solid #7d7d7d;
   flex: 1 1 auto;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom: 0;
 }
 
 .playmenu__list-space {
@@ -87,17 +91,18 @@ $panelBorder: 1px solid #7d7d7d;
   width: 100%;
   height: 100%;
   position: absolute;
-  z-index: 999998;
+  z-index: 999990;
 }
 
 .playmenu__list-basket {
   background-color: #ce5ea3;
   opacity: 0.2;
-  width: 100%;
-  height: 140px;
   position: absolute;
-  z-index: 999999;
+  z-index: 999993;
+
   bottom: 0;
+  width: 100%;
+  height: 135px;
 }
 
 .playmenu__status {

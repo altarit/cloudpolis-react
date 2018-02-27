@@ -348,6 +348,13 @@ const ACTION_HANDLERS = {
       action.tabTo, action.posTo)
     return {...state, drag: {isOn: false, item: null, mutable: false}, tabs: moveUpdates.tabs, pos: moveUpdates.pos}
   },
+  [types.TRACK_DRAG_DROP_DELETE]: (state, action) => {
+    let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos,
+      state.drag.mutable ? state.drag.item.pl : null, state.drag.mutable ? state.drag.item.pos : null, state.track)
+    setTitle(removeUpdates.track)
+    return {...state, drag: {isOn: false, item: null, mutable: false},
+      tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track}
+  },
 }
 
 export default function playerReducer(state = initialState, action) {

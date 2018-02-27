@@ -273,6 +273,13 @@ export function dropTrack(pl, pos) {
   }
 }
 
+
+export function dropDeleteTrack() {
+  return {
+    type: types.TRACK_DRAG_DROP_DELETE
+  }
+}
+
 // --------------------------------
 //
 // --------------------------------

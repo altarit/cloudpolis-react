@@ -9,6 +9,7 @@ export class TrackListCustom extends React.Component {
     track: PropTypes.object,
     pos: PropTypes.number,
     currentTab: PropTypes.string,
+    openTab: PropTypes.string,
     pl: PropTypes.string.isRequired,
     plName: PropTypes.string,
     isTrackDrag: PropTypes.string,
@@ -16,6 +17,7 @@ export class TrackListCustom extends React.Component {
     updatePlaylist: PropTypes.func,
     updateAnotherPlaylist: PropTypes.func,
     dropTrack: PropTypes.func,
+    dropDeleteTrack: PropTypes.func,
   }
 
   constructor(props) {
@@ -66,6 +68,13 @@ export class TrackListCustom extends React.Component {
     this.props.dropTrack(this.props.pl, pos)
   }
 
+  dropToBasket = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('dropToBasket')
+    this.props.dropDeleteTrack()
+  }
+
   dragOver = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -73,31 +82,11 @@ export class TrackListCustom extends React.Component {
     this.setState({overPos: pos})
   }
 
-  dragEnter = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('dragEnter')
-  }
-
-
-  dragLeave = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-    console.log('dragLeave')
-  }
-
   render() {
     return (
       <div className='playmenu__contaner'>
         <div className='playmenu__list-header'>
-          <div className='d-flex'>
-            <button className='btn btn-outline-secondary mr-2' onClick={this.openInPlaylist}>
-              Open New Tab
-            </button>
-            <button className='btn btn-outline-secondary'>
-              Add To Tab ...
-            </button>
-          </div>
+          <b>{this.props.openTab}</b>
         </div>
         <ul className='playmenu__list'>
           {this.getPlaylist()}
@@ -105,14 +94,15 @@ export class TrackListCustom extends React.Component {
         </ul>
         {this.props.isTrackDrag ? (
           <div className='playmenu__list-droppable'>
-            <div className='playmenu__list-drop-tracks'
-                 onMouseUpCapture={this.drop} onMouseMove={this.dragOver} onDragLeave={this.dragLeave}
-                 onDragEnter={this.dragEnter}>
+            <div className='playmenu__list-drop-tracks' onMouseUpCapture={this.drop} onMouseMove={this.dragOver} >
             </div>
-            <div className='playmenu__list-basket'>
+            <div className='playmenu__list-basket' onMouseUpCapture={this.dropToBasket}>
             </div>
           </div>
         ) : null}
+        <div className='playmenu__status'>
+          Tracks: {this.props.songs.length}
+        </div>
       </div>
     )
   }

@@ -69,10 +69,6 @@ export class Sidebar extends React.Component {
 
           <TrackListCustom songs={songs} pl={this.props.openTab} />
 
-          <div className='playmenu__status'>
-            Playing: <b>{this.props.currentTab}</b>
-          </div>
-
           <SidebarBottomMenu
             popups={this.props.popups}
             openTab={this.props.openTab}
