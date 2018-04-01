@@ -150,7 +150,7 @@ export class Track extends React.Component {
           </div>
           <div className='track__info' onDoubleClick={this.handlePlayButton}>
             <div className='track__title'>{this.props.title}</div>
-            <div className='track__artist'>{this.props.artist} ({this.props.pl}:{this.props.pos})</div>
+            <div className='track__artist'>{this.props.artist} [{this.props.library}]</div>
           </div>
 
           <div className='track__control'>

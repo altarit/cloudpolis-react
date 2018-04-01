@@ -12,10 +12,10 @@ export class Admin extends React.Component {
       <div className='container'>
         <h2>Admin: {this.props.name}</h2>
         <div>
-          <Link to='/admin/access/'>Access Log</Link>
+          <Link to='/admin/access/'></Link>
         </div>
         <div>
-          <Link to={`/music/libraries/`}>Libraries</Link>
+          <Link to={`/music/libraries/`}></Link>
         </div>
       </div>
     )

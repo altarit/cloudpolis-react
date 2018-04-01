@@ -41,7 +41,7 @@ export class Sidebar extends React.Component {
   render() {
     console.log(`SideBar.render`)
     const openTabIndex = getTabIndexByName(this.props.tabs, this.props.openTab)
-    let songs = this.props.tabs[openTabIndex].tracks
+    let playlist = this.props.tabs[openTabIndex]
     return (
       <div className='sidebar__widget'>
         <div className='playmenu'>
@@ -67,7 +67,7 @@ export class Sidebar extends React.Component {
             createPlaylist={this.props.createPlaylist}
           />
 
-          <TrackListCustom songs={songs} pl={this.props.openTab} />
+          <TrackListCustom playlist={playlist} pl={this.props.openTab} />
 
           <SidebarBottomMenu
             popups={this.props.popups}

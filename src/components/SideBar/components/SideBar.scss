@@ -58,11 +58,21 @@ $panelBorder: 1px solid #7d7d7d;
   flex-flow: column;
 }
 
+.playmenu__list-header_title {
+  flex: 1 1 auto;
+}
+
 .playmenu__list-header {
   background-color: $playMenuStatusColor;
   text-align: center;
   line-height: 34px;
   flex: 0 0 34px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.playmenu__list-header_control {
+
 }
 
 .playmenu__list {

@@ -209,7 +209,13 @@ const initialState = {
   }, {
     name: 'Random',
     type: 'R',
-    tracks: []
+    tracks: [],
+    filter: {
+      name: 'mlpfa',
+      value: JSON.stringify({library:{$in:['mlpfa']}})
+    },
+    lastUpdate: 0,
+    fetching: false
   }],
   currentTab: types.DEFAULT_PL,
   openTab: types.DEFAULT_PL,
@@ -223,6 +229,23 @@ const initialState = {
     item: null,
     mutable: false
   },
+
+  filters: [{
+    name: 'mlpfa',
+    value: JSON.stringify({library:{$in:['mlpfa']}})
+  }, {
+    name: 'mlpost',
+    value: JSON.stringify({library:{$in:['mlpost']}})
+  }, {
+    name: 'any mlp',
+    value: JSON.stringify({library:{$in:['mlpfa','mlpost','mlpfa17']}})
+  }, {
+    name: 'common music',
+    value: JSON.stringify({library:{$in:['common']}})
+  }, {
+    name: 'all',
+    value: JSON.stringify({})
+  }],
   errors: {}
 }
 
@@ -352,9 +375,50 @@ const ACTION_HANDLERS = {
     let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos,
       state.drag.mutable ? state.drag.item.pl : null, state.drag.mutable ? state.drag.item.pos : null, state.track)
     setTitle(removeUpdates.track)
-    return {...state, drag: {isOn: false, item: null, mutable: false},
-      tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track}
+    return {
+      ...state, drag: {isOn: false, item: null, mutable: false},
+      tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track
+    }
   },
+  [types.CUT_OBSOLETE_RANDOM_TRACKS]: (state, action) => {
+    let removeUpdates = removeTrack(state.tabs, state.currentTab, state.pos, action.tab, 0, state.track)
+    setTitle(removeUpdates.track)
+    return {...state, tabs: removeUpdates.tabs, pos: removeUpdates.pos, track: removeUpdates.track}
+  },
+  [types.GET_RANDOM_TRACKS_REQUEST]: (state, action) => {
+    let newTabs = [...state.tabs]
+    let index = getTabIndexByName(newTabs, action.tab)
+    let newTab = {...newTabs[index]}
+    newTab.tracks = [...newTab.tracks]
+    newTab.fetching = true
+    newTab.lastUpdate = Date.now()
+    newTabs[index] = newTab
+    return {...state, tabs: newTabs}
+  },
+  [types.GET_RANDOM_TRACKS_SUCCESS]: (state, action) => {
+    let newTabs = [...state.tabs]
+    let index = getTabIndexByName(newTabs, action.tab)
+    let newTab = {...newTabs[index]}
+    newTab.tracks = action.clear ? action.tracks : [...newTab.tracks].concat(action.tracks)
+    newTab.fetching = false
+    newTab.lastUpdate = Date.now()
+    newTabs[index] = newTab
+    return {...state, tabs: newTabs}
+  },
+  [types.CHANGE_RANDOM_FILTER]: (state, action) => {
+    let newTabs = [...state.tabs]
+    let index = getTabIndexByName(newTabs, action.tab)
+    let newTab = {...newTabs[index]}
+    newTab.filter = action.filter
+    newTab.fetching = false
+    newTabs[index] = newTab
+    return {...state, tabs: newTabs}
+  },
+  ["QWE"]: (state, action) => {
+    if (state.pos)
+    return {...state, tabs: newTabs}
+  },
+
 }
 
 export default function playerReducer(state = initialState, action) {
