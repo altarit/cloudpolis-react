@@ -6,6 +6,7 @@ import {closeAllPopups, openPopup} from '../../modules/popups'
 import Sidebar from '../SideBar'
 import BottomBar from '../BottomBar'
 import Modals from '../Modals'
+import DragDrop from '../DragDrop'
 import Header from '../Header'
 import './App.scss'
 import '../../styles/main.scss'
@@ -81,6 +82,7 @@ class App extends Component {
         </div>
         <BottomBar />
         <Modals />
+        <DragDrop />
       </div>
     )
   }
