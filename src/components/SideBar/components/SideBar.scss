@@ -51,17 +51,74 @@ $panelBorder: 1px solid #7d7d7d;
   flex: 0 1;
 }
 
+.playmenu__contaner {
+  background-color: #7d7d7d;
+  flex: 1 1 auto;
+  display: flex;
+  flex-flow: column;
+}
+
+.playmenu__list-header_title {
+  flex: 1 1 auto;
+}
+
+.playmenu__list-header {
+  background-color: $playMenuStatusColor;
+  text-align: center;
+  line-height: 34px;
+  flex: 0 0 34px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.playmenu__list-header_control {
+
+}
+
 .playmenu__list {
   background-color: $playMenuListColor;
+  position: relative;
   flex: 1 1 auto;
   overflow-y: scroll;
   overflow-x: hidden;
+  margin-bottom: 0;
+}
+
+.playmenu__list-space {
+  height: 150px;
+}
+
+.playmenu__list-droppable {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.playmenu__list-drop-tracks {
+  background-color: #8fa5ce;
+  opacity: 0.2;
+  margin-top: 34px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999990;
+}
+
+.playmenu__list-basket {
+  background-color: #ce5ea3;
+  opacity: 0.2;
+  position: absolute;
+  z-index: 999993;
+
+  bottom: 0;
+  width: 100%;
+  height: 135px;
 }
 
 .playmenu__status {
   background-color: $playMenuStatusColor;
   flex: 0 1;
-  min-height: 40px;
+  min-height: 20px;
   text-align: center;
 }
 

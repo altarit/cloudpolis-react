@@ -1,11 +1,12 @@
 export function cloneTrack(track) {
   return {
+    id: track.id,
     title: track.title,
     library: track.library,
     artist: track.artist,
     src: track.src,
     duration: track.duration,
-    compilation: track.compilation
+    compilation: track.compilation,
   }
 }
 

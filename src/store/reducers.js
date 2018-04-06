@@ -3,6 +3,7 @@ import {reducer as formReducer} from 'redux-form'
 import {routerReducer} from 'react-router-redux'
 
 import sidebarReducer from '../components/SideBar/modules/sideBar'
+import audioDetailsReducer from '../components/AudioDetails/modules/audioDetails'
 import playerReducer from '../modules/player/playerReducer'
 import popupReducer from '../modules/popups'
 import homeReducer from '../routes/Home/modules/home'
@@ -13,6 +14,7 @@ export const makeRootReducer = (asyncReducers) => {
     routing: routerReducer,
     form: formReducer,
     sidebar: sidebarReducer,
+    audioDetails: audioDetailsReducer,
     player: playerReducer,
     popups: popupReducer,
     home: homeReducer,

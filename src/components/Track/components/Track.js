@@ -10,6 +10,7 @@ export class Track extends React.Component {
     title: PropTypes.string.isRequired,
     artist: PropTypes.string.isRequired,
     library: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     // compilation: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
     href: PropTypes.string,
@@ -22,6 +23,7 @@ export class Track extends React.Component {
     currentTab: PropTypes.string.isRequired,
     openTab: PropTypes.string.isRequired,
     pl: PropTypes.string,
+    isDragOver: PropTypes.bool,
 
     trackAdd: PropTypes.object,
 
@@ -32,6 +34,7 @@ export class Track extends React.Component {
     openPopup: PropTypes.func.isRequired,
     removeTrack: PropTypes.func.isRequired,
     addToPlaylist: PropTypes.func.isRequired,
+    trackDragStart: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -53,39 +56,15 @@ export class Track extends React.Component {
   }
 
   dragStart = (e) => {
-    // console.log('start ' + this.props.pos)
-    e.dataTransfer.setData('pos', this.props.pos)
-    e.dataTransfer.setData('pl', this.props.pl)
-    e.dataTransfer.setData('track', JSON.stringify(this.props))
-  }
-
-  drop = (e) => {
-    if (this.props.immutable) return
-
     e.preventDefault()
     e.stopPropagation()
-    this.setState({isAbove: null})
-    let track = JSON.parse(e.dataTransfer.getData('track'))
-    if (track.immutable) {
-      console.log('immutable')
-      this.props.moveTrack(track, null, null, this.props.pl, this.props.pos)
-    } else {
-      let transferPlName = e.dataTransfer.getData('pl')
-      let transferTrackPos = +e.dataTransfer.getData('pos')
-      this.props.moveTrack(track, transferPlName, transferTrackPos, this.props.pl, this.props.pos)
-    }
-  }
+    console.log(`dragStart`)
 
-  dragOver = (e) => {
-    if (this.props.immutable) return
-    e.preventDefault()
-    this.setState({isAbove: true})
-  }
-
-  dragLeave = (e) => {
-    if (this.props.immutable) return
-    e.preventDefault()
-    this.setState({isAbove: null})
+    this.props.trackDragStart({
+      pos: this.props.pos,
+      pl: this.props.pl,
+      track: this.props
+    }, !this.props.immutable)
   }
 
   openMenu = (e) => {
@@ -161,20 +140,17 @@ export class Track extends React.Component {
         <div
           className={'track' + (this.props.isCurrent ? ' playing' : '')}
           style={{
-            borderTopStyle: this.state.isAbove ? 'solid' : null
+            marginTop: this.props.isDragOver ? '40px' : null
           }}
           draggable='true'
-          onDragStart={this.dragStart}
-          onDrop={this.drop}
-          onDragOver={this.dragOver}
-          onDragLeave={this.dragLeave}>
+          onDragStart={this.dragStart}>
 
           <div className='track__cover' onClick={this.handlePlayButton}>
             <span className={this.props.isCurrent && this.props.isPlaying ? 'fa fa-pause' : 'fa fa-play'} />
           </div>
           <div className='track__info' onDoubleClick={this.handlePlayButton}>
             <div className='track__title'>{this.props.title}</div>
-            <div className='track__artist'>{this.props.artist} ({this.props.pl}:{this.props.pos})</div>
+            <div className='track__artist'>{this.props.artist} [{this.props.library}]</div>
           </div>
 
           <div className='track__control'>

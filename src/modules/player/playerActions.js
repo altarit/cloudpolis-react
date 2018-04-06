@@ -1,6 +1,7 @@
 import * as types from './playerConstants'
 import {openConfirmation, openSingleInput, closeAllPopups} from '../popups'
 import {getTabIndexByName} from "./playerReducer"
+import {fetchGet} from "../apiUtils"
 
 // --------------------------------
 // General
@@ -244,6 +245,78 @@ export function scrollLeft() {
 export function scrollRight() {
   return {
     type: types.SCROLL_RIGHT
+  }
+}
+
+// --------------------------------
+// Drag and Drop
+// --------------------------------
+
+export function trackDragStart(item, mutable) {
+  return {
+    type: types.TRACK_DRAG_START,
+    item: item,
+    mutable: mutable
+  }
+}
+
+export function trackDragEnd() {
+  return {
+    type: types.TRACK_DRAG_END,
+  }
+}
+
+export function dropTrack(pl, pos) {
+  return {
+    type: types.TRACK_DRAG_DROP,
+    tabTo: pl,
+    posTo: pos
+  }
+}
+
+
+export function dropDeleteTrack() {
+  return {
+    type: types.TRACK_DRAG_DROP_DELETE
+  }
+}
+
+// --------------------------------
+// Server
+// --------------------------------
+
+export function getRandomTracks(tab, filter, clear) {
+  return (dispatch) => {
+    dispatch({
+      type: types.GET_RANDOM_TRACKS_REQUEST,
+      tab: tab
+    })
+
+    return fetchGet('/music/random?filter=' + filter)
+      .then(tracks => {
+        dispatch({
+          type: types.GET_RANDOM_TRACKS_SUCCESS,
+          tracks: tracks.data,
+          tab: tab,
+          clear: clear
+        })
+      })
+  }
+}
+
+export function cutObsoleteTracks(tab, cut) {
+  return {
+    type: types.CUT_OBSOLETE_RANDOM_TRACKS,
+    tab: tab,
+    cut: cut
+  }
+}
+
+export function selectFilter(filter, tab) {
+  return {
+    type: types.CHANGE_RANDOM_FILTER,
+    filter: filter,
+    tab: tab
   }
 }
 

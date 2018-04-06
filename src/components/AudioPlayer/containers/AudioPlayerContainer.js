@@ -2,11 +2,12 @@ import {connect} from 'react-redux'
 
 import AudioPlayer from '../components/AudioPlayer'
 import {play, pause, endTrack} from '../../../modules/player/playerActions'
-
+import {getTrackDetails} from '../../AudioDetails/modules/audioDetails'
 const mapDispatchToProps = {
   play,
   pause,
-  endTrack
+  endTrack,
+  sendSingleStat: getTrackDetails
 }
 
 const mapStateProps = (state) => ({
@@ -15,6 +16,7 @@ const mapStateProps = (state) => ({
   src: state.player.track.src,
   duration: state.player.track.duration,
   compilation: state.player.track.compiltaion,
+  trackId: state.player.track.id,
 
   isPlaying: state.player.isPlaying,
   volume: state.player.volume,

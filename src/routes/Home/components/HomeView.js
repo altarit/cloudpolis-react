@@ -66,7 +66,7 @@ export class HomeView extends React.Component {
             but it'd be great if anybody uses it. I'd like to take any feedbacks to make it better.
           </div>
           <div className='col-lg-4'>
-            <h3>How to?</h3>
+            <h3>How to use?</h3>
             I've added lots of cool things but tried to keep it easy to use and understand.
             If you think it's not, <Link to={'/howto'}>check out this</Link>.
 

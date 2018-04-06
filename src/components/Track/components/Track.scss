@@ -54,26 +54,26 @@
 
 /* Tracklist for sidebar*/
 
-.tracklist_mini {
+.playmenu__list {
   margin-left: 0px;
 }
 
-.tracklist_mini .track {
+.playmenu__list .track {
   height: 40px;
 }
 
-.tracklist_mini .track__info {
+.playmenu__list .track__info {
   overflow: hidden;
   width: 240px;
   white-space: nowrap;
 }
 
-.tracklist_mini .track__title {
+.playmenu__list .track__title {
   font-size: 10pt;
   width: 230px;
 }
 
-.tracklist_mini .track__artist {
+.playmenu__list .track__artist {
   font-size: 8pt;
   width: 230px;
 }

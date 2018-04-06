@@ -9,6 +9,7 @@ export class AudioPlayer extends React.Component {
     artist: PropTypes.string,
     src: PropTypes.string,
     duration: PropTypes.string,
+    trackId: PropTypes.string,
 
     volume: PropTypes.number.isRequired,
     muted: PropTypes.bool.isRequired,
@@ -16,7 +17,9 @@ export class AudioPlayer extends React.Component {
 
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
-    endTrack: PropTypes.func.isRequired
+    endTrack: PropTypes.func.isRequired,
+
+    sendSingleStat: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -42,6 +45,7 @@ export class AudioPlayer extends React.Component {
 
     if (this.props.src !== nextProps.src) {
       console.log('changed src')
+      this.props.sendSingleStat(`lib`, nextProps.artist, nextProps.title, nextProps.trackId)
       this.setState({
         ...this.state,
         time: 0,
@@ -172,6 +176,7 @@ export class AudioPlayer extends React.Component {
           ref='audio'
           src={trackLink(this.props.src)}
           muted={this.props.muted}
+          title={this.props.title}
 
           onTimeUpdate={this.handleTimeUpdate}
           onProgress={this.handleProgress}
